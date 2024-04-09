@@ -37,7 +37,7 @@ module.exports.saveBlogs = (req, res) => {
     BlogModel.create(blog)
         .then((data) => {
             // Invia il risultato della creazione come risposta con stato 201
-            console.log("Saved successfully");
+            console.log("Saved successfully, item: " + JSON.stringify(data));
             res.status(201).send(data);
         })
         .catch((error) => {
@@ -53,7 +53,7 @@ module.exports.updateBlogs = (req, res) => {
     const { blog } = req.body;
     // Utilizza il metodo `findByIdAndUpdate` del modello Blog per aggiornare un blog esistente nel database
     BlogModel.findByIdAndUpdate(id, {blog})
-        .then(() => res.send("Updated successfully"))
+        .then(() => res.send("Updated successfully, item: " + JSON.stringify(id)))
         .catch((error) => {
             // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
             console.error(error.message);
@@ -66,7 +66,7 @@ module.exports.deleteBlogs = (req, res) => {
     const { id } = req.params;
     // Utilizza il metodo `findByIdAndDelete` del modello Blog per eliminare un blog esistente nel database
     BlogModel.findByIdAndDelete(id)
-        .then(() => res.send("Deleted successfully"))
+        .then(() => res.send("Deleted successfully, item: " + JSON.stringify(id)))
         .catch((error) => {
             // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
             console.error(error.message);
