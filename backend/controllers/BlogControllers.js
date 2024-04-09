@@ -1,15 +1,17 @@
-const axios = require('axios'); // Importa axios per la gestione delle fetch
-
 // Importa il modello del blog per interagire con il database
 const BlogModel = require("../models/BlogModel");
 
 // Funzione asincrona per ottenere tutti i blog dal database e inviarli come risposta
 module.exports.getBlogs = async (req, res) => {
     try {
-        const response = await axios.get('http://localhost:5000/api/get');
-        res.send(response.data);
+        // Utilizza il metodo `find` del modello Blog per recuperare tutti i blog dal database
+        const blog = await BlogModel.find();
+        // Invia la lista dei blog come risposta
+        res.send(blog);
     } catch (error) {
-        handleAxiosError(error, res);
+        // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+        console.error(error.message);
+        res.status(500).send({ error: error.message, msg: "Something went wrong!" });
     }
 }
 
@@ -17,43 +19,57 @@ module.exports.getBlogs = async (req, res) => {
 module.exports.detailBlogs = async (req, res) => {
     const { id } = req.params;
     try {
-        const response = await axios.get(`http://localhost:5000/api/get/${id}`);
-        res.send(response.data);
+        // Utilizza il metodo `findById` del modello Blog per recuperare un blog specifico dal database
+        const blog = await BlogModel.findById(id);
+        // Invia i dettagli del blog come risposta
+        res.send(blog);
     } catch (error) {
-        handleAxiosError(error, res);
+        // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+        console.error(error.message);
+        res.status(500).send({ error: error.message, msg: "Something went wrong!" });
     }
 };
 
 // Funzione per salvare un nuovo blog nel database e inviare il risultato della creazione come risposta
-module.exports.saveBlogs = async (req, res) => {
+module.exports.saveBlogs = (req, res) => {
     const blog = req.body;
-    try {
-        const response = await axios.post('http://localhost:5000/api/save', blog);
-        res.status(201).send(response.data);
-    } catch (error) {
-        handleAxiosError(error, res);
-    }
+    // Utilizza il metodo `create` del modello Blog per salvare un nuovo blog nel database
+    BlogModel.create(blog)
+        .then((data) => {
+            // Invia il risultato della creazione come risposta con stato 201
+            console.log("Saved successfully");
+            res.status(201).send(data);
+        })
+        .catch((error) => {
+            // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+            console.error(error.message);
+            res.status(500).send({ error: error.message, msg: "Something went wrong!" });
+        });
 }
 
 // Funzione per aggiornare un blog esistente nel database e inviare il risultato dell'aggiornamento come risposta
-module.exports.updateBlogs = async (req, res) => {
+module.exports.updateBlogs = (req, res) => {
     const { id } = req.params;
     const { blog } = req.body;
-    try {
-        const response = await axios.put(`http://localhost:5000/api/update/${id}`, blog);
-        res.send(response.data);
-    } catch (error) {
-        handleAxiosError(error, res);
-    }
+    // Utilizza il metodo `findByIdAndUpdate` del modello Blog per aggiornare un blog esistente nel database
+    BlogModel.findByIdAndUpdate(id, {blog})
+        .then(() => res.send("Updated successfully"))
+        .catch((error) => {
+            // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+            console.error(error.message);
+            res.status(500).send({ error: error.message, msg: "Something went wrong!" });
+        });
 }
 
 // Funzione per eliminare un blog esistente dal database e inviare il risultato dell'eliminazione come risposta
-module.exports.deleteBlogs = async (req, res) => {
+module.exports.deleteBlogs = (req, res) => {
     const { id } = req.params;
-    try {
-        const response = await axios.delete(`http://localhost:5000/api/delete/${id}`);
-        res.send(response.data);
-    } catch (error) {
-        handleAxiosError(error, res);
-    }
+    // Utilizza il metodo `findByIdAndDelete` del modello Blog per eliminare un blog esistente nel database
+    BlogModel.findByIdAndDelete(id)
+        .then(() => res.send("Deleted successfully"))
+        .catch((error) => {
+            // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+            console.error(error.message);
+            res.status(500).send({ error: error.message, msg: "Something went wrong!" });
+        });
 }
