@@ -26,7 +26,7 @@ module.exports.detailBlogs = async (req, res, next) => {
         res.status(500).send({ error: error.message, stack: error.stack, msg: "Something went wrong!" });
         next(error);
     } finally {
-        console.log('Blog details retrieval process completed.');
+        console.log(`Blog with id: ${id} details retrieval process completed.`);
     }
 };
 
