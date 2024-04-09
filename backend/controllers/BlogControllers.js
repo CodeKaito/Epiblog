@@ -42,7 +42,7 @@ module.exports.saveBlogs = async (req, res, next) => {
         res.status(500).send({ error: error.message, stack: error.stack, msg: "Something went wrong!" });
         next(error);
     } finally {
-        console.log('Blog saving process completed.');
+        console.log(`Blog with id: ${id} creation process completed.`);
     }
 }
 
@@ -58,7 +58,7 @@ module.exports.updateBlogs = async (req, res, next) => {
         res.status(500).send({ error: error.message, stack: error.stack, msg: "Something went wrong!" });
         next(error);
     } finally {
-        console.log('Blog update process completed.');
+        console.log(`Blog with id: ${id} update process completed.`);
     }
 }
 
@@ -73,6 +73,6 @@ module.exports.deleteBlogs = async (req, res, next) => {
         res.status(500).send({ error: error.message, stack: error.stack, msg: "Something went wrong!" });
         next(error);
     } finally {
-        console.log('Blog deletion process completed.');
+        console.log(`Blog with id: ${id} deletion process completed.`);
     }
 }
