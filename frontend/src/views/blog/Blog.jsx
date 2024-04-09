@@ -36,16 +36,15 @@ const Blog = () => {
     return (
       <div className="blog-details-root">
         <Container>
-          <Image className="blog-details-cover" src={blog.avatar} fluid /> {/* Modificato per utilizzare 'avatar' */}
-          <h1 className="blog-details-title">{blog.name} {blog.surname}</h1> {/* Modificato per utilizzare 'name' e 'surname' */}
+          <Image className="blog-details-cover" src={blog.avatar} fluid />
+          <h1 className="blog-details-title">{blog.name} {blog.surname}</h1>
 
           <div className="blog-details-container">
             <div className="blog-details-author">
-              <BlogAuthor {...blog} /> {/* Passa tutto l'oggetto blog come props a BlogAuthor */}
+              <BlogAuthor {...blog} />
             </div>
             <div className="blog-details-info">
-              <div>{blog.birth}</div> {/* Mostra la data di nascita */}
-              {/* <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div> */}
+              <div>{blog.birth}</div>
               <div
                 style={{
                   marginTop: 20,
