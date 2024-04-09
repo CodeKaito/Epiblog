@@ -1,24 +1,22 @@
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
-    nome: {
+    name: {
         type: String,
         required: true,
     },
-    cognome: {
+    surname: {
         type: String,
-        required: true,
     },
     email: {
         type: String,
     },
-    data_nascita: {
+    birth: {
         type: String,
     },
     avatar: {
         type: String,
-    },
-
+    }
 })
 
 module.exports = mongoose.model("Blog", blogSchema);

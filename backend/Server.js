@@ -3,10 +3,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// const routes = require('./routes/TaskRoute');
+const routes = require('./routes/BlogRoute');
+
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
@@ -16,16 +19,10 @@ mongoose
     .then(() => console.log('Connected to Mongodb'))
     .catch((err) => console.log(err));
 
-const routes = require('./routes/BlogRoute');
+app.use("/api", routes);
 
-app.use("/", routes);
-
-app.get("/codekaito", (req, res) => {
-    res.send('Hello from Codekaito!');
-})
-
-app.get("/test", (req, res) => {
-    res.send('If you get this message, your API ENDPOINT is working!');
+app.get("/", (req, res) => {
+    res.send('This is the server response');
 })
 
 app.listen(PORT, () => {

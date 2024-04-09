@@ -1,31 +1,31 @@
-const BlogModel = require("../models/BlogModel");
+const TaskModel = require("../models/TaskModel");
 
-module.exports.getBlogs = async (req, res) => {
-    const blog = await BlogModel.find();
-    res.send(blog);
+module.exports.getTasks = async (req, res) => {
+    const tasks = await TaskModel.find();
+    res.send(tasks);
 
     // res.send("Hello, world!");
 }
 
-module.exports.saveBlogs = (req, res) => {
-    const blog = req.body;
+module.exports.saveTasks = (req, res) => {
+    const { task } = req.body;
 
-    BlogModel.create(blog)
+    TaskModel.create({task})
         .then((data) => {
             console.log("Saved successfully");
             res.status(201).send(data);
         })
         .catch((error) => {
             console.log(error.message);
-            res.status(500).send({ error: error.message, msg: "Something went wrong!" });
+            res.send({error: error.message, msg: "Something went wrong!"});
         });
 }
 
-module.exports.updateBlogs = (req, res) => {
+module.exports.updateTasks = (req, res) => {
     const { id } = req.params;
-    const { blog } = req.body;
+    const { task } = req.body;
 
-    BlogModel.findByIdAndUpdate(id, {blog})
+    TaskModel.findByIdAndUpdate(id, {task})
         .then(() => res.send("Updated successfully"))
         .catch((error) => {
             console.log(error.message);
@@ -33,10 +33,10 @@ module.exports.updateBlogs = (req, res) => {
         });
 }
 
-module.exports.deleteBlogs = (req, res) => {
+module.exports.deleteTasks = (req, res) => {
     const { id } = req.params;
 
-    BlogModel.findByIdAndDelete(id)
+    TaskModel.findByIdAndDelete(id)
         .then(() => res.send("Deleted successfully"))
         .catch((error) => {
             console.log(error.message);
