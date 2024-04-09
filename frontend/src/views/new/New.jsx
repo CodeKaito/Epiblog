@@ -18,7 +18,7 @@ const NewBlogPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:5000/api/save", {
+      await fetch("https://epicode-api.onrender.com/api/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
