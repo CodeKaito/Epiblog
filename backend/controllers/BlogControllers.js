@@ -3,9 +3,14 @@ const BlogModel = require("../models/BlogModel");
 module.exports.getBlogs = async (req, res) => {
     const blog = await BlogModel.find();
     res.send(blog);
-
-    // res.send("Hello, world!");
 }
+
+module.exports.detailBlogs = async (req, res) => {
+    const { id } = req.params;
+
+    const blog = await BlogModel.findById(id);
+    res.send(blog);
+};
 
 module.exports.saveBlogs = (req, res) => {
     const blog = req.body;

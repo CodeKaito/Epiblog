@@ -3,24 +3,32 @@ import { Container, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import BlogAuthor from "../../components/blog/blog-author/BlogAuthor";
 import BlogLike from "../../components/likes/BlogLike";
-import posts from "../../data/posts.json";
 import "./styles.css";
-const Blog = props => {
+
+const Blog = () => {
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const navigate = useNavigate();
-  useEffect(() => {
-    const { id } = params;
-    const blog = posts.find(post => post._id.toString() === id);
 
-    if (blog) {
-      setBlog(blog);
-      setLoading(false);
-    } else {
-      navigate("/404");
-    }
-  }, []);
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/get/${params.id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blog");
+        }
+        const data = await response.json();
+        setBlog(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching blog:", error);
+        navigate("/404");
+      }
+    };
+
+    fetchBlog();
+  }, [params.id, navigate]);
 
   if (loading) {
     return <div>loading</div>;
@@ -28,16 +36,16 @@ const Blog = props => {
     return (
       <div className="blog-details-root">
         <Container>
-          <Image className="blog-details-cover" src={blog.cover} fluid />
-          <h1 className="blog-details-title">{blog.title}</h1>
+          <Image className="blog-details-cover" src={blog.avatar} fluid /> {/* Modificato per utilizzare 'avatar' */}
+          <h1 className="blog-details-title">{blog.name} {blog.surname}</h1> {/* Modificato per utilizzare 'name' e 'surname' */}
 
           <div className="blog-details-container">
             <div className="blog-details-author">
-              <BlogAuthor {...blog.author} />
+              <BlogAuthor {...blog} /> {/* Passa tutto l'oggetto blog come props a BlogAuthor */}
             </div>
             <div className="blog-details-info">
-              <div>{blog.createdAt}</div>
-              <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div>
+              <div>{blog.birth}</div> {/* Mostra la data di nascita */}
+              {/* <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div> */}
               <div
                 style={{
                   marginTop: 20,

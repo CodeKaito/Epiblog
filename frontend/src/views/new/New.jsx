@@ -1,39 +1,96 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import "./styles.css";
-import {convertToRaw} from "draft-js"
-import draftToHtml from "draftjs-to-html"
-const NewBlogPost = props => {
-  const [text, setText] = useState("");
-  const handleChange = useCallback(value => {
-    
-    setText(draftToHtml(value));
-    console.log(text)
-    // console.log(convertToRaw(value.getCurrentContent()))
+
+const NewBlogPost = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    birth: "",
+    avatar: ""
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await fetch("http://localhost:5000/api/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      console.log(JSON.stringify(formData));
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error while submitting the form!");
+    }
+  };
+
   return (
     <Container className="new-blog-container">
-      <Form className="mt-5">
-        <Form.Group controlId="blog-form" className="mt-3">
-          <Form.Label>Titolo</Form.Label>
-          <Form.Control size="lg" placeholder="Title" />
+      <Form className="mt-5" onSubmit={handleSubmit}>
+        <Form.Group controlId="name" className="mt-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            size="lg"
+            type="text"
+            name="name"
+            placeholder="Enter name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
         </Form.Group>
-        <Form.Group controlId="blog-category" className="mt-3">
-          <Form.Label>Categoria</Form.Label>
-          <Form.Control size="lg" as="select">
-            <option>Categoria 1</option>
-            <option>Categoria 2</option>
-            <option>Categoria 3</option>
-            <option>Categoria 4</option>
-            <option>Categoria 5</option>
-          </Form.Control>
+        <Form.Group controlId="surname" className="mt-3">
+          <Form.Label>Surname</Form.Label>
+          <Form.Control
+            size="lg"
+            type="text"
+            name="surname"
+            placeholder="Enter surname"
+            value={formData.surname}
+            onChange={handleChange}
+          />
         </Form.Group>
-        <Form.Group controlId="blog-content" className="mt-3">
-          <Form.Label>Contenuto Blog</Form.Label>
-
-          <Editor value={text} onChange={handleChange} className="new-blog-content" />
+        <Form.Group controlId="email" className="mt-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            size="lg"
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="birth" className="mt-3">
+          <Form.Label>Birth</Form.Label>
+          <Form.Control
+            size="lg"
+            type="text"
+            name="birth"
+            placeholder="Enter birth"
+            value={formData.birth}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="avatar" className="mt-3">
+          <Form.Label>Avatar</Form.Label>
+          <Form.Control
+            size="lg"
+            type="text"
+            name="avatar"
+            placeholder="Enter avatar"
+            value={formData.avatar}
+            onChange={handleChange}
+          />
         </Form.Group>
         <Form.Group className="d-flex mt-3 justify-content-end">
           <Button type="reset" size="lg" variant="outline-dark">
@@ -47,7 +104,7 @@ const NewBlogPost = props => {
               marginLeft: "1em",
             }}
           >
-            Invia
+            Submit
           </Button>
         </Form.Group>
       </Form>
