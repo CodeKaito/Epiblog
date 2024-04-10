@@ -50,7 +50,7 @@ const Blog = () => {
                   marginTop: 20,
                 }}
               >
-                <BlogLike defaultLikes={["123"]} onChange={console.log} />
+                <BlogLike defaultLikes={["123"]} />
               </div>
             </div>
           </div>
