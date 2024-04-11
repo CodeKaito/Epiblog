@@ -6,7 +6,7 @@ import "./styles.css";
 
 const NavBar = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary sticky-top top-0">
       <Container>
         <Navbar.Brand href="/">
           <img className="blog-navbar-brand" alt="logo" src={logo} />
