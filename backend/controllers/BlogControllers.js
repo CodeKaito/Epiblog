@@ -125,12 +125,15 @@ module.exports.saveBlogs = async (req, res, next) => {
 // Funzione per aggiornare un blog esistente nel database e inviare il risultato dell'aggiornamento come risposta
 module.exports.updateBlogs = async (req, res, next) => {
     const { id } = req.params;
-    const { blog } = req.body;
     try {
+        // Estrai i dati aggiornati dalla richiesta
+        const updatedBlogData = req.body;
         // Aggiorna il blog nel database utilizzando l'ID fornito e i dati del blog
-        await BlogModel.findByIdAndUpdate(id, blog);
+        const updatedBlog = await BlogModel.findByIdAndUpdate(id, updatedBlogData, {
+            new: true, // L'oggetto restituito deve essere quello aggiornato
+        });
         // Invia una conferma di aggiornamento come risposta
-        res.send("Updated successfully, item: " + JSON.stringify(id));
+        res.send("Updated successfully, item: " + JSON.stringify(updatedBlog));
     } catch (error) {
         // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
         console.error(error.message);
