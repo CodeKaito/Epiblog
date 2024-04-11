@@ -20,6 +20,27 @@ module.exports.getBlogs = async (req, res, next) => {
     }
 }
 
+// Funzione asincrona per ottenere tutti i blog dal database e inviarli come risposta
+module.exports.getBlogsPaginations = async (req, res, next) => {
+    try {
+        // Recupera tutti i blog dal database utilizzando il modello Blog
+        const blog = await BlogModel.find().sort({
+            name: parseInt(req.params.order) || 1,
+        });
+        // Invia la lista dei blog come risposta
+        res.send(blog);
+    } catch (error) {
+        // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+        console.error(error.message);
+        res.status(500).send({ error: error.message, stack: error.stack, msg: "Something went wrong!" });
+        // Passa l'errore al middleware successivo
+        next(error);
+    } finally {
+        // Stampa a console il completamento del processo di recupero dei blog
+        console.log('Blogs retrieval process completed.');
+    }
+}
+
 // Funzione asincrona per ottenere i dettagli di un blog specifico in base all'ID e inviarli come risposta
 module.exports.detailBlogs = async (req, res, next) => {
     const { id } = req.params;
@@ -39,6 +60,8 @@ module.exports.detailBlogs = async (req, res, next) => {
         console.log(`Blog with id: ${id} details retrieval process completed.`);
     }
 };
+
+
 
 // Funzione per salvare un nuovo blog nel database e inviare il risultato della creazione come risposta
 module.exports.saveBlogs = async (req, res, next) => {
