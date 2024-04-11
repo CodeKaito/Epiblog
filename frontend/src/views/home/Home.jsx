@@ -5,8 +5,8 @@ import "./styles.css";
 
 const Home = props => {
   return (
-    <Container fluid="sm">
-      <h1 className="blog-main-title mb-3">Benvenuto sullo Strive Blog!</h1>
+    <Container>
+      <h1 className="blog-main-title mb-2">Welcome to the blog!</h1>
       <BlogList />
     </Container>
   );

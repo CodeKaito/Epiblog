@@ -20,7 +20,7 @@ const blogSchema = new mongoose.Schema({
     },
     // Definisce il campo 'birth' di tipo String e richiesto
     birth: {
-        type: String,
+        type: Date,
         required: true,
     },
     // Definisce il campo 'avatar' di tipo String e richiesto
