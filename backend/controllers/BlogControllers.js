@@ -128,7 +128,7 @@ module.exports.updateBlogs = async (req, res, next) => {
     const { blog } = req.body;
     try {
         // Aggiorna il blog nel database utilizzando l'ID fornito e i dati del blog
-        await BlogModel.findByIdAndUpdate(id, {blog});
+        await BlogModel.findByIdAndUpdate(id, blog);
         // Invia una conferma di aggiornamento come risposta
         res.send("Updated successfully, item: " + JSON.stringify(id));
     } catch (error) {
