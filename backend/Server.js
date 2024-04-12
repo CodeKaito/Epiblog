@@ -5,7 +5,7 @@ const fs = require('fs'); // Importa il modulo fs per la lettura dei file
 
 require('dotenv').config(); // Configurazione dotenv per caricare le variabili d'ambiente
 
-const routes = require('./routes/BlogRoute'); // Importa le route necessarie per le chiamate HTTP
+const routes = require('./routes/AuthorRoute'); // Importa le route necessarie per le chiamate HTTP
 
 const PORT = process.env.PORT || 5001; // Imposta la porta del server di default a 5000, se la 5000non é disponibile allora utilizza la 5001
 const db = process.env.MONGO_URI; // Imposto una costante dove inserisco l'endpoint del mongodb

@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // Definisce lo schema del blog utilizzando il modulo mongoose
-const blogSchema = new mongoose.Schema({
+const authorSchema = new mongoose.Schema({
     // Definisce il campo 'name' di tipo String e richiesto
     name: {
         type: String,
@@ -31,4 +31,4 @@ const blogSchema = new mongoose.Schema({
 })
 
 // Esporta il modello mongoose associato allo schema definito sopra
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("Author", authorSchema);
