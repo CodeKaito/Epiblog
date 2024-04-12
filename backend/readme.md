@@ -52,22 +52,22 @@ L'API fornisce le seguenti route:
 - `PUT /api/authors/:id`: Aggiorna un author esistente in base all'ID.
 - `DELETE /api/authors/:id`: Elimina un author esistente in base all'ID.
 
-- `GET /api/blogs/blogPosts`: Ottiene tutti gli authors.
-- `GET /api/blogs/blogPosts/:id`: Ottiene i dettagli di un author specifico in base all'ID.
-- `POST /api/blogs/blogPosts`: Salva un nuovo author.
-- `PUT /api/blogs/blogPosts/:id`: Aggiorna un author esistente in base all'ID.
-- `DELETE /api/blogs/blogPosts/:id`: Elimina un author esistente in base all'ID.
+- `GET /api/blogPosts`: Ottiene tutti gli authors.
+- `GET /api/blogPosts/:id`: Ottiene i dettagli di un author specifico in base all'ID.
+- `POST /api/blogPosts`: Salva un nuovo author.
+- `PUT /api/blogPosts/:id`: Aggiorna un author esistente in base all'ID.
+- `DELETE /api/blogPosts/:id`: Elimina un author esistente in base all'ID.
 
 ### Ottieni tutti i blog
 
 ```bash
-curl http://localhost:5000/api/blogs/blogPosts
+curl http://localhost:5000/api/blogPosts
 ```
 
 ### Ottieni i dettagli di un blog specifico
 
 ```bash
-curl http://localhost:5000//api/blogs/blogPosts/<id_del_blog>
+curl http://localhost:5000/api/blogPosts/<id_del_blog>
 ```
 
 ### Salva un nuovo blog

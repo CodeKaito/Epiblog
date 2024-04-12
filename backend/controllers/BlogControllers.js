@@ -16,7 +16,7 @@ module.exports.getBlogs = async (req, res, next) => {
         next(error);
     } finally {
         // Stampa a console il completamento del processo di recupero dei author
-        console.log('blogs retrieval process completed.');
+        console.log('Blogs retrieval process completed.');
     }
 }
 
@@ -48,7 +48,7 @@ module.exports.getBlogsPaginations = async (req, res, next) => {
         next(error);
     } finally {
         // Stampa a console il completamento del processo di recupero dei author
-        console.log('blogs retrieval process completed.');
+        console.log('Blogs retrieval process completed.');
     }
 }
 
@@ -75,7 +75,7 @@ module.exports.getBlogsPaginationOrders = async (req, res, next) => {
         next(error);
     } finally {
         // Stampa a console il completamento del processo di recupero dei author
-        console.log('blog retrieval process completed.');
+        console.log('Blog retrieval process completed.');
     }
 }
 

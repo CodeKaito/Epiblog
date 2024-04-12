@@ -37,7 +37,7 @@ const startServer = async() => {
 startServer();
 
 app.use("/api", AuthorRoutes); // Utilizza le route definite nel file AuthorRoute per gli endpoint API
-app.use("/api/blogs", BlogRoutes); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
+app.use("/api", BlogRoutes); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
 
 // Route di base per controllare se il server è attivo
 app.get("/", (req, res) => {

@@ -16,7 +16,7 @@ module.exports.getAuthors = async (req, res, next) => {
         next(error);
     } finally {
         // Stampa a console il completamento del processo di recupero dei author
-        console.log('authors retrieval process completed.');
+        console.log('Authors retrieval process completed.');
     }
 }
 
@@ -48,7 +48,7 @@ module.exports.getAuthorsPaginations = async (req, res, next) => {
         next(error);
     } finally {
         // Stampa a console il completamento del processo di recupero dei author
-        console.log('authors retrieval process completed.');
+        console.log('Authors retrieval process completed.');
     }
 }
 
@@ -75,7 +75,7 @@ module.exports.getAuthorsPaginationOrders = async (req, res, next) => {
         next(error);
     } finally {
         // Stampa a console il completamento del processo di recupero dei author
-        console.log('authors retrieval process completed.');
+        console.log('Authors retrieval process completed.');
     }
 }
 
