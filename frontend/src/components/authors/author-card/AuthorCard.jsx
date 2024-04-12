@@ -2,18 +2,22 @@ import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import "./styles.css";
 
-const BlogAuthor = props => {
-  const { name, surname, avatar } = props;
+const AuthorCard = props => {
+  const { name, surname, email, avatar } = props;
   return (
     <Row>
       <Col xs={"auto"} className="pe-0">
-        <Image className="blog-author" src={avatar} roundedCircle />
+        <div className="author-card-img">
+          <Image src={avatar} roundedCircle />
+        </div>
+        
       </Col>
       <Col>
         <h6>{name} {surname}</h6>
+        <p>{email}</p>
       </Col>
     </Row>
   );
 };
 
-export default BlogAuthor;
+export default AuthorCard;
