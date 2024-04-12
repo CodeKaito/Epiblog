@@ -1,4 +1,4 @@
----test
+---
 
 # Blog API
 
@@ -13,13 +13,17 @@ L'API del Blog è un servizio RESTful che consente di gestire operazioni CRUD (C
 - Cors
 - Nodemon
 - Dotenv
+- jsonwebtoken
+- bcrypt
+- react-hot-toast
+- react-pagination-library
 
 ## Installazione
 
 1. Clonare il repository:
 
    ```bash
-   git clone https://github.com/CodeKaito/epicode-api.git
+   git clone https://github.com/CodeKaito/epiblog.git
    ```
 
 2. Installare le dipendenze:
