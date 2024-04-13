@@ -1,39 +1,47 @@
 import React from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Form, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { PiNotePencilThin } from "react-icons/pi";
 import "./styles.css";
+import User from "../user/User";
 
 const NavBar = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary sticky-top top-0">
-      <Container>
+    <div className="navbar-container">
+      <Navbar expand="lg" className="sticky-top top-0">
         <Navbar.Brand href="/">
           <img className="blog-navbar-brand" alt="logo" src={logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+          <Form className="d-flex mt-3 mt-lg-0">
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2 form-control-navbar"
+              aria-label="Search"
+            />
+          </Form>
+            
+          </Nav>
+          <Nav className="me-auto">
+          <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/authors">Authors</Nav.Link>
             <Nav.Link href="/posts">Posts</Nav.Link>
           </Nav>
-          <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark" size="xs">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-plus-lg"
-            viewBox="0 0 16 16"
-          >
-            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
-          </svg>
-          Nuovo Articolo
-        </Button>
+          <Link className="d-flex align-items-center pointer write" to="/new">
+            <PiNotePencilThin className="PiNotePencilThin mx-1" /> Write  
+          </Link>
+          <div className="mt-2 mt-lg-0 ms-lg-5 me-2">
+            <User />
+          </div>
+          
         </Navbar.Collapse>
-      </Container>
     </Navbar>
+    </div>
+    
   );
 }
 
