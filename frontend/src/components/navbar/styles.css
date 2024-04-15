@@ -1,0 +1,41 @@
+.blog-navbar-brand {
+  width: 100px;
+}
+
+.blog-navbar {
+  padding-top: 25px;
+  padding-bottom: 25px;
+  background-color: white;
+  -webkit-box-shadow: 2px 0px 18px 1px rgba(222, 222, 222, 1);
+  -moz-box-shadow: 2px 0px 18px 1px rgba(222, 222, 222, 1);
+  box-shadow: 2px 0px 4px 1px rgba(222, 222, 222, 1);
+  border-bottom: 1px #F2F2F2;
+}
+.write {
+  color: #838383;
+}
+.write:hover {
+  color: #686868;
+}
+.navbar-container {
+  margin: 0px 30px;
+  border-bottom: 1px solid #F2F2F2;
+}
+.form-control-navbar {
+  background-color: #F9F9F9;
+  border-radius: 20px;
+  border: none;
+  max-width: 300px;
+}
+.form-control-navbar:focus {
+  border-color: white;
+  box-shadow: none;
+  background-color: #fdfdfd;
+}
+.PiNotePencilThin .TfiBell {
+  font-size: 20px;
+}
+
+.TfiBell {
+  color: #838383;
+}
