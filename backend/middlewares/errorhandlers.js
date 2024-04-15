@@ -26,7 +26,7 @@ const notFoundHandler = (req, res, err, next) => {
 	if (err.status === 404) {
 		res.status(404).send({
 			success: false,
-			message: "There's a problem with the server. Please try again later.",
+			message: err.message,
 			errorList: err.errorList ? err.errorList.map((e) => e.msg) : []
 		});
 	} else {
