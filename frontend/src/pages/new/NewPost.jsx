@@ -78,16 +78,16 @@ const NewPost = () => {
     <Container className="new-blog-container">
       {isLoading && (
         <div className="loader-overlay">
-          <Spinner animation="border" role="status" className="loader mt-3" />
+          <Spinner animation="border" role="status" className="loader" />
         </div>
       )}
       {showSuccessAlert && (
-        <div className="alert alert-success" role="alert">
+        <div className="alert alert-success mt-3 mx-auto" role="alert">
           Post successfully created.
         </div>
       )}
       {showErrorAlert && (
-        <div className="alert alert-danger" role="alert">
+        <div className="alert alert-danger mt-3 mx-auto" role="alert">
           Error while creating the post, try again later.
         </div>
       )}

@@ -1,5 +1,9 @@
-.blog-author {
+.author-author {
     width: 40px;
     height: 40px;
-  }
-  
+}
+.author-cover {
+  min-height: 300px;
+  max-height: 300px;
+  object-fit: cover;
+}

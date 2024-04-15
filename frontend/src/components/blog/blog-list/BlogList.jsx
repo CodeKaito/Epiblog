@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Col, Row, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import BlogItem from "../blog-item/BlogItem";
 
 const BlogList = () => {
@@ -9,7 +9,7 @@ const BlogList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://epicode-api.onrender.com/api/authors");
+        const response = await fetch("http://localhost:5000/api/blogPosts");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -28,26 +28,16 @@ const BlogList = () => {
   return (
     <>
       {loading ? (
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
+        <div className="loader-overlay">
+          <Spinner animation="border" role="status" className="loader" />
+        </div>
       ) : (
-        <Row>
-          {posts.map((post) => (
-            <Col
-              key={post._id}
-              md={4}
-              style={{
-                marginBottom: 50,
-              }}
-            >
-              <BlogItem {...post} />
-            </Col>
-          ))}
-        </Row>
+        posts.map((post) => (
+          <BlogItem key={post._id} {...post} />
+        ))
       )}
     </>
   );
-};
+}
 
 export default BlogList;

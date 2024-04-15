@@ -39,7 +39,6 @@ const NavBar = () => {
           <div className="mt-2 mt-lg-0 ms-lg-3 me-2">
             <User />
           </div>
-          
         </Navbar.Collapse>
     </Navbar>
     </div>

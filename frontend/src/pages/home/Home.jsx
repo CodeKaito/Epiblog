@@ -1,13 +1,23 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import BlogList from "../../components/blog/blog-list/BlogList";
+import { Container, Row, Col } from "react-bootstrap";
 import "./styles.css";
+import BlogList from "../../components/blog/blog-list/BlogList";
 
-const Home = props => {
+const Home = () => {
   return (
-    <Container>
-      <h1 className="blog-main-title mb-2">Welcome to the blog!</h1>
-      <BlogList />
+    <Container className="page">
+      <Row>
+        <Col md={8}>
+          <div className="m-5">
+            <BlogList />
+          </div>
+        </Col>
+        <Col md={4} className="sidebar-container">
+          <div className="m-5">
+            Hello
+          </div>
+        </Col>
+      </Row>
     </Container>
   );
 };

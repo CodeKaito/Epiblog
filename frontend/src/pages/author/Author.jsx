@@ -5,8 +5,7 @@ import AuthorList from "../../components/authors/authors-lists/AuthorList";
 
 const Author = () => {
   return (
-    <Container>
-      <h1 className="author-main-title mb-2">List of authors in this blog!</h1>
+    <Container className="mt-5">
       <AuthorList />
     </Container>
   );

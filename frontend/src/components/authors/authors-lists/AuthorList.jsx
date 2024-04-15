@@ -37,7 +37,8 @@ const AuthorList = () => {
           {posts.map((post) => (
             <Col
               key={post._id}
-              md={4}
+              md={6}
+              lg={4}
               style={{
                 marginBottom: 50,
               }}

@@ -6,9 +6,9 @@ import AuthorCard from "../author-card/AuthorCard";
 
 const AuthorItem = ({ _id, name, surname, email, birth, avatar }) => {
   return (
-    <Link to={`/details/${_id}`} className="blog-link">
-      <Card className="blog-card">
-        <Card.Img variant="top" src={avatar} className="blog-cover" />
+    <Link to={`/details/${_id}`} className="author-link">
+      <Card className="author-card">
+        <Card.Img variant="top" src={avatar} className="author-cover" />
         <Card.Body>
           <Card.Title>{name} {surname}</Card.Title>
         </Card.Body>
