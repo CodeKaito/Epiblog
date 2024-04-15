@@ -2,13 +2,13 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  overflow: hidden; /* Assicura che l'immagine non esca dai limiti del cerchio */
-  display: flex; /* Abilita la flessibilità */
-  justify-content: center; /* Centra orizzontalmente l'immagine */
-  align-items: center; /* Centra verticalmente l'immagine */
+  overflow: hidden; 
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
 }
 
 .author-card-img img {
   max-height: 100%;
-  object-fit: cover; /* Assicura che l'immagine si adatti completamente all'area */
+  object-fit: cover; 
 }

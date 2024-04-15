@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
 import AuthorItem from "../authors-item/AuthorItem";
+import './styles.css';
 
 const AuthorList = () => {
   const [posts, setPosts] = useState([]);
@@ -28,9 +29,9 @@ const AuthorList = () => {
   return (
     <>
       {loading ? (
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
+        <div className="loader-overlay">
+          <Spinner animation="border" role="status" className="loader" />
+        </div>
       ) : (
         <Row>
           {posts.map((post) => (

@@ -3,20 +3,19 @@ const mongoose = require('mongoose');
 
 // Definisce lo schema del blog utilizzando il modulo mongoose
 const blogSchema = new mongoose.Schema({
-    // Definisce il campo 'name' di tipo String e richiesto
+    // Definisce il campo 'category' di tipo String e richiesto
     category: {
         type: String,
         required: true,
     },
-    // Definisce il campo 'surname' di tipo String e richiesto
+    // Definisce il campo 'title' di tipo String e richiesto
     title: {
         type: String,
         required: true,
     },
-    // Definisce il campo 'email' di tipo String e richiesto
+    // Definisce il campo 'cover' di tipo String e richiesto
     cover: {
         type: String,
-        required: true,
     },
     // Definisce il campo 'readTime' di tipo String e richiesto
     readTime: {

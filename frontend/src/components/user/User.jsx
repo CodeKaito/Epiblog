@@ -5,7 +5,7 @@ import './style.css'
 const User = () => {
   return (
     <div className='image-container pointer'>
-        <Image src='https://t3.ftcdn.net/jpg/04/49/19/08/360_F_449190831_i2whvIQdDIGtuIVWT6QfenWwmRApVJ5l.jpg' alt='user-img' />
+        <Image src='https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=600' alt='user-img' />
     </div>
   )
 }

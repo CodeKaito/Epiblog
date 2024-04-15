@@ -3,6 +3,7 @@ import { Form, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { PiNotePencilThin } from "react-icons/pi";
+import { TfiBell } from "react-icons/tfi";
 import "./styles.css";
 import User from "../user/User";
 
@@ -31,10 +32,11 @@ const NavBar = () => {
             <Nav.Link href="/authors">Authors</Nav.Link>
             <Nav.Link href="/posts">Posts</Nav.Link>
           </Nav>
-          <Link className="d-flex align-items-center pointer write" to="/new">
+          <Link className="d-flex align-items-center pointer write" to="/new-blog">
             <PiNotePencilThin className="PiNotePencilThin mx-1" /> Write  
           </Link>
-          <div className="mt-2 mt-lg-0 ms-lg-5 me-2">
+          <TfiBell className="mx-0 my-2 my-lg-0 mx-lg-3 TfiBell pointer" />
+          <div className="mt-2 mt-lg-0 ms-lg-3 me-2">
             <User />
           </div>
           
