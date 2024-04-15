@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Image, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 
@@ -21,24 +21,31 @@ const Blog = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching blog:", error);
-        navigate("/404");
       }
     };
 
     fetchBlog();
   }, [params.id, navigate]);
 
-  if (loading) {
-    return <div>loading</div>;
-  } else {
-    return (
-      <div className="blog-details-root">
-        <Container>
-          Hello
-        </Container>
-      </div>
-    );
-  }
+  return (
+    <>
+      {loading ? (
+        <div className="loader-overlay">
+          <Spinner animation="border" role="status" className="loader" />
+        </div>
+      ) : (
+        <div>
+          <Container className="blog-container">
+            <h1 className="blog-title">{blog.title}</h1>
+            <p>{blog.content}</p>
+            <div>
+              <Image src={blog.cover} alt="cover-img" />
+            </div>
+          </Container>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Blog;
