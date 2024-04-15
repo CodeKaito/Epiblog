@@ -46,4 +46,9 @@ const genericErrorHandler = (req, res, err, next) => {
 	}
 };
 
-module.exports = { badRequestHandler, unauthorizedHandler, notFoundHandler, genericErrorHandler };
+module.exports = {
+    badRequestHandler,
+    unauthorizedHandler,
+    notFoundHandler,
+    genericErrorHandler
+};

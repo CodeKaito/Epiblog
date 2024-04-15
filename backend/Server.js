@@ -5,7 +5,8 @@ const mongoose = require('mongoose'); // Importa il modulo mongoose per interagi
 const cors = require('cors'); // Importa il modulo cors per interagire con il frontend
 const fs = require('fs'); // Importa il modulo fs per la lettura dei file
 const logger = require('./middlewares/logger.js');
-const { badRequestHandler, unauthorizedHandler, notFoundHandler, genericErrorHandler } = require('./middlewares/ErrorHandlers.js');
+
+const { badRequestHandler, unauthorizedHandler, notFoundHandler, genericErrorHandler } = require('./middlewares/errorhandler.js');
 
 require('dotenv').config(); // Configurazione dotenv per caricare le variabili d'ambiente
 
@@ -44,8 +45,8 @@ startServer();
 
 app.use("/api", AuthorRoutes); // Utilizza le route definite nel file AuthorRoute per gli endpoint API
 app.use("/api", BlogRoutes); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
-
-app.use([badRequestHandler, unauthorizedHandler, notFoundHandler, genericErrorHandler]); // Gestione degli errori
+ 
+app.use([ badRequestHandler, unauthorizedHandler, notFoundHandler, genericErrorHandler]); // Gestione degli errori
 
 // Route di base per controllare se il server è attivo
 app.get("/", (req, res) => {
