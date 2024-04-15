@@ -12,7 +12,7 @@ const NewPost = () => {
       unit: "minuti",
     },
     author: {
-      name: "John Doe",
+      name: "Susan Frierer",
       avatar: "https://images.pexels.com/photos/1090387/pexels-photo-1090387.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     content: "",
