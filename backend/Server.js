@@ -71,4 +71,5 @@ app.get("/*", (req, res) => {
             res.send(data); // Invia il contenuto del file HTML come risposta
         }
     });
+    res.status(404);
 });
