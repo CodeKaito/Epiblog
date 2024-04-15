@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Image } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import BlogAuthor from "../../components/blog/blog-author/BlogAuthor";
-import BlogLike from "../../components/likes/BlogLike";
 import "./styles.css";
 
 const Blog = () => {
@@ -14,7 +12,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`https://epicode-api.onrender.com/api/authors/${params.id}`);
+        const response = await fetch(`https://epicode-api.onrender.com/api/blogPosts/${params.id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch blog");
         }
@@ -36,30 +34,7 @@ const Blog = () => {
     return (
       <div className="blog-details-root">
         <Container>
-          <Image className="blog-details-cover" src={blog.avatar} fluid />
-          <h1 className="blog-details-title">{blog.name} {blog.surname}</h1>
-
-          <div className="blog-details-container">
-            <div className="blog-details-author">
-              <BlogAuthor {...blog} />
-            </div>
-            <div className="blog-details-info">
-              <div>{blog.birth}</div>
-              <div
-                style={{
-                  marginTop: 20,
-                }}
-              >
-                <BlogLike defaultLikes={["123"]} />
-              </div>
-            </div>
-          </div>
-
-          <div
-            dangerouslySetInnerHTML={{
-              __html: blog.content,
-            }}
-          ></div>
+          Hello
         </Container>
       </div>
     );
