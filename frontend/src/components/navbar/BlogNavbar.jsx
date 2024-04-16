@@ -1,12 +1,15 @@
 import React from "react";
-import { Form, Nav, Navbar } from "react-bootstrap";
+import { Form, Nav, Navbar, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { PiNotePencilThin } from "react-icons/pi";
 import { TfiBell } from "react-icons/tfi";
 import "./styles.css";
 import User from "../user/User";
-import { SearchQueryProvider, useSearchQuery } from "../../context/SearchQueryContext";
+import {
+  SearchQueryProvider,
+  useSearchQuery,
+} from "../../context/SearchQueryContext";
 
 const NavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
@@ -44,8 +47,35 @@ const NavBar = () => {
               <PiNotePencilThin className="PiNotePencilThin mx-1" /> Write
             </Link>
             <TfiBell className="mx-0 my-2 my-lg-0 mx-lg-3 TfiBell pointer" />
-            <div className="mt-2 mt-lg-0 ms-lg-3 me-2">
-              <User />
+            <div className="btn-group">
+              <Dropdown align="end">
+                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                  <User />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <div className="d-flex align-items-center px-2">
+                    <User />
+                    <div className="mx-2">
+                      <span className="pointer">Jerome Decinco</span>
+                      <br />
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="mx-2">
+                    <Link to="/profile">
+                      <div className="d-flex pointer">
+                        <p className="ms-3">Profile</p>
+                      </div>
+                    </Link>
+                  </div>
+                  <hr />
+                  <Link to="/login">
+                    <div className="d-flex mx-2">
+                      <p className="ms-3 pointer">Sign Out</p>
+                    </div>
+                  </Link>
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </Navbar.Collapse>
         </Navbar>

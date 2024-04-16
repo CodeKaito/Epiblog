@@ -39,3 +39,21 @@
 .TfiBell {
   color: #838383;
 }
+.dropdown-toggle::after {
+  display: none;
+}
+.btn:first-child:active {
+  color: white;
+  background-color: white;
+  border-color: white;
+}
+.btn {
+  color: white;
+  background-color: white;
+  border-color: white;
+}
+.btn:hover {
+  color: white;
+  background-color: white;
+  border-color: white;
+}
