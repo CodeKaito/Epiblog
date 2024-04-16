@@ -14,9 +14,6 @@ const BlogList = () => {
       try {
         let url = "https://epicode-api.onrender.com/api/blogPosts";
   
-        console.log("Sono searchQuery in BlogList: " + searchQuery);
-  
-        // Aggiungi la query di ricerca come parametro se presente
         if (searchQuery) {
           url += `?searchTitle=${encodeURIComponent(searchQuery)}`;
         }

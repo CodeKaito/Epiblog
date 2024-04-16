@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Image, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
+import CommentArea from "../../components/comments/comment-area/CommentArea";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({});
@@ -41,6 +42,7 @@ const BlogDetails = () => {
             <div className="blog-cover-container mt-4">
               <Image src={blog.cover} alt="cover-img" className="blog-cover" />
             </div>
+            <CommentArea />
           </Container>
         </div>
       )}
