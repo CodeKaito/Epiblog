@@ -3,7 +3,7 @@ import { Container, Image, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 
-const Blog = () => {
+const BlogDetails = () => {
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(true);
   const params = useParams();
@@ -48,4 +48,4 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default BlogDetails;

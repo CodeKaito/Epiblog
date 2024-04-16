@@ -7,12 +7,12 @@ const Home = () => {
   return (
     <Container className="page">
       <Row>
-        <Col md={8}>
+        <Col sm={12} lg={8}>
           <div className="m-5">
             <BlogList />
           </div>
         </Col>
-        <Col md={4} className="sidebar-container">
+        <Col md={4} className="d-none d-lg-block sidebar-container">
           <div className="m-5">
             Hello
           </div>

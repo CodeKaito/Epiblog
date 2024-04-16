@@ -23,6 +23,14 @@
   cursor: pointer;
 }
 
+.readtime {
+  font-size: clamp(.7rem, (0.7vw), 1rem);
+}
+
+.category-text {
+  font-size: clamp(.7rem, (0.7vw), 1rem);
+}
+
 .feed {
   padding-top: 10px;
   border-bottom: 1px solid #F2F2F2;
@@ -38,7 +46,7 @@
 }
 
 .feed-title {
-  font-size: 20px;
+  font-size: clamp(.8rem, (1vw), 2rem);
   font-weight: 700;
 }
 
@@ -56,7 +64,6 @@
   -webkit-box-orient: vertical;
   color: #242424;
   height: 45px;
-  width: 400px;
 }
 
 .feed-bottomside {

@@ -31,16 +31,16 @@ const BlogItem = (props) => {
         <div className="feed">
           <Link to={`/details/${_id}`}>
             <Row>
-              <Col lg={8} className="feed-container">
+              <Col xs={8} md={8} className="feed-container">
                 <div className="feed-title-container">
                   <h3 className="feed-title">{title}</h3>
                 </div>
-                <div className="feed-description-container">
+                <div className="d-none d-md-block feed-description-container">
                   <p className="feed-description">{content}</p>
                 </div>
               </Col>
 
-              <Col lg={4} className="image-feed-container">
+              <Col xs={4} md={4} className="image-feed-container">
                 <Image
                   src={cover}
                   alt="image-feed"
@@ -53,19 +53,15 @@ const BlogItem = (props) => {
           <div className="feed-bottomside">
             <div className="tag-container">
               <div className="left-side">
-                <p className="author-date">
-                  <span>{value} {unit} read</span>
-                  <span className="mx-2">-</span>
+                <p className="readtime me-2">
+                  {value} {unit} read
                 </p>
                 <div className="category">
-                  <p className="ellipsis px-2">{category}</p>
+                  <p className="ellipsis px-2 category-text">{category}</p>
                 </div>
-                <span className="mx-2">-</span>
-                <p>Selected for you</p>
-                <span className="mx-2">-</span>
-                <CiBookmark className="member" />
               </div>
               <div className="right-side">
+                <CiBookmark className="member" />
                 <PiDotsThree className="ellipsis" />
               </div>
             </div>
