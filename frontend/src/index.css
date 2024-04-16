@@ -1,10 +1,14 @@
 body {
   font-family: "Mulish", sans-serif;
 }
+
 .pointer {
   cursor: pointer;
 }
 a {
   color: none;
   text-decoration: none;
+}
+.page {
+  min-height: 80vh;
 }

@@ -108,7 +108,26 @@ module.exports.detailBlog = async (req, res, next) => {
     }
 };
 
+// Funzione asincrona per ottenere tutti i post con un autore specifico e inviarli come risposta// Funzione asincrona per ottenere tutti i post con un autore specifico e inviarli come risposta
+module.exports.getPostsByAuthorName = async (req, res, next) => {
+    const authorName = req.params.name; // Nome dell'autore fornito nella richiesta
+    try {
+        // Esegui la query al database per trovare tutti i post con il nome dell'autore specificato
+        const posts = await BlogModel.find({ 'author.name': authorName });
 
+        // Invia la lista dei post come risposta
+        res.send(posts);
+    } catch (error) {
+        // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+        console.error(error.message);
+        res.status(500).send({ error: error.message, stack: error.stack, msg: "Something went wrong!" });
+        // Passa l'errore al middleware successivo
+        next(error);
+    } finally {
+        // Stampa a console il completamento del processo di recupero dei post dell'autore
+        console.log('Post retrieval process completed.');
+    }
+};
 
 // Funzione per salvare un nuovo author nel database e inviare il risultato della creazione come risposta
 module.exports.saveBlog = async (req, res, next) => {
