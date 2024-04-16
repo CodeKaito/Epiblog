@@ -12,7 +12,7 @@ const BlogItem = (props) => {
   const { name, avatar } = author;
   const { value, unit } = readTime;
   return (
-    <Container className="article-container">
+    <Container fluid="lg" className="article-container">
       <div className="author-container">
         <div xs={2} className="author-image-container">
           <Image
@@ -32,7 +32,7 @@ const BlogItem = (props) => {
           <Link to={`/details/${_id}`}>
             <Row>
               <Col xs={8} md={8} className="feed-container">
-                <div className="feed-title-container">
+                <div className="feed-title-container mt-3 pt-lg-none">
                   <h3 className="feed-title">{title}</h3>
                 </div>
                 <div className="d-none d-md-block feed-description-container">
@@ -40,7 +40,7 @@ const BlogItem = (props) => {
                 </div>
               </Col>
 
-              <Col xs={4} md={4} className="image-feed-container">
+              <Col xs={4}>
                 <Image
                   src={cover}
                   alt="image-feed"

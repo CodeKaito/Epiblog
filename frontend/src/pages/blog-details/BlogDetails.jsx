@@ -38,8 +38,8 @@ const BlogDetails = () => {
           <Container className="blog-container">
             <h1 className="blog-title">{blog.title}</h1>
             <p>{blog.content}</p>
-            <div>
-              <Image src={blog.cover} alt="cover-img" />
+            <div className="blog-cover-container mt-4">
+              <Image src={blog.cover} alt="cover-img" className="blog-cover" />
             </div>
           </Container>
         </div>

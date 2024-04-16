@@ -21,3 +21,12 @@
   font-size: 50px;
   font-weight: 900;
 }
+.blog-cover-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+}
+.blog-cover {
+  width: 100%;
+}
