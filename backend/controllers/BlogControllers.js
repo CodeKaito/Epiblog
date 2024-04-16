@@ -4,10 +4,19 @@ const BlogModel = require("../models/BlogModel");
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getBlogs = async (req, res, next) => {
     try {
-        // Recupera tutti i author dal database utilizzando il modello author
-        const blog = await BlogModel.find();
-        // Invia la lista dei author come risposta
-        res.send(blog);
+        let filter = {}; // Inizializza il filtro come un oggetto vuoto
+
+        // Controlla se la query di ricerca è presente e non è vuota
+        if (req.query.searchTitle && req.query.searchTitle.trim() !== "") {
+            // Utilizza una espressione regolare per trovare corrispondenze parziali nel titolo
+            filter.title = { $regex: req.query.searchTitle, $options: 'i' };
+        }
+
+        // Esegui la query al database utilizzando il filtro
+        const blogs = await BlogModel.find(filter);
+
+        // Invia la lista dei blog filtrata come risposta
+        res.send(blogs);
     } catch (error) {
         // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
         console.error(error.message);
@@ -15,10 +24,10 @@ module.exports.getBlogs = async (req, res, next) => {
         // Passa l'errore al middleware successivo
         next(error);
     } finally {
-        // Stampa a console il completamento del processo di recupero dei author
+        // Stampa a console il completamento del processo di recupero dei blog
         console.log('Blogs retrieval process completed.');
     }
-}
+};
 
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getBlogsPaginations = async (req, res, next) => {

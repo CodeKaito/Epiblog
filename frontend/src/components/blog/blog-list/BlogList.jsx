@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 import BlogItem from "../blog-item/BlogItem";
+import { useSearchQuery } from "../../../context/SearchQueryContext";
 
 const BlogList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { searchQuery } = useSearchQuery();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://epicode-api.onrender.com/api/blogPosts");
+        let url = "https://epicode-api.onrender.com/api/blogPosts";
+
+        console.log("Sono searchQuery in BlogList: "+searchQuery);
+
+        // Aggiungi la query di ricerca come parametro se presente
+        if (searchQuery) {
+          url += `?searchTitle=${encodeURIComponent(searchQuery)}`;
+        }
+
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -23,7 +34,7 @@ const BlogList = () => {
     };
 
     fetchData();
-  }, []);
+  }, [searchQuery]);
 
   return (
     <>
