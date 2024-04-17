@@ -12,11 +12,11 @@ const Home = () => {
     <Container className="page">
       <Row>
         <Col sm={12} lg={8}>
-          <div className="m-5">
+          <div className="m-5 main">
             <BlogList />
           </div>
         </Col>
-        <Col md={4} className="d-none d-lg-block sidebar-container">
+        <Col md={4} className="d-none d-lg-block sidebar-container sidebar">
           <div className="m-5">
             <PopularPosts />
             <Topics />
