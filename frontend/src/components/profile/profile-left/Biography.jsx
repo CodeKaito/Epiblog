@@ -8,6 +8,8 @@ const Biography = () => {
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedBio, setEditedBio] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   useEffect(() => {
     const userId = process.env.REACT_APP_USER_LOGGED_IN_ID;
@@ -41,18 +43,39 @@ const Biography = () => {
     try {
       const userId = process.env.REACT_APP_USER_LOGGED_IN_ID;
       await fetch(`https://epicode-api.onrender.com/api/authors/${userId}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ bio: editedBio }),
       });
       console.log("Bio saved:", editedBio);
+      setShowSuccessAlert(true);
       setIsEditing(false);
+
+      // Aggiorna la biografia visualizzata subito dopo averla salvata
+      const updatedResponse = await fetch(
+        `https://epicode-api.onrender.com/api/authors/${userId}`
+      );
+      if (!updatedResponse.ok) {
+        throw new Error("Failed to fetch updated bio");
+      }
+      const updatedData = await updatedResponse.json();
+      setBioData(updatedData);
     } catch (error) {
       console.error("Error saving biography:", error);
+      setShowErrorAlert(true);
     }
   };
+
+  useEffect(() => {
+    const hideAlerts = setTimeout(() => {
+      setShowSuccessAlert(false);
+      setShowErrorAlert(false);
+    }, 1000);
+
+    return () => clearTimeout(hideAlerts);
+  }, [showSuccessAlert, showErrorAlert]);
 
   return (
     <>
@@ -85,6 +108,20 @@ const Biography = () => {
               </Button>
             )}
           </div>
+          {showSuccessAlert && (
+            <div className="modal-overlay d-flex justify-content-center align-items-center">
+              <div className="alert alert-success" role="alert">
+                Bio successfully edited.
+              </div>
+            </div>
+          )}
+          {showErrorAlert && (
+            <div className="modal-overlay d-flex justify-content-center align-items-center">
+              <div className="alert alert-danger" role="alert">
+                Error while saving the bio, try again later.
+              </div>
+            </div>
+          )}
         </Container>
       )}
     </>
