@@ -49,7 +49,6 @@ const BlogItem = (props) => {
                     loading="lazy"
                   />
                 </Col>
-                
               )}
             </Row>
           </Link>
@@ -60,7 +59,7 @@ const BlogItem = (props) => {
                   {value} {unit} read
                 </p>
                 <div className="category">
-                  <p className="ellipsis px-2 category-text">{category}</p>
+                  <p className="ellipsis px-3 category-text">{category}</p>
                 </div>
               </div>
               <div className="right-side">

@@ -24,16 +24,16 @@
 }
 
 .readtime {
-  font-size: clamp(.7rem, (0.7vw), 1rem);
+  font-size: clamp(0.7rem, (0.7vw), 1rem);
 }
 
 .category-text {
-  font-size: clamp(.7rem, (0.7vw), 1rem);
+  font-size: clamp(0.7rem, (0.7vw), 1rem);
 }
 
 .feed {
   padding-top: 10px;
-  border-bottom: 1px solid #F2F2F2;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .feed-topside {
@@ -46,7 +46,7 @@
 }
 
 .feed-title {
-  font-size: clamp(.8rem, (1vw), 2rem);
+  font-size: clamp(0.8rem, (1vw), 2rem);
   font-weight: 700;
 }
 
@@ -71,7 +71,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #7F7F7F;
+  color: #7f7f7f;
 }
 
 .left-side {
@@ -81,13 +81,14 @@
 
 .category {
   height: 30px;
-  width: 90px;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-wrap: wrap;
+  display: flex;
 }
 
 .right-side {
@@ -101,7 +102,7 @@
 
 .fa-bookmark-tag {
   font-size: 16px;
-  color: #7F7F7F;
+  color: #7f7f7f;
   cursor: pointer;
 }
 
@@ -111,7 +112,7 @@
 
 .fa-ellipsis {
   font-size: 16px;
-  color: #7F7F7F;
+  color: #7f7f7f;
   cursor: pointer;
 }
 
@@ -129,7 +130,7 @@
 
 .member {
   margin-left: 5px;
-  color: #6B6B6B;
+  color: #6b6b6b;
   cursor: pointer;
 }
 
