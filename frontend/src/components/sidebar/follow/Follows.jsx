@@ -35,7 +35,7 @@ const Follows = () => {
       <h3 className="follows-name">Who to follow</h3>
       <div>
         {authors.map((author) => (
-          <Follow key={author.id} {...author} />
+          <Follow key={author._id} {...author} />
         ))}
       </div>
     </div>

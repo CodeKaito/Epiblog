@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Nav, Navbar, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { PiNotePencilThin } from "react-icons/pi";
 import { TfiBell } from "react-icons/tfi";
@@ -13,6 +13,12 @@ import {
 
 const NavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/posts?query=${searchQuery}`);
+  };
 
   return (
     <div className="navbar-container">
@@ -24,7 +30,10 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Form className="d-flex mt-3 mt-lg-0">
+              <Form
+                className="d-flex mt-3 mt-lg-0"
+                onSubmit={handleSearchSubmit}
+              >
                 <Form.Control
                   type="search"
                   placeholder="Search"
