@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
+import CustomAlert from "../../../utils/CustomAlert";
 import "./styles.css";
 
 const Biography = () => {
@@ -109,18 +110,18 @@ const Biography = () => {
             )}
           </div>
           {showSuccessAlert && (
-            <div className="modal-overlay d-flex justify-content-center align-items-center">
-              <div className="alert alert-success" role="alert">
-                Bio successfully edited.
-              </div>
-            </div>
+            <CustomAlert
+              type="success"
+              message="Bio successfully edited."
+              show={showSuccessAlert}
+            />
           )}
           {showErrorAlert && (
-            <div className="modal-overlay d-flex justify-content-center align-items-center">
-              <div className="alert alert-danger" role="alert">
-                Error while saving the bio, try again later.
-              </div>
-            </div>
+            <CustomAlert
+              type="danger"
+              message="Error while editing the bio, try again later."
+              show={showErrorAlert}
+            />
           )}
         </Container>
       )}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
+import CustomAlert from "../../utils/CustomAlert";
 import "./styles.css";
 
 const NewPost = () => {
@@ -85,19 +86,19 @@ const NewPost = () => {
         </div>
       )}
       {showSuccessAlert && (
-        <div className="modal-overlay d-flex justify-content-center align-items-center">
-          <div className="alert alert-success" role="alert">
-            Post successfully created.
-          </div>
-        </div>
+        <CustomAlert
+          type="success"
+          message="Post successfully created."
+          show={showSuccessAlert}
+        />
       )}
 
       {showErrorAlert && (
-        <div className="modal-overlay d-flex justify-content-center align-items-center">
-          <div className="alert alert-danger" role="alert">
-            Error while creating the post, try again later.
-          </div>
-        </div>
+        <CustomAlert
+          type="danger"
+          message="Error while creating the post, try again later."
+          show={showErrorAlert}
+        />
       )}
       <Form className="mt-3" onSubmit={handleSubmit}>
         <Form.Group
