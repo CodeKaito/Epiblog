@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Spinner, Tabs, Tab } from "react-bootstrap";
 import BlogItem from "../../../components/blog/blog-item/BlogItem";
-import "./profileleft.css";
+import Biography from "./Biography";
+import "./styles.css";
 
 const ProfileLeft = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +13,7 @@ const ProfileLeft = () => {
     const fetchData = async () => {
       try {
         let authorName = process.env.REACT_APP_USER_LOGGED_IN;
-        let url = `http://localhost:5000/api/blogPosts/author/${encodeURIComponent(
+        let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
           authorName
         )}`;
 
@@ -64,7 +65,7 @@ const ProfileLeft = () => {
               </div>
             </Tab>
             <Tab eventKey="bio" title="Bio">
-              Tab content for Profile
+              <Biography />
             </Tab>
           </Tabs>
         </>

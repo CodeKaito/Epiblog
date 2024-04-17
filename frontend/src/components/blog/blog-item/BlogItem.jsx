@@ -40,14 +40,17 @@ const BlogItem = (props) => {
                 </div>
               </Col>
 
-              <Col xs={4}>
-                <Image
-                  src={cover}
-                  alt="image-feed"
-                  className="image-feed"
-                  loading="lazy"
-                />
-              </Col>
+              {cover && (
+                <Col xs={4}>
+                  <Image
+                    src={cover}
+                    alt="image-feed"
+                    className="image-feed"
+                    loading="lazy"
+                  />
+                </Col>
+                
+              )}
             </Row>
           </Link>
           <div className="feed-bottomside">

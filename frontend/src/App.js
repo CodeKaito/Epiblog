@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./components/navbar/BlogNavbar";
 import Footer from "./components/footer/Footer";
 // import Blog from "./pages/blog/Blog";
-import NewPost from "./pages/new/NewPost";
+import NewPost from "./pages/new-post/NewPost";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Author from "./pages/author/Author";
 import NotFound from "./pages/notfound/NotFound";

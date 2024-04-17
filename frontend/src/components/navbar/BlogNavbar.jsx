@@ -49,7 +49,11 @@ const NavBar = () => {
             <TfiBell className="mx-0 my-2 my-lg-0 mx-lg-3 TfiBell pointer" />
             <div className="btn-group">
               <Dropdown align="end">
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                <Dropdown.Toggle
+                  className="dropdown-toggle"
+                  variant="light"
+                  id="dropdown-basic"
+                >
                   <User />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>

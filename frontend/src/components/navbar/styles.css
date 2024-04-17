@@ -28,9 +28,9 @@
   max-width: 300px;
 }
 .form-control-navbar:focus {
-  border-color: white;
+  border-color: transparent;
   box-shadow: none;
-  background-color: #fdfdfd;
+  background-color: rgb(255, 255, 255);
 }
 .PiNotePencilThin .TfiBell {
   font-size: 20px;
@@ -42,18 +42,18 @@
 .dropdown-toggle::after {
   display: none;
 }
-.btn:first-child:active {
-  color: white;
-  background-color: white;
-  border-color: white;
+.dropdown-toggle.btn:first-child:active {
+  color: transparent;
+  background-color: transparent;
+  border-color: transparent;
 }
-.btn {
-  color: white;
-  background-color: white;
-  border-color: white;
+.dropdown-toggle.btn {
+  color: transparent;
+  background-color: transparent;
+  border-color: transparent;
 }
-.btn:hover {
-  color: white;
-  background-color: white;
-  border-color: white;
+.dropdown-toggle.btn:hover {
+  color: transparent;
+  background-color: transparent;
+  border-color: transparent;
 }

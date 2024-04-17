@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Form, Spinner  } from "react-bootstrap";
+import { Button, Container, Form, Spinner } from "react-bootstrap";
 import "./styles.css";
 
 const NewPost = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     category: "",
     title: "",
     cover: "",
     readTime: {
       value: 1,
-      unit: "minuti",
+      unit: "min",
     },
     author: {
-      name: "Susan Frierer",
-      avatar: "https://images.pexels.com/photos/1090387/pexels-photo-1090387.jpeg?auto=compress&cs=tinysrgb&w=600",
+      name: "Jerome Decinco",
+      avatar: "https://avatars.githubusercontent.com/u/57111980?v=4",
     },
     content: "",
-  });
+  };
+  const [formData, setFormData] = useState(initialFormData);
   const [showSuccessAlert, setshowSuccessAlert] = useState(false);
   const [showErrorAlert, setshowErrorAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,25 +55,27 @@ const NewPost = () => {
         body: JSON.stringify(formData),
       });
       console.log(JSON.stringify(formData));
-        setshowSuccessAlert(true);
-
+      setshowSuccessAlert(true);
     } catch (error) {
       console.error("Error submitting form:", error);
-        setshowErrorAlert(true);
-      
+      setshowErrorAlert(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-    useEffect(() => {
-      const hideAlerts = setTimeout(() => {
-        setshowSuccessAlert(false);
-        setshowErrorAlert(false);
-      }, 5000);
-  
-      return () => clearTimeout(hideAlerts);
-    }, [showSuccessAlert, showErrorAlert]);
+  const handleReset = () => {
+    setFormData(initialFormData);
+  };
+
+  useEffect(() => {
+    const hideAlerts = setTimeout(() => {
+      setshowSuccessAlert(false);
+      setshowErrorAlert(false);
+    }, 5000);
+
+    return () => clearTimeout(hideAlerts);
+  }, [showSuccessAlert, showErrorAlert]);
 
   return (
     <Container className="new-blog-container">
@@ -82,13 +85,18 @@ const NewPost = () => {
         </div>
       )}
       {showSuccessAlert && (
-        <div className="alert alert-success mt-3 mx-auto" role="alert">
-          Post successfully created.
+        <div className="modal-overlay d-flex justify-content-center align-items-center">
+          <div className="alert alert-success" role="alert">
+            Post successfully created.
+          </div>
         </div>
       )}
+
       {showErrorAlert && (
-        <div className="alert alert-danger mt-3 mx-auto" role="alert">
-          Error while creating the post, try again later.
+        <div className="modal-overlay d-flex justify-content-center align-items-center">
+          <div className="alert alert-danger" role="alert">
+            Error while creating the post, try again later.
+          </div>
         </div>
       )}
       <Form className="mt-3" onSubmit={handleSubmit}>
@@ -145,23 +153,22 @@ const NewPost = () => {
           <Form.Group controlId="readTime" className="mt-3">
             <Form.Label>Read Time in minutes</Form.Label>
             <div className="d-flex">
-            <Form.Control
-              className="form-container input-readtime"
-              size="lg"
-              type="number"
-              name="readTime"
-              placeholder="Enter read time"
-              value={formData.readTime.value}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  readTime: { ...formData.readTime, value: e.target.value },
-                })
-              }
-              required
-            />
+              <Form.Control
+                className="form-container input-readtime"
+                size="lg"
+                type="number"
+                name="readTime"
+                placeholder="Enter read time"
+                value={formData.readTime.value}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    readTime: { ...formData.readTime, value: e.target.value },
+                  })
+                }
+                required
+              />
             </div>
-            
           </Form.Group>
         </div>
         <Form.Group controlId="content" className="mt-3">
@@ -177,7 +184,12 @@ const NewPost = () => {
           />
         </Form.Group>
         <Form.Group className="d-flex mt-3 justify-content-end">
-          <Button type="reset" size="lg" variant="outline-dark">
+          <Button
+            type="reset"
+            size="lg"
+            variant="outline-dark"
+            onClick={handleReset}
+          >
             Reset
           </Button>
           <Button
