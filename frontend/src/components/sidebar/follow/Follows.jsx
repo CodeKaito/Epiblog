@@ -16,7 +16,7 @@ const Follows = () => {
         }
         const data = await response.json();
         const filteredAuthors = data.filter(
-          (author) => author.id !== loggedInUser
+          (author) => author._id !== loggedInUser
         );
         const randomAuthors = filteredAuthors
           .sort(() => 0.5 - Math.random())
