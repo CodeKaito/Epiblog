@@ -12,3 +12,10 @@ a {
 .page {
   min-height: 80vh;
 }
+::-moz-selection {
+  background: yellow;
+}
+
+::selection {
+  background: yellow;
+}
