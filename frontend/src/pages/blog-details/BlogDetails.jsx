@@ -13,7 +13,9 @@ const BlogDetails = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`https://epicode-api.onrender.com/api/blogPosts/${params.id}`);
+        const response = await fetch(
+          `https://epicode-api.onrender.com/api/blogPosts/${params.id}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch blog");
         }
@@ -35,9 +37,21 @@ const BlogDetails = () => {
           <Spinner animation="border" role="status" className="loader" />
         </div>
       ) : (
-        <div>
+        <div className="mt-5">
           <Container className="blog-container">
-            <h1 className="blog-title">{blog.title}</h1>
+            <h1 className="mt-5 blog-title">{blog.title}</h1>
+            <div className="d-flex align-items-center">
+              <Image
+                src={blog.author.avatar}
+                className="rounded-circle object-fit-cover"
+                width={50}
+                height={50}
+              />
+              <h1 className="fs-4 mx-3 my-5 blog-author-name">
+                {blog.author.name}
+              </h1>
+            </div>
+
             <p>{blog.content}</p>
             <div className="blog-cover-container mt-4">
               <Image src={blog.cover} alt="cover-img" className="blog-cover" />
