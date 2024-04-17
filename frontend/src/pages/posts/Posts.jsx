@@ -11,11 +11,13 @@ const Posts = () => {
       try {
         const query = new URLSearchParams(location.search).get("query");
         const response = await fetch(
-          `http://localhost:5000/api/blogPosts?query=${query}`
+          `https://epicode-api.onrender.com/api/blogPosts?searchTitle=${query}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }
+        console.log("Query from URL:", query);
+
         const data = await response.json();
         console.log(data);
         setPosts(data);
