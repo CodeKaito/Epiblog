@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import "./styles.css";
 
 const Posts = () => {
   const location = useLocation();
@@ -33,7 +35,9 @@ const Posts = () => {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
+        <div className="loader-overlay">
+          <Spinner animation="border" role="status" className="loader" />
+        </div>
       ) : (
         <div>
           <h1>Posts</h1>
