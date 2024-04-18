@@ -4,7 +4,7 @@ import { RxPerson } from "react-icons/rx";
 import { MdOutlineBookmarks } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo2.png";
 import { PiNotePencilThin } from "react-icons/pi";
 import { TfiBell } from "react-icons/tfi";
 import "./styles.css";
