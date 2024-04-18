@@ -37,7 +37,7 @@ const BlogDetails = () => {
           <Spinner animation="border" role="status" className="loader" />
         </div>
       ) : (
-        <div className="mt-5">
+        <div className="mt-5 page">
           <Container className="blog-container">
             <h1 className="mt-5 blog-title">{blog.title}</h1>
             <div className="d-flex align-items-center">
@@ -53,9 +53,15 @@ const BlogDetails = () => {
             </div>
 
             <p>{blog.content}</p>
-            <div className="blog-cover-container mt-4">
-              <Image src={blog.cover} alt="cover-img" className="blog-cover" />
-            </div>
+            {blog.cover && (
+              <div className="blog-cover-container mt-4">
+                <Image
+                  src={blog.cover}
+                  alt="cover-img"
+                  className="blog-cover"
+                />
+              </div>
+            )}
             <CommentArea />
           </Container>
         </div>
