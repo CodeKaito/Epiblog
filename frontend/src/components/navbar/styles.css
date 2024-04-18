@@ -22,12 +22,13 @@
   border-bottom: 1px solid #f2f2f2;
 }
 .form-control-navbar {
-  background-color: #f9f9f9;
+  background-color: transparent;
   border-radius: 20px;
   border: none;
   max-width: 300px;
 }
 .form-control-navbar:focus {
+  background-color: #fafafa !important;
   border-color: transparent;
   box-shadow: none;
   background-color: rgb(255, 255, 255);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import CustomAlert from "../../../utils/CustomAlert";
 import "./styles.css";
 
@@ -88,12 +88,15 @@ const Biography = () => {
         <Container className="my-5 px-3 biography-container">
           <div className="my-5">
             {isEditing ? (
-              <input
-                type="text"
-                value={editedBio}
-                onChange={(e) => setEditedBio(e.target.value)}
-                className="form-control biography-edit"
-              />
+              <Form>
+                <Form.Control
+                  as="textarea"
+                  rows={20}
+                  value={editedBio}
+                  onChange={(e) => setEditedBio(e.target.value)}
+                  className="biography-edit"
+                />
+              </Form>
             ) : (
               <p>{bioData ? bioData.bio : "No biography available"}</p>
             )}
