@@ -23,8 +23,8 @@ app.use(logger); // Logger
 
 app.use(cors({ // Middleware per abilitare le richieste da diversi domini
     origin: ['https://epiblog.vercel.app', 'localhost:3000'], // Imposta l'origine consentita
-    methods: ['GET', 'POST'], // Imposta i metodi consentiti
-    allowedHeaders: ['Content-Type', 'Authorization'], // Imposta gli header consentiti
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
 // Connessione al database MongoDB utilizzando la variabile d'ambiente MONGO_URI di .env
