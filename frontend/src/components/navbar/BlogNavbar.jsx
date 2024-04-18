@@ -1,5 +1,8 @@
 import React from "react";
-import { Form, Nav, Navbar, Dropdown } from "react-bootstrap";
+import { Form, Nav, Navbar, Dropdown, Container } from "react-bootstrap";
+import { RxPerson } from "react-icons/rx";
+import { MdOutlineBookmarks } from "react-icons/md";
+import { BsPeople } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { PiNotePencilThin } from "react-icons/pi";
@@ -21,6 +24,21 @@ const NavBar = () => {
       navigate(`/posts?query=${searchQuery}`);
     }
   };
+
+  const hideEmail = (email) => {
+    const atIndex = email.indexOf("@");
+    const firstChar = email.charAt(0);
+    const domain = email.substring(atIndex);
+    const hiddenUsername =
+      firstChar + "*".repeat(atIndex - 2) + email.charAt(atIndex - 1);
+
+    const hiddenEmail = hiddenUsername + domain;
+
+    return hiddenEmail;
+  };
+
+  const userEmail = process.env.REACT_APP_USER_LOGGED_IN_EMAIL;
+  const hiddenEmail = hideEmail(userEmail);
 
   return (
     <div className="navbar-container">
@@ -46,17 +64,13 @@ const NavBar = () => {
                 />
               </Form>
             </Nav>
-            <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/authors">Authors</Nav.Link>
-            </Nav>
             <Link
               className="d-flex align-items-center pointer write"
               to="/new-blog"
             >
-              <PiNotePencilThin className="PiNotePencilThin mx-1" /> Write
+              <PiNotePencilThin className="PiNotePencilThin fs-4 mx-1" /> Write
             </Link>
-            <TfiBell className="mx-0 my-2 my-lg-0 mx-lg-3 TfiBell pointer" />
+            <TfiBell className="mx-0 my-2 my-lg-0 fs-5 mx-lg-3 TfiBell pointer" />
             <div className="btn-group">
               <Dropdown align="end">
                 <Dropdown.Toggle
@@ -67,27 +81,39 @@ const NavBar = () => {
                   <User />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <div className="d-flex align-items-center px-2">
-                    <User />
-                    <div className="mx-2">
-                      <span className="pointer">Jerome Decinco</span>
-                      <br />
-                    </div>
-                  </div>
-                  <hr />
-                  <div className="mx-2">
-                    <Link to="/profile">
-                      <div className="d-flex pointer">
-                        <p className="ms-3">Profile</p>
+                  <div className="my-4">
+                    <Container>
+                      <div className="mx-2">
+                        <Link to="/profile">
+                          <div className="d-flex align-items-center pointer font-weight">
+                            <RxPerson className="fs-5" />
+                            <p className="ms-3">Profile</p>
+                          </div>
+                        </Link>
+                        <Link to="/authors">
+                          <div className="mt-3 d-flex align-items-center pointer font-weight">
+                            <BsPeople className="fs-5" />
+                            <p className="ms-3">Authors</p>
+                          </div>
+                        </Link>
+                        <Link to="/posts">
+                          <div className="mt-3 d-flex align-items-center pointer font-weight">
+                            <MdOutlineBookmarks className="fs-5" />
+                            <p className="ms-3">Library</p>
+                          </div>
+                        </Link>
                       </div>
-                    </Link>
+                    </Container>
+                    <hr />
+                    <Container>
+                      <Link to="/signout">
+                        <div className="mx-2 sign-out">
+                          <p className="pointer">Sign Out</p>
+                          <p className="userEmail mt-1">{hiddenEmail}</p>
+                        </div>
+                      </Link>
+                    </Container>
                   </div>
-                  <hr />
-                  <Link to="/login">
-                    <div className="d-flex mx-2">
-                      <p className="ms-3 pointer">Sign Out</p>
-                    </div>
-                  </Link>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

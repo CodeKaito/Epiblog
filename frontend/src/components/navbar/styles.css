@@ -9,7 +9,7 @@
   -webkit-box-shadow: 2px 0px 18px 1px rgba(222, 222, 222, 1);
   -moz-box-shadow: 2px 0px 18px 1px rgba(222, 222, 222, 1);
   box-shadow: 2px 0px 4px 1px rgba(222, 222, 222, 1);
-  border-bottom: 1px #F2F2F2;
+  border-bottom: 1px #f2f2f2;
 }
 .write {
   color: #838383;
@@ -19,10 +19,10 @@
 }
 .navbar-container {
   margin: 0px 30px;
-  border-bottom: 1px solid #F2F2F2;
+  border-bottom: 1px solid #f2f2f2;
 }
 .form-control-navbar {
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   border-radius: 20px;
   border: none;
   max-width: 300px;
@@ -33,7 +33,7 @@
   background-color: rgb(255, 255, 255);
 }
 .PiNotePencilThin .TfiBell {
-  font-size: 20px;
+  font-size: 100px;
 }
 
 .TfiBell {
@@ -56,4 +56,22 @@
   color: transparent;
   background-color: transparent;
   border-color: transparent;
+}
+.dropdown-menu {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 4px, rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  border: none;
+  border-radius: 2px;
+  width: 250px;
+}
+.sign-out {
+  font-size: 14px;
+}
+.userEmail {
+  font-size: 12px;
+}
+.font-weight {
+  font-weight: 100;
+}
+.font-weight:hover {
+  font-weight: 400;
 }

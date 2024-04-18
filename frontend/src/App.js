@@ -10,6 +10,7 @@ import Home from "./pages/home/Home";
 import BlogDetails from "./pages/blog-details/BlogDetails";
 import Profile from "./pages/profile/Profile";
 import Posts from "./pages/posts/Posts";
+import SignOut from "./authentication/signout/SignOut";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/posts" element={<Posts />} />
         <Route path="/details/:id" element={<BlogDetails />} />
         <Route path="/new-blog" element={<NewPost />} />
+        <Route path="/signout" element={<SignOut />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
