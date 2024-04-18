@@ -13,7 +13,7 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // Definisce il campo 'cover' di tipo String e richiesto
+    // Definisce il campo 'cover' di tipo String
     cover: {
         type: String,
     },

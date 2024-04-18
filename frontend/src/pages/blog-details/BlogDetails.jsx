@@ -52,6 +52,10 @@ const BlogDetails = () => {
               </h1>
             </div>
 
+            <div className="mb-4 category">
+              <p className="ellipsis px-3 category-text">{blog.category}</p>
+            </div>
+
             <p>{blog.content}</p>
             {blog.cover && (
               <div className="blog-cover-container mt-4">
