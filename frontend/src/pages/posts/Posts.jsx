@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Spinner } from "react-bootstrap";
+import BlogItem from "../../components/blog/blog-item/BlogItem";
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 import "./styles.css";
+import PopularPosts from "../../components/sidebar/popular/PopularPosts";
+import Topics from "../../components/sidebar/topics/Topics";
+import Follows from "../../components/sidebar/follow/Follows";
+import SavedPosts from "../../components/sidebar/saved/SavedPosts";
 
 const Posts = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const query = new URLSearchParams(location.search).get("query");
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const query = new URLSearchParams(location.search).get("query");
         const response = await fetch(
           `https://epicode-api.onrender.com/api/blogPosts?searchTitle=${query}`
         );
@@ -30,7 +36,7 @@ const Posts = () => {
     };
 
     fetchPosts();
-  }, [location]);
+  }, [location, query]);
 
   return (
     <div>
@@ -39,14 +45,31 @@ const Posts = () => {
           <Spinner animation="border" role="status" className="loader" />
         </div>
       ) : (
-        <div>
-          <h1>Posts</h1>
-          <ul>
-            {posts.map((post) => (
-              <li key={post._id}>{post.title}</li>
-            ))}
-          </ul>
-        </div>
+        <Container fluid="lg">
+          <Row>
+            <Col sm={12} lg={8}>
+              <div className="m-5 main">
+                <div className="posts-title-container mx-auto">
+                  <h1 className="posts-title mb-5">
+                    Posts of <span className="posts-title-result">{query}</span>
+                  </h1>
+                </div>
+                
+                {posts.map((post) => (
+                  <BlogItem key={post._id} {...post} />
+                ))}
+              </div>
+            </Col>
+            <Col md={4} className="d-none d-lg-block sidebar-container sidebar">
+              <div className="m-5">
+                <PopularPosts />
+                <Topics />
+                <Follows />
+                <SavedPosts />
+              </div>
+            </Col>
+          </Row>
+        </Container>
       )}
     </div>
   );

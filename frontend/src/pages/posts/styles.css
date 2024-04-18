@@ -13,4 +13,17 @@
 .loader {
     color: #fff;
 }
-  
+.main {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 680px;
+}
+.posts-title {
+    font-size: 40px;
+    color: grey;
+    font-weight: 600;
+}
+.posts-title-result {
+    font-weight: 800;
+    color: black!important;
+}

@@ -17,7 +17,9 @@ const NavBar = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    navigate(`/posts?query=${searchQuery}`);
+    if (searchQuery.trim() !== "") {
+      navigate(`/posts?query=${searchQuery}`);
+    }
   };
 
   return (
