@@ -20,7 +20,12 @@ const db = process.env.MONGO_URI; // Imposto una costante dove inserisco l'endpo
 const app = express(); // Crea un'app Express
 app.use(express.json()); // Middleware per il parsing del corpo della richiesta come JSON
 app.use(logger); // Logger
-app.use(cors()); // Middleware per abilitare le richieste da diversi domini
+
+app.use(cors({ // Middleware per abilitare le richieste da diversi domini
+    origin: ['https://epiblog.vercel.app', 'localhost:3000'], // Imposta l'origine consentita
+    methods: ['GET', 'POST'], // Imposta i metodi consentiti
+    allowedHeaders: ['Content-Type', 'Authorization'], // Imposta gli header consentiti
+  }));
 
 // Connessione al database MongoDB utilizzando la variabile d'ambiente MONGO_URI di .env
 // mongoose
