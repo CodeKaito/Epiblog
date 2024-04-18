@@ -49,7 +49,6 @@ const NavBar = () => {
             <Nav className="me-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/authors">Authors</Nav.Link>
-              <Nav.Link href="/posts">Posts</Nav.Link>
             </Nav>
             <Link
               className="d-flex align-items-center pointer write"
