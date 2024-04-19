@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import "../styles.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -61,77 +62,91 @@ const Signup = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Signup</h2>
+    <div className="w-100 container mt-4 mx-auto p-5">
+      <h1 className="signup-title text-center mb-5">Signup on Epiblog</h1>
+
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formSurname">
-          <Form.Label>Surname</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter surname"
-            name="surname"
-            value={formData.surname}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBirth">
-          <Form.Label>Birth</Form.Label>
-          <Form.Control
-            type="date"
-            name="birth"
-            value={formData.birth}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formAvatar">
-          <Form.Label>Avatar</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image/*"
-            name="avatar"
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBio">
-          <Form.Label>Bio</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Enter bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Signup
-        </Button>
+        <div className="d-flex gap-2">
+          <Form.Group controlId="formName">
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="form-signup"
+            />
+          </Form.Group>
+          <Form.Group controlId="formSurname">
+            <Form.Control
+              type="text"
+              placeholder="Surname"
+              name="surname"
+              value={formData.surname}
+              onChange={handleChange}
+              className="form-signup"
+            />
+          </Form.Group>
+        </div>
+        <div className="mt-1">
+          <Form.Group controlId="formEmail">
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="form-signup"
+            />
+          </Form.Group>
+        </div>
+        <div className="mt-1">
+          {" "}
+          <Form.Group controlId="formBirth">
+            <Form.Control
+              type="date"
+              name="birth"
+              value={formData.birth}
+              onChange={handleChange}
+              className="form-signup"
+            />
+          </Form.Group>
+        </div>
+        <div className="mt-1">
+          <Form.Group controlId="formAvatar">
+            <Form.Control
+              type="file"
+              accept="image/*"
+              name="avatar"
+              onChange={handleChange}
+              className="form-signup"
+            />
+          </Form.Group>
+        </div>
+        <div className="mt-3">
+          <Form.Group controlId="formBio">
+            <Form.Label className="text-center">
+              Write something about yourself..
+            </Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="bio"
+              value={formData.bio}
+              onChange={handleChange}
+              className="form-signup text-center"
+            />
+          </Form.Group>
+        </div>
+        <div className="text-center">
+          <Button
+            variant="primary"
+            type="submit"
+            className="signup-button mt-5"
+          >
+            Signup
+          </Button>
+        </div>
       </Form>
     </div>
   );

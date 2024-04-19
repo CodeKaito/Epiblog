@@ -26,8 +26,23 @@ main {
   font-size: 20px;
   width: 213px;
 }
+.signup-button {
+  background: rgba(25, 25, 25, 1);
+  border-color: rgba(25, 25, 25, 1);
+  padding: 5px 40px;
+  border-radius: 20px;
+}
 .start-reading-button:hover,
+.signup-button:hover,
+.signup-button:active,
 .start-reading-button:active {
   background: black;
   border-color: #242424;
+}
+.signup-title {
+  font-size: 20px;
+}
+.form-signup:focus {
+  box-shadow: none;
+  border-color: none;
 }
