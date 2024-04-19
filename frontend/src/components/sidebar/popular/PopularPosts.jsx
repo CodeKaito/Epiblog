@@ -36,7 +36,7 @@ const PopularPosts = () => {
         <div>
           <h3 className="popularposts-title">Staff Picks</h3>
           {posts.map((post) => (
-            <PopularPost key={post.id} {...post} />
+            <PopularPost key={post._id} {...post} />
           ))}
         </div>
       )}

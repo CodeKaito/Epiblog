@@ -28,7 +28,7 @@ const MainPage = () => {
       <main>
         <Container className="main-container">
           <div className="d-flex flex-column align-items-start justify-content-center h-100">
-            <h1 className="main-title">Stay curious.</h1>
+            <h1 className="main-title">Feed Your Curiosity.</h1>
             <div className="mt-3">
               <p className="main-paragraph">
                 Discover stories, thinking, and expertise from writers on any
