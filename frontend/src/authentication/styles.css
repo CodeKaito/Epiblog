@@ -6,7 +6,7 @@ main {
   height: 80vh;
 }
 .main-title {
-  font-size: 120px;
+  font-size: clamp(40px, 100%, 120px);
   letter-spacing: -0.05em;
   font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
   color: black;
