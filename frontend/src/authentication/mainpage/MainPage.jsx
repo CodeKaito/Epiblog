@@ -3,21 +3,28 @@ import MainPageNavBar from "../../components/navbar/MainPageNavBar";
 import { Button, Container, Modal } from "react-bootstrap";
 import "../styles.css";
 import Signup from "../signup/Signup";
+import Login from "../login/Login";
 
 const MainPage = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
-  const handleModalOpen = () => {
-    setShowModal(true);
+  const handleSignupModalToggle = () => {
+    setShowSignupModal(!showSignupModal);
+    setShowLoginModal(false);
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
+  const handleLoginModalToggle = () => {
+    setShowLoginModal(!showLoginModal);
+    setShowSignupModal(false);
   };
 
   return (
     <>
-      <MainPageNavBar show={handleModalOpen} />
+      <MainPageNavBar
+        showSignupModal={handleSignupModalToggle}
+        showLoginModal={handleLoginModalToggle}
+      />
       <main>
         <Container className="main-container">
           <div className="d-flex flex-column align-items-start justify-content-center h-100">
@@ -30,7 +37,7 @@ const MainPage = () => {
               <div className="mt-5">
                 <Button
                   className="start-reading-button"
-                  onClick={handleModalOpen}
+                  onClick={handleSignupModalToggle}
                 >
                   Start Reading
                 </Button>
@@ -39,8 +46,11 @@ const MainPage = () => {
           </div>
         </Container>
       </main>
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Signup />
+      <Modal show={showSignupModal} onHide={handleSignupModalToggle}>
+        <Signup showLoginModal={handleLoginModalToggle} />
+      </Modal>
+      <Modal show={showLoginModal} onHide={handleLoginModalToggle}>
+        <Login showSignupModal={handleSignupModalToggle} />
       </Modal>
     </>
   );

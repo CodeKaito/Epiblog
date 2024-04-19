@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import CustomLoader from "../../utils/CustomLoader";
 import "../styles.css";
 
-const Signup = () => {
+const Signup = ({ showLoginModal }) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -23,15 +25,14 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setLoading(true);
     try {
-      const form = new FormData(); // Crea un oggetto FormData
-      // Aggiungi tutti i campi del modulo all'oggetto FormData
+      const form = new FormData();
       form.append("name", formData.name);
       form.append("surname", formData.surname);
       form.append("email", formData.email);
       form.append("birth", formData.birth);
-      form.append("avatar", formData.avatar); // Aggiungi l'avatar
+      form.append("avatar", formData.avatar);
       form.append("bio", formData.bio);
 
       const response = await fetch("http://localhost:5000/api/authors", {
@@ -42,12 +43,16 @@ const Signup = () => {
       console.log("Author created:", authorData);
     } catch (error) {
       console.error("Errore durante la creazione dell'autore:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="w-100 container mt-4 mx-auto p-5">
       <h1 className="signup-title text-center mb-5">Signup on Epiblog</h1>
+
+      {loading && <CustomLoader />}
 
       <Form onSubmit={handleSubmit}>
         <div className="d-flex gap-2">
@@ -132,6 +137,12 @@ const Signup = () => {
           </Button>
         </div>
       </Form>
+      <div className="mt-3">
+        Already have an account?{" "}
+        <span className="login-here" onClick={showLoginModal}>
+          Login here
+        </span>
+      </div>
     </div>
   );
 };

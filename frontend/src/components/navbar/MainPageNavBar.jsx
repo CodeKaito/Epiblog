@@ -4,7 +4,7 @@ import logo from "../../assets/logo2.png";
 
 import "./styles.css";
 
-const HomeNavBar = ({ show }) => {
+const HomeNavBar = ({ showSignupModal, showLoginModal }) => {
   return (
     <div className="navbar-mainpage-container">
       <Navbar expand="lg" className="sticky-top top-0 me-auto">
@@ -26,11 +26,11 @@ const HomeNavBar = ({ show }) => {
               <div className="mx-2">
                 <p>Write</p>
               </div>
-              <div className="mx-2">
+              <div className="mx-2 pointer" onClick={showLoginModal}>
                 <p>Sign in</p>
               </div>
               <div className="mx-2">
-                <Button className="getstarted-button" onClick={show}>
+                <Button className="getstarted-button" onClick={showSignupModal}>
                   Get Started
                 </Button>
               </div>
