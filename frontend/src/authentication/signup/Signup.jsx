@@ -12,22 +12,6 @@ const Signup = () => {
     bio: "",
   });
 
-  const handleAvatarPatch = async (authorId, avatarFormData) => {
-    try {
-      const avatarResponse = await fetch(
-        `http://localhost:5000/api/${authorId}/avatar`,
-        {
-          method: "PATCH",
-          body: avatarFormData,
-        }
-      );
-      const avatarData = await avatarResponse.json();
-      console.log("Avatar uploaded:", avatarData);
-    } catch (error) {
-      console.error("Errore durante l'upload dell'avatar:", error);
-    }
-  };
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "avatar") {
@@ -39,23 +23,14 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
       const response = await fetch("http://localhost:5000/api/authors", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formData,
       });
       const authorData = await response.json();
       console.log("Author created:", authorData);
-
-      const authorId = authorData._id;
-
-      const avatarFormData = new FormData();
-      avatarFormData.append("avatar", formData.avatar);
-
-      await handleAvatarPatch(authorId, avatarFormData);
     } catch (error) {
       console.error("Errore durante la creazione dell'autore:", error);
     }
