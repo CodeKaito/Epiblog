@@ -8,7 +8,7 @@ const Signup = () => {
     surname: "",
     email: "",
     birth: "",
-    avatar: "",
+    avatar: null,
     bio: "",
   });
 
@@ -25,9 +25,18 @@ const Signup = () => {
     e.preventDefault();
     console.log(formData);
     try {
+      const form = new FormData(); // Crea un oggetto FormData
+      // Aggiungi tutti i campi del modulo all'oggetto FormData
+      form.append("name", formData.name);
+      form.append("surname", formData.surname);
+      form.append("email", formData.email);
+      form.append("birth", formData.birth);
+      form.append("avatar", formData.avatar); // Aggiungi l'avatar
+      form.append("bio", formData.bio);
+
       const response = await fetch("http://localhost:5000/api/authors", {
         method: "POST",
-        body: formData,
+        body: form, // Passa l'oggetto FormData come corpo della richiesta
       });
       const authorData = await response.json();
       console.log("Author created:", authorData);

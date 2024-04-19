@@ -117,12 +117,26 @@ module.exports.detailAuthor = async (req, res, next) => {
 // Funzione per salvare un nuovo author nel database e inviare il risultato della creazione come risposta
 module.exports.saveAuthor = async (req, res, next) => {
   try {
-    const author = req.body;
-    // Crea un nuovo author nel database utilizzando i dati forniti
-    const data = await AuthorModel.create(author);
-    // Invia il nuovo author creato come risposta con stato 201
-    console.log("Saved successfully, author: " + JSON.stringify(data));
-    res.status(201).send(data);
+    // Esegue il middleware di Cloudinary per caricare l'avatar + i dati dell'autore
+    cloudinaryMiddleware(req, res, async () => {
+      // Estrai i dati dell'autore dalla richiesta
+      const { name, surname, email, birth, bio } = req.body;
+
+      // Crea un nuovo autore nel database utilizzando i dati forniti
+      const data = await AuthorModel.create({
+        name,
+        surname,
+        email,
+        birth,
+        bio,
+        // Aggiungi il percorso dell'avatar dal req.file se è stato caricato correttamente
+        avatar: req.file ? req.file.path : null,
+      });
+
+      // Invia il nuovo autore creato come risposta con stato 201
+      console.log("Saved successfully, author: " + JSON.stringify(data));
+      res.status(201).send(data);
+    });
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
