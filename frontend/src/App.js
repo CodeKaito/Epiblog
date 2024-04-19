@@ -1,5 +1,4 @@
 import React from "react";
-import NavBar from "./components/navbar/BlogNavbar";
 import Footer from "./components/footer/Footer";
 // import Blog from "./pages/blog/Blog";
 import NewPost from "./pages/new-post/NewPost";
@@ -10,13 +9,12 @@ import Home from "./pages/home/Home";
 import BlogDetails from "./pages/blog-details/BlogDetails";
 import Profile from "./pages/profile/Profile";
 import Posts from "./pages/posts/Posts";
-import SignOut from "./authentication/signout/SignOut";
 import Signup from "./authentication/signup/Signup";
+import MainPage from "./authentication/mainpage/MainPage";
 
 function App() {
   return (
     <Router>
-      <NavBar />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/authors" element={<Author />} />
@@ -24,7 +22,7 @@ function App() {
         <Route path="/posts" element={<Posts />} />
         <Route path="/details/:id" element={<BlogDetails />} />
         <Route path="/new-blog" element={<NewPost />} />
-        <Route path="/signout" element={<SignOut />} />
+        <Route path="/signin" element={<MainPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>

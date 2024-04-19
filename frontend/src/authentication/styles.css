@@ -1,0 +1,32 @@
+main {
+  border-bottom: 1px solid black;
+  background-color: #ffc017;
+}
+.main-container {
+  height: 80vh;
+}
+.main-title {
+  font-size: 120px;
+  letter-spacing: -0.05em;
+  font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
+  color: black;
+  font-weight: 400;
+}
+.main-paragraph {
+  font-size: 30px;
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+.start-reading-button {
+  background: rgba(25, 25, 25, 1);
+  border-color: rgba(25, 25, 25, 1);
+  padding: 5px 40px;
+  border-radius: 20px;
+  border: none;
+  font-size: 20px;
+  width: 213px;
+}
+.start-reading-button:hover {
+  background: black;
+  border-color: #242424;
+}

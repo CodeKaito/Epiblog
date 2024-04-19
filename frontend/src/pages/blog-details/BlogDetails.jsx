@@ -3,6 +3,7 @@ import { Container, Image, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./styles.css";
 import CommentArea from "../../components/comments/comment-area/CommentArea";
+import HomeNavBar from "../../components/navbar/HomeNavbar";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({});
@@ -37,38 +38,41 @@ const BlogDetails = () => {
           <Spinner animation="border" role="status" className="loader" />
         </div>
       ) : (
-        <div className="mt-5 page">
-          <Container className="blog-container">
-            <h1 className="mt-5 blog-title">{blog.title}</h1>
-            <div className="d-flex align-items-center">
-              <Image
-                src={blog.author.avatar}
-                className="rounded-circle object-fit-cover"
-                width={50}
-                height={50}
-              />
-              <h1 className="fs-4 mx-3 my-5 blog-author-name">
-                {blog.author.name}
-              </h1>
-            </div>
-
-            <div className="mb-4 category">
-              <p className="ellipsis px-3 category-text">{blog.category}</p>
-            </div>
-
-            <p>{blog.content}</p>
-            {blog.cover && (
-              <div className="blog-cover-container mt-4">
+        <>
+          <HomeNavBar />
+          <div className="mt-5 page">
+            <Container className="blog-container">
+              <h1 className="mt-5 blog-title">{blog.title}</h1>
+              <div className="d-flex align-items-center">
                 <Image
-                  src={blog.cover}
-                  alt="cover-img"
-                  className="blog-cover"
+                  src={blog.author.avatar}
+                  className="rounded-circle object-fit-cover"
+                  width={50}
+                  height={50}
                 />
+                <h1 className="fs-4 mx-3 my-5 blog-author-name">
+                  {blog.author.name}
+                </h1>
               </div>
-            )}
-            <CommentArea />
-          </Container>
-        </div>
+
+              <div className="mb-4 category">
+                <p className="ellipsis px-3 category-text">{blog.category}</p>
+              </div>
+
+              <p>{blog.content}</p>
+              {blog.cover && (
+                <div className="blog-cover-container mt-4">
+                  <Image
+                    src={blog.cover}
+                    alt="cover-img"
+                    className="blog-cover"
+                  />
+                </div>
+              )}
+              <CommentArea />
+            </Container>
+          </div>
+        </>
       )}
     </>
   );

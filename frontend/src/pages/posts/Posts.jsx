@@ -7,6 +7,7 @@ import PopularPosts from "../../components/sidebar/popular/PopularPosts";
 import Topics from "../../components/sidebar/topics/Topics";
 import Follows from "../../components/sidebar/follow/Follows";
 import SavedPosts from "../../components/sidebar/saved/SavedPosts";
+import HomeNavBar from "../../components/navbar/HomeNavbar";
 
 const Posts = () => {
   const location = useLocation();
@@ -39,39 +40,46 @@ const Posts = () => {
   }, [location, query]);
 
   return (
-    <div>
+    <>
       {loading ? (
         <div className="loader-overlay">
           <Spinner animation="border" role="status" className="loader" />
         </div>
       ) : (
-        <Container fluid="lg">
-          <Row>
-            <Col sm={12} lg={8}>
-              <div className="m-5 main">
-                <div className="posts-title-container mx-auto">
-                  <h1 className="posts-title mb-5">
-                    Posts of <span className="posts-title-result">{query}</span>
-                  </h1>
+        <>
+          <HomeNavBar />
+          <Container fluid="lg">
+            <Row>
+              <Col sm={12} lg={8}>
+                <div className="m-5 main">
+                  <div className="posts-title-container mx-auto">
+                    <h1 className="posts-title mb-5">
+                      Posts of{" "}
+                      <span className="posts-title-result">{query}</span>
+                    </h1>
+                  </div>
+
+                  {posts.map((post) => (
+                    <BlogItem key={post._id} {...post} />
+                  ))}
                 </div>
-                
-                {posts.map((post) => (
-                  <BlogItem key={post._id} {...post} />
-                ))}
-              </div>
-            </Col>
-            <Col md={4} className="d-none d-lg-block sidebar-container sidebar">
-              <div className="m-5">
-                <PopularPosts />
-                <Topics />
-                <Follows />
-                <SavedPosts />
-              </div>
-            </Col>
-          </Row>
-        </Container>
+              </Col>
+              <Col
+                md={4}
+                className="d-none d-lg-block sidebar-container sidebar"
+              >
+                <div className="m-5">
+                  <PopularPosts />
+                  <Topics />
+                  <Follows />
+                  <SavedPosts />
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

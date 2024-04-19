@@ -14,7 +14,7 @@ import {
   useSearchQuery,
 } from "../../context/SearchQueryContext";
 
-const NavBar = () => {
+const HomeNavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
   const navigate = useNavigate();
 
@@ -106,7 +106,7 @@ const NavBar = () => {
                     </Container>
                     <hr />
                     <Container>
-                      <Link to="/signout">
+                      <Link to="/signin">
                         <div className="mx-2 sign-out">
                           <p className="pointer">Sign Out</p>
                           <p className="userEmail mt-1">{hiddenEmail}</p>
@@ -124,4 +124,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default HomeNavBar;

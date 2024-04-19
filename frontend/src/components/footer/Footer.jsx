@@ -5,8 +5,8 @@ const Footer = (props) => {
   return (
     <footer
       style={{
-        paddingTop: 50,
-        paddingBottom: 50,
+        paddingTop: 40,
+        paddingBottom: 40,
       }}
     >
       <Container>{`${new Date().getFullYear()} - © Epiblog | Developed by CodeKaito`}</Container>

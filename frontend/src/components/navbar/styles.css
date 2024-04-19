@@ -19,8 +19,11 @@
   color: #686868;
 }
 .navbar-container {
-  margin: 0px 30px;
   border-bottom: 1px solid #f2f2f2;
+}
+.navbar-mainpage-container {
+  background-color: #ffc017;
+  border-bottom: 1px solid black;
 }
 .form-control-navbar {
   background-color: transparent;
@@ -76,4 +79,14 @@
 }
 .font-weight:hover {
   font-weight: 400;
+}
+.getstarted-button {
+  border-radius: 20px;
+  background-color: #000000;
+  border: 0;
+}
+.getstarted-button:hover {
+  border-radius: 20px;
+  background-color: #000000;
+  border: 0;
 }
