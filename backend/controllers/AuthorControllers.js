@@ -2,6 +2,8 @@ const cloudinaryMiddleware = require("../middlewares/multer.js");
 // Importa il modello del author per interagire con il database
 const AuthorModel = require("../models/AuthorModel");
 
+const sendEmail = require("../middlewares/sendMail.js");
+
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getAuthors = async (req, res, next) => {
   try {
@@ -123,7 +125,7 @@ module.exports.saveAuthor = async (req, res, next) => {
       const { name, surname, email, birth, bio } = req.body;
 
       // Crea un nuovo autore nel database utilizzando i dati forniti
-      const data = await AuthorModel.create({
+      const newAuthor = await AuthorModel.create({
         name,
         surname,
         email,
@@ -133,9 +135,11 @@ module.exports.saveAuthor = async (req, res, next) => {
         avatar: req.file ? req.file.path : null,
       });
 
+      await sendEmail({ name, surname, email });
+
       // Invia il nuovo autore creato come risposta con stato 201
-      console.log("Saved successfully, author: " + JSON.stringify(data));
-      res.status(201).send(data);
+      console.log("Saved successfully, author: " + JSON.stringify(newAuthor));
+      res.status(201).send(newAuthor);
     });
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
