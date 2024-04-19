@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import CustomLoader from "../../utils/CustomLoader";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "../styles.css";
 
 const Login = ({ showSignupModal }) => {
@@ -10,7 +10,7 @@ const Login = ({ showSignupModal }) => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,12 +21,8 @@ const Login = ({ showSignupModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Perform login logic here
-      // For demonstration purposes, I'm just console logging the formData
       console.log("Login Data:", formData);
-
-      // After successful login, navigate to the main page
-      navigate("/"); // Redirect to main page
+      navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
     } finally {
