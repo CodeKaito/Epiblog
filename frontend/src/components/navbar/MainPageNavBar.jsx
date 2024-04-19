@@ -4,7 +4,7 @@ import logo from "../../assets/logo2.png";
 
 import "./styles.css";
 
-const HomeNavBar = () => {
+const HomeNavBar = ({ show }) => {
   return (
     <div className="navbar-mainpage-container">
       <Navbar expand="lg" className="sticky-top top-0 me-auto">
@@ -30,7 +30,9 @@ const HomeNavBar = () => {
                 <p>Sign in</p>
               </div>
               <div className="mx-2">
-                <Button className="getstarted-button">Get Started</Button>
+                <Button className="getstarted-button" onClick={show}>
+                  Get Started
+                </Button>
               </div>
             </div>
           </Navbar.Collapse>
