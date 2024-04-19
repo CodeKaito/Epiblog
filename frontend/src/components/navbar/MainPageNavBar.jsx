@@ -10,7 +10,7 @@ const HomeNavBar = ({ showSignupModal, showLoginModal }) => {
       <Navbar expand="lg" className="sticky-top top-0 me-auto">
         <Container>
           <Navbar.Brand href="/">
-            <Image className="blog-navbar-brand" alt="logo" src={logo} />
+            <Image className="blog-navbar-brand ms-3" alt="logo" src={logo} />
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

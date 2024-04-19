@@ -33,7 +33,11 @@ const HomeNavBar = () => {
           <Container>
             <div className="d-flex align-items-center">
               <Navbar.Brand href="/">
-                <Image className="blog-navbar-brand" alt="logo" src={logo} />
+                <Image
+                  className="blog-navbar-brand ms-3"
+                  alt="logo"
+                  src={logo}
+                />
               </Navbar.Brand>
               <span>Draft in {userLoggedIn}</span>
             </div>

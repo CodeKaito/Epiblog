@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Nav, Navbar, Dropdown, Container } from "react-bootstrap";
+import { Form, Nav, Navbar, Dropdown, Container, Image } from "react-bootstrap";
 import { RxPerson } from "react-icons/rx";
 import { MdOutlineBookmarks } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
@@ -45,7 +45,7 @@ const HomeNavBar = () => {
       <SearchQueryProvider>
         <Navbar expand="lg" className="sticky-top top-0">
           <Navbar.Brand href="/">
-            <img className="blog-navbar-brand" alt="logo" src={logo} />
+            <Image className="blog-navbar-brand ms-3" alt="logo" src={logo} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
