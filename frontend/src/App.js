@@ -11,6 +11,7 @@ import BlogDetails from "./pages/blog-details/BlogDetails";
 import Profile from "./pages/profile/Profile";
 import Posts from "./pages/posts/Posts";
 import SignOut from "./authentication/signout/SignOut";
+import Signup from "./authentication/signup/Signup";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/details/:id" element={<BlogDetails />} />
         <Route path="/new-blog" element={<NewPost />} />
         <Route path="/signout" element={<SignOut />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />

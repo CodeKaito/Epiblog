@@ -26,7 +26,7 @@ const authorSchema = new mongoose.Schema({
   // Definisce il campo 'avatar' i tipo String e richiesto
   avatar: {
     type: String,
-    required: true,
+    required: false,
   },
   // Definisce il campo 'bio' di tipo String
   bio: {

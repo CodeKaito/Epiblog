@@ -1,3 +1,4 @@
+const cloudinaryMiddleware = require("../middlewares/multer.js");
 // Importa il modello del author per interagire con il database
 const AuthorModel = require("../models/AuthorModel");
 
@@ -165,6 +166,40 @@ module.exports.updateAuthor = async (req, res, next) => {
     next(error);
   } finally {
     // Stampa a console il completamento del processo di aggiornamento del author
+    console.log(`Author with id: ${id} update process completed.`);
+  }
+};
+
+module.exports.updateAuthorAvatar = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    // Esegui il middleware di Cloudinary per caricare l'avatar
+    cloudinaryMiddleware(req, res, async () => {
+      // Aggiorna l'URL dell'avatar dell'autore nel database
+      const updatedAuthor = await AuthorModel.findByIdAndUpdate(
+        id,
+        { avatar: req.file.path },
+        { new: true }
+      );
+      if (!updatedAuthor) {
+        // Se l'autore non è stato trovato, restituisci un messaggio di errore
+        return res.status(404).send("Author not found");
+      }
+      // Invia una conferma di aggiornamento con i dettagli dell'autore aggiornati
+      res.send(
+        "Updated successfully, author: " + JSON.stringify(updatedAuthor)
+      );
+    });
+  } catch (error) {
+    // Gestisci altri errori
+    console.error(error.message);
+    res.status(500).send({
+      error: error.message,
+      msg: "Something went wrong!",
+    });
+    next(error);
+  } finally {
+    // Stampa a console il completamento del processo di aggiornamento dell'autore
     console.log(`Author with id: ${id} update process completed.`);
   }
 };

@@ -8,6 +8,7 @@ const {
   getAuthorsPaginationOrders,
   detailAuthor,
   updateAuthor,
+  updateAuthorAvatar,
   saveAuthor,
   deleteAuthor,
 } = require("../controllers/AuthorControllers");
@@ -23,6 +24,7 @@ router
   .get("/authors/:id", detailAuthor) // Route per ottenere i dettagli di un blog specifico in base all'ID
   .post("/authors", saveAuthor) // Route per salvare un nuovo blog
   .put("/authors/:id", updateAuthor) // Route per aggiornare un blog esistente in base all'ID
+  .patch("/authors/:id/avatar", updateAuthorAvatar) // Route per aggiornare l'avatar dell'utente
   .delete("/authors/:id", deleteAuthor); // Route per eliminare un blog esistente in base all'ID
 
 // Esporta il router per renderlo disponibile ad altri moduli

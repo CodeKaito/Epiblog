@@ -8,6 +8,13 @@ cloudinary.config({
   api_secret: "IW5Y5s5w7IVkqvSb3sp_9mAjSbc",
 });
 
-const multerUpload = multer({ storage: storage }).single("avatar");
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "avatars",
+  },
+});
 
-export default multerUpload;
+const cloudinaryMiddleware = multer({ storage: storage }).single("avatar");
+
+module.exports = cloudinaryMiddleware;
