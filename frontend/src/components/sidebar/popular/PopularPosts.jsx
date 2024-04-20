@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles.css";
 import PopularPost from "./PopularPost";
-import CustomLoader from "../../../utils/CustomLoader";
+import { Spinner } from "react-bootstrap";
 
 const PopularPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -30,11 +30,17 @@ const PopularPosts = () => {
 
   return (
     <div>
+      <h3 className="popularposts-title">Staff Picks</h3>
       {loading ? (
-        <CustomLoader />
+        <div className="d-flex align-items-center justify-content-center sidebar">
+          <Spinner
+            animation="border"
+            role="status"
+            className="loader-sidebar"
+          />
+        </div>
       ) : (
         <div>
-          <h3 className="popularposts-title">Staff Picks</h3>
           {posts.map((post) => (
             <PopularPost key={post._id} {...post} />
           ))}
