@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
 import NewPostNavbar from "../../components/navbar/NewPostNavbar";
 import CustomAlert from "../../utils/CustomAlert";
+import { useAuth } from "../../context/AuthenticationContext";
 import "./styles.css";
 
 const NewPost = () => {
@@ -14,8 +15,8 @@ const NewPost = () => {
       unit: "min",
     },
     author: {
-      name: "Jerome Decinco",
-      avatar: "https://avatars.githubusercontent.com/u/57111980?v=4",
+      name: "",
+      avatar: "",
     },
     content: "",
   };
@@ -23,6 +24,7 @@ const NewPost = () => {
   const [showSuccessAlert, setshowSuccessAlert] = useState(false);
   const [showErrorAlert, setshowErrorAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { userData } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,6 +80,18 @@ const NewPost = () => {
 
     return () => clearTimeout(hideAlerts);
   }, [showSuccessAlert, showErrorAlert]);
+
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        ...formData,
+        author: {
+          name: userData.name + " " + userData.surname,
+          avatar: userData.avatar,
+        },
+      });
+    }
+  }, [formData, userData]);
 
   return (
     <>

@@ -30,6 +30,10 @@ const blogSchema = new mongoose.Schema({
     },
   },
   author: {
+    id: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

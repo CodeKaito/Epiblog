@@ -13,16 +13,23 @@ import {
   SearchQueryProvider,
   useSearchQuery,
 } from "../../context/SearchQueryContext";
+import { useAuth } from "../../context/AuthenticationContext.js";
 
 const HomeNavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim() !== "") {
       navigate(`/posts?query=${searchQuery}`);
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/signin");
   };
 
   const hideEmail = (email) => {
@@ -106,12 +113,12 @@ const HomeNavBar = () => {
                     </Container>
                     <hr />
                     <Container>
-                      <Link to="/signin">
+                      <div onClick={handleLogout}>
                         <div className="mx-2 sign-out">
                           <p className="pointer">Sign Out</p>
                           <p className="userEmail mt-1">{hiddenEmail}</p>
                         </div>
-                      </Link>
+                      </div>
                     </Container>
                   </div>
                 </Dropdown.Menu>

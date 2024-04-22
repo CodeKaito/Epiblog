@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Spinner, Tabs, Tab } from "react-bootstrap";
 import BlogItem from "../../../components/blog/blog-item/BlogItem";
 import Biography from "./Biography";
-import "./styles.css";
+import { useAuth } from "../../../context/AuthenticationContext";
 
 const ProfileLeft = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { userData } = useAuth();
 
   useEffect(() => {
+    console.log(userData);
     const fetchData = async () => {
       try {
-        let authorName = process.env.REACT_APP_USER_LOGGED_IN;
+        let authorName = userData ? userData._id : "";
         let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
-          authorName
+          userData._id
         )}`;
 
         const response = await fetch(url);
@@ -33,7 +35,7 @@ const ProfileLeft = () => {
     };
 
     fetchData();
-  }, []);
+  }, [userData]);
 
   return (
     <>
@@ -44,13 +46,13 @@ const ProfileLeft = () => {
       ) : error ? (
         <div>Error: {error}</div>
       ) : posts.length === 0 ? (
-        <div>No posts found for this author.</div>
+        <div className="d-flex h-50 justify-content-center align-items-center">
+          <h2>No posts found for this author.</h2>
+        </div>
       ) : (
         <>
           <div>
-            <h5 className="blog-title my-4">
-              {process.env.REACT_APP_USER_LOGGED_IN}
-            </h5>
+            <h5 className="blog-title my-4">{userData ? userData.name : ""}</h5>
           </div>
           <Tabs
             defaultActiveKey="posts"

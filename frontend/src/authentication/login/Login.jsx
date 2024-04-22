@@ -12,7 +12,7 @@ const Login = ({ showSignupModal }) => {
     password: "",
   });
   const navigate = useNavigate();
-  const { login, setUserData } = useAuth(); // Aggiungi setUserData
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,9 +34,10 @@ const Login = ({ showSignupModal }) => {
         throw new Error("User not found");
       }
 
-      setUserData(user);
+      login(user);
+      localStorage.setItem("userData", JSON.stringify(user));
+      localStorage.setItem("hasShownModal", "true");
       console.log("User Data:", user);
-      login();
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
