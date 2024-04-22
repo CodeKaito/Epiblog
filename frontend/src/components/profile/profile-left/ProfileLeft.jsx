@@ -52,7 +52,9 @@ const ProfileLeft = () => {
       ) : (
         <>
           <div>
-            <h5 className="blog-title my-4">{userData ? userData.name : ""}</h5>
+            <h5 className="blog-title my-4">
+              {userData ? userData.name + " " + userData.surname : ""}
+            </h5>
           </div>
           <Tabs
             defaultActiveKey="posts"
