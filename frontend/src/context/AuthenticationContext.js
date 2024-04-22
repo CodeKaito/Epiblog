@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       setUserData(JSON.parse(storedUserData));
       setIsAuthenticated(true);
     }
-  }, []);
+  }, [userData]);
 
   const login = () => {
     setIsAuthenticated(true);
