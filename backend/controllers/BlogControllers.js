@@ -127,7 +127,7 @@ module.exports.getPostsByAuthorId = async (req, res, next) => {
   const authorId = req.params.id; // Nome dell'autore fornito nella richiesta
   try {
     // Esegui la query al database per trovare tutti i post con il nome dell'autore specificato
-    const posts = await BlogModel.find({ "author._id": authorId });
+    const posts = await BlogModel.find({ "author.id": authorId });
 
     // Invia la lista dei post come risposta
     res.send(posts);

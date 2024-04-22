@@ -11,29 +11,30 @@ const ProfileLeft = () => {
   const { userData } = useAuth();
 
   useEffect(() => {
-    console.log(userData);
-    const fetchData = async () => {
-      try {
-        let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
-          userData._id
-        )}`;
+    if (userData && userData._id) {
+      const fetchData = async () => {
+        try {
+          let url = `http://localhost:5000/api/blogPosts/author/${encodeURIComponent(
+            userData._id
+          )}`;
 
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error("Failed to fetch data");
+          }
+          const data = await response.json();
+
+          setPosts(data);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          setError("Failed to fetch data");
+          setLoading(false);
         }
-        const data = await response.json();
+      };
 
-        setPosts(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Failed to fetch data");
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+      fetchData();
+    }
   }, [userData]);
 
   return (
