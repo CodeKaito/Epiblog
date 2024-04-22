@@ -86,6 +86,7 @@ const NewPost = () => {
       setFormData({
         ...formData,
         author: {
+          id: userData._id,
           name: userData.name + " " + userData.surname,
           avatar: userData.avatar,
         },
