@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import CustomLoader from "../../utils/CustomLoader";
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
+import { useAuth } from "../../context/AuthenticationContext.js";
 
 const Login = ({ showSignupModal }) => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ const Login = ({ showSignupModal }) => {
     password: "",
   });
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +24,7 @@ const Login = ({ showSignupModal }) => {
     setLoading(true);
     try {
       console.log("Login Data:", formData);
+      login();
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
