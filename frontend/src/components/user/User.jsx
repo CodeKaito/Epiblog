@@ -1,13 +1,18 @@
-import React from 'react'
-import { Image } from 'react-bootstrap'
-import './style.css'
+import React from "react";
+import { Image } from "react-bootstrap";
+import { useAuth } from "../../context/AuthenticationContext";
+import "./style.css";
 
 const User = () => {
-  return (
-    <div className='image-container pointer'>
-        <Image src='https://avatars.githubusercontent.com/u/57111980?v=4' alt='user-img' />
-    </div>
-  )
-}
+  const { userData } = useAuth();
 
-export default User
+  return (
+    <div className="image-container pointer">
+      {userData && userData.avatar && (
+        <Image src={userData.avatar} alt="user-img" />
+      )}
+    </div>
+  );
+};
+
+export default User;

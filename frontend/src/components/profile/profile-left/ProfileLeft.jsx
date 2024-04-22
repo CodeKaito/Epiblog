@@ -14,7 +14,7 @@ const ProfileLeft = () => {
     if (userData && userData._id) {
       const fetchData = async () => {
         try {
-          let url = `http://localhost:5000/api/blogPosts/author/${encodeURIComponent(
+          let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
             userData._id
           )}`;
 

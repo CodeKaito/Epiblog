@@ -11,7 +11,7 @@ const ProfileRight = (props) => {
           <Image
             src={avatar}
             alt="avatar-profile"
-            className="rounded-circle"
+            className="rounded-circle object-fit-cover"
             width={100}
             height={100}
           />

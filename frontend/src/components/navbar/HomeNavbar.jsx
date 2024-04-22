@@ -18,7 +18,7 @@ import { useAuth } from "../../context/AuthenticationContext.js";
 const HomeNavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, userData } = useAuth();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ const HomeNavBar = () => {
     return hiddenEmail;
   };
 
-  const userEmail = process.env.REACT_APP_USER_LOGGED_IN_EMAIL;
+  const userEmail = userData ? userData.email : "";
   const hiddenEmail = hideEmail(userEmail);
 
   return (
