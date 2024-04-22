@@ -18,7 +18,7 @@ import { useAuth } from "../../context/AuthenticationContext.js";
 const HomeNavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
   const navigate = useNavigate();
-  const { logout, userData } = useAuth();
+  const { logout } = useAuth();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();

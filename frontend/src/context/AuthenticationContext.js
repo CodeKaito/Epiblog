@@ -16,11 +16,14 @@ export const AuthProvider = ({ children }) => {
 
   const login = () => {
     setIsAuthenticated(true);
+    localStorage.setItem("hasShownModal", "false");
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUserData(null);
+    localStorage.removeItem("userData");
+    localStorage.removeItem("hasShownModal");
   };
 
   return (

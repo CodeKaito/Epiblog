@@ -11,16 +11,18 @@ import WelcomeModal from "../../authentication/welcome/Welcome";
 import { useAuth } from "../../context/AuthenticationContext";
 
 const Home = () => {
-  const { isAuthenticated, userData, isLoading } = useAuth();
-  const [showModal, setShowModal] = useState(true);
+  const { userData, isLoading } = useAuth();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const hasShownModal = localStorage.getItem("hasShownModal");
-    if (hasShownModal === true && isAuthenticated) {
+    if (hasShownModal) {
       setShowModal(true);
-      localStorage.setItem("hasShownModal", "false");
+      setTimeout(() => {
+        localStorage.removeItem("hasShownModal");
+      }, 5000);
     }
-  }, [isAuthenticated]);
+  }, []);
 
   const handleModalClose = () => setShowModal(false);
 
