@@ -8,7 +8,7 @@ import Follows from "../../components/sidebar/follow/Follows";
 import SavedPosts from "../../components/sidebar/saved/SavedPosts";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
 import WelcomeModal from "../../authentication/welcome/Welcome";
-import { isAuthenticated, useAuth } from "../../context/AuthenticationContext";
+import { useAuth } from "../../context/AuthenticationContext";
 
 const Home = () => {
   const { isAuthenticated, userData, isLoading } = useAuth();

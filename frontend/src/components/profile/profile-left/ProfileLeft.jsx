@@ -14,7 +14,6 @@ const ProfileLeft = () => {
     console.log(userData);
     const fetchData = async () => {
       try {
-        let authorName = userData ? userData._id : "";
         let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
           userData._id
         )}`;
