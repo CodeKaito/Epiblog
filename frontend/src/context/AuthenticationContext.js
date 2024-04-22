@@ -1,33 +1,20 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    let logoutTimer;
-    if (isAuthenticated) {
-      logoutTimer = setTimeout(() => {
-        logout();
-      }, 60000); // 1 minuto in millisecondi
-    }
-
-    return () => {
-      clearTimeout(logoutTimer);
-    };
-  }, [isAuthenticated]);
+  const [userData, setUserData] = useState(null);
 
   const login = () => {
     setIsAuthenticated(true);
-  };
-
-  const logout = () => {
-    setIsAuthenticated(false);
+    console.log("User logged in");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, login, userData, setUserData }}
+    >
       {children}
     </AuthContext.Provider>
   );

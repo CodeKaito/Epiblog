@@ -12,7 +12,7 @@ const Login = ({ showSignupModal }) => {
     password: "",
   });
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, setUserData } = useAuth(); // Aggiungi setUserData
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +23,19 @@ const Login = ({ showSignupModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log("Login Data:", formData);
+      const response = await fetch("http://localhost:5000/api/authors");
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const userData = await response.json();
+
+      const user = userData.find((user) => user.email === formData.email);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      setUserData(user);
+      console.log("User Data:", user);
       login();
       navigate("/");
     } catch (error) {
