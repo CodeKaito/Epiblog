@@ -14,8 +14,6 @@ const Home = () => {
   const { isAuthenticated, userData, isLoading } = useAuth();
   const [showModal, setShowModal] = useState(true);
 
-  console.log(userData);
-
   useEffect(() => {
     const hasShownModal = localStorage.getItem("hasShownModal");
     if (hasShownModal === true && isAuthenticated) {
@@ -41,11 +39,15 @@ const Home = () => {
               {isLoading ? (
                 <div>Loading...</div>
               ) : (
-                <WelcomeModal
-                  show={showModal}
-                  onHide={handleModalClose}
-                  {...userData}
-                />
+                <div>
+                  {userData && (
+                    <WelcomeModal
+                      show={showModal}
+                      onHide={handleModalClose}
+                      {...userData}
+                    />
+                  )}
+                </div>
               )}
               <PopularPosts />
               <Topics />
