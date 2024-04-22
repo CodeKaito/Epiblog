@@ -11,7 +11,7 @@ const ProfileLeft = () => {
   const { userData } = useAuth();
 
   useEffect(() => {
-    console.log(userData);
+    console.log("User logged in: " + userData);
     const fetchData = async () => {
       try {
         let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
