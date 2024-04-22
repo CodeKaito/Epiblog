@@ -32,20 +32,20 @@ const HomeNavBar = () => {
     navigate("/signin");
   };
 
-  const hideEmail = (email) => {
-    const atIndex = email.indexOf("@");
-    const firstChar = email.charAt(0);
-    const domain = email.substring(atIndex);
-    const hiddenUsername =
-      firstChar + "*".repeat(atIndex - 2) + email.charAt(atIndex - 1);
+  // const hideEmail = (email) => {
+  //   const atIndex = email.indexOf("@");
+  //   const firstChar = email.charAt(0);
+  //   const domain = email.substring(atIndex);
+  //   const hiddenUsername =
+  //     firstChar + "*".repeat(atIndex - 2) + email.charAt(atIndex - 1);
 
-    const hiddenEmail = hiddenUsername + domain;
+  //   const hiddenEmail = hiddenUsername + domain;
 
-    return hiddenEmail;
-  };
+  //   return hiddenEmail;
+  // };
 
-  const userEmail = userData ? userData.email : "";
-  const hiddenEmail = hideEmail(userEmail);
+  // const userEmail = userData ? userData.email : "";
+  // const hiddenEmail = hideEmail(userEmail);
 
   return (
     <div className="navbar-container">
@@ -116,7 +116,7 @@ const HomeNavBar = () => {
                       <div onClick={handleLogout}>
                         <div className="mx-2 sign-out">
                           <p className="pointer">Sign Out</p>
-                          <p className="userEmail mt-1">{hiddenEmail}</p>
+                          <p className="userEmail mt-1">Hello</p>
                         </div>
                       </div>
                     </Container>
