@@ -12,7 +12,7 @@ const Login = ({ showSignupModal }) => {
     password: "",
   });
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, setUserData } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,15 +31,15 @@ const Login = ({ showSignupModal }) => {
       }
       const userData = await response.json();
 
+      // Verifica se l'utente è stato trovato
       const user = userData.find((user) => user.email === formData.email);
       if (!user) {
         throw new Error("User not found");
       }
 
-      login(user);
+      setUserData(user);
+      login();
       localStorage.setItem("userData", JSON.stringify(user));
-      localStorage.setItem("hasShownModal", "true");
-      console.log(user);
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);

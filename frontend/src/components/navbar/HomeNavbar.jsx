@@ -18,7 +18,7 @@ import { useAuth } from "../../context/AuthenticationContext.js";
 const HomeNavBar = () => {
   const { searchQuery, setSearchQuery } = useSearchQuery();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, userData } = useAuth();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -44,8 +44,8 @@ const HomeNavBar = () => {
   //   return hiddenEmail;
   // };
 
-  // const userEmail = userData ? userData.email : "";
-  // const hiddenEmail = hideEmail(userEmail);
+  const userEmail = userData ? userData.email : "";
+  const hiddenEmail = userEmail;
 
   return (
     <div className="navbar-container">
@@ -116,7 +116,7 @@ const HomeNavBar = () => {
                       <div onClick={handleLogout}>
                         <div className="mx-2 sign-out">
                           <p className="pointer">Sign Out</p>
-                          <p className="userEmail mt-1">Hello</p>
+                          <p className="userEmail mt-1">{hiddenEmail}</p>
                         </div>
                       </div>
                     </Container>
