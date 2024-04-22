@@ -20,7 +20,7 @@ const Home = () => {
       setShowModal(true);
       setTimeout(() => {
         localStorage.removeItem("hasShownModal");
-      }, 5000);
+      }, 1000);
     }
   }, []);
 
