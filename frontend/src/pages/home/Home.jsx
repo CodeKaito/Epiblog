@@ -14,7 +14,7 @@ const Home = () => {
   const { isAuthenticated, userData, isLoading } = useAuth();
   const [showModal, setShowModal] = useState(true);
 
-  console.log("User logged in: " + userData);
+  console.log(userData);
 
   useEffect(() => {
     const hasShownModal = localStorage.getItem("hasShownModal");

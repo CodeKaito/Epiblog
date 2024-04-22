@@ -37,7 +37,7 @@ const Login = ({ showSignupModal }) => {
       login(user);
       localStorage.setItem("userData", JSON.stringify(user));
       localStorage.setItem("hasShownModal", "true");
-      console.log("User Data:", user);
+      console.log(user);
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);

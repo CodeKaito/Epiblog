@@ -8,7 +8,7 @@ import { useAuth } from "../../context/AuthenticationContext";
 const Profile = () => {
   const { userData, isLoading } = useAuth();
 
-  console.log("User logged in: " + userData);
+  console.log(userData);
 
   return (
     <>
