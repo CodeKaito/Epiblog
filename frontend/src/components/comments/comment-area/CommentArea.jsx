@@ -7,7 +7,7 @@ const CommentArea = () => {
   const { userData } = useAuth();
 
   return (
-    <>
+    <div className="commentarea-container">
       <div>
         <h1 className="commentarea-title">Comments(0)</h1>
       </div>
@@ -39,7 +39,7 @@ const CommentArea = () => {
           <Button className="comment-area-add-button">Add</Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
