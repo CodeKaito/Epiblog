@@ -53,7 +53,6 @@ const Biography = (props) => {
       setShowSuccessAlert(true);
       setIsEditing(false);
 
-      // Aggiorna la biografia visualizzata subito dopo averla salvata
       const updatedResponse = await fetch(
         `https://epicode-api.onrender.com/api/authors/${_id}`
       );

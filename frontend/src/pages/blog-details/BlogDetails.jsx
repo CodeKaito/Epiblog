@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Container, Image, Spinner } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
+import { IoChatbubbleOutline } from "react-icons/io5";
 import "./styles.css";
-import CommentArea from "../../components/comments/comment-area/CommentArea";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
+import Sidebar from "../../components/comments/Sidebar";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -30,6 +32,12 @@ const BlogDetails = () => {
 
     fetchBlog();
   }, [params.id, navigate]);
+
+  const handleToggleSidebar = () => {
+    setTimeout(() => {
+      setShowSidebar(!showSidebar);
+    }, 100);
+  };
 
   return (
     <>
@@ -54,11 +62,12 @@ const BlogDetails = () => {
                   {blog.author.name}
                 </h1>
               </div>
-
+              <div className="mb-5 comments-box">
+                <IoChatbubbleOutline onClick={handleToggleSidebar} />
+              </div>
               <div className="mb-4 category">
                 <p className="ellipsis px-3 category-text">{blog.category}</p>
               </div>
-
               <p>{blog.content}</p>
               {blog.cover && (
                 <div className="blog-cover-container mt-4">
@@ -69,7 +78,10 @@ const BlogDetails = () => {
                   />
                 </div>
               )}
-              <CommentArea />
+              <Sidebar
+                isVisible={showSidebar}
+                handleClose={() => setShowSidebar(false)}
+              />
             </Container>
           </div>
         </>
