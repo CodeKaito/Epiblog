@@ -16,7 +16,7 @@ const Sidebar = ({ isVisible, handleClose }) => {
             <FaTimes className="fatimes pointer" />
           </div>
 
-          <div className="d-flex p-2">
+          <div className="comment-area-container d-flex p-2">
             <div className="p-3">
               <CommentArea />
             </div>
