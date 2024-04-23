@@ -3,7 +3,8 @@ import { Button, Container, Form } from "react-bootstrap";
 import CustomAlert from "../../../utils/CustomAlert";
 import "./styles.css";
 
-const Biography = () => {
+const Biography = (props) => {
+  const { _id } = props;
   const [bioData, setBioData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,11 +14,10 @@ const Biography = () => {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   useEffect(() => {
-    const userId = process.env.REACT_APP_USER_LOGGED_IN_ID;
     const fetchBio = async () => {
       try {
         const response = await fetch(
-          `https://epicode-api.onrender.com/api/authors/${userId}`
+          `https://epicode-api.onrender.com/api/authors/${_id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -34,7 +34,7 @@ const Biography = () => {
     };
 
     fetchBio();
-  }, []);
+  }, [_id]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -42,8 +42,7 @@ const Biography = () => {
 
   const handleSave = async () => {
     try {
-      const userId = process.env.REACT_APP_USER_LOGGED_IN_ID;
-      await fetch(`https://epicode-api.onrender.com/api/authors/${userId}`, {
+      await fetch(`https://epicode-api.onrender.com/api/authors/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +55,7 @@ const Biography = () => {
 
       // Aggiorna la biografia visualizzata subito dopo averla salvata
       const updatedResponse = await fetch(
-        `https://epicode-api.onrender.com/api/authors/${userId}`
+        `https://epicode-api.onrender.com/api/authors/${_id}`
       );
       if (!updatedResponse.ok) {
         throw new Error("Failed to fetch updated bio");
@@ -98,7 +97,11 @@ const Biography = () => {
                 />
               </Form>
             ) : (
-              <p>{bioData ? bioData.bio : "No biography available"}</p>
+              <p>
+                {bioData && bioData.bio
+                  ? bioData.bio
+                  : "No biography available"}
+              </p>
             )}
           </div>
           <div className="d-flex justify-content-end mb-3">

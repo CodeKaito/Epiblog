@@ -69,7 +69,7 @@ const ProfileLeft = () => {
               </div>
             </Tab>
             <Tab eventKey="bio" title="Bio">
-              <Biography />
+              <Biography {...userData} />
             </Tab>
           </Tabs>
         </>
