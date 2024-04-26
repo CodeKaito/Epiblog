@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import CommentSingle from "../comment-single/CommentSingle";
 
 const CommentList = () => {
   return (
-    <div>CommentList</div>
-  )
-}
+    <div className="comment-list-container">
+      <CommentSingle />
+      <CommentSingle />
+      <CommentSingle />
+      <CommentSingle />
+    </div>
+  );
+};
 
-export default CommentList
+export default CommentList;

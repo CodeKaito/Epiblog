@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Form, Image } from "react-bootstrap";
 import { useAuth } from "../../../context/AuthenticationContext";
 import "../styles.css";
-import CommentList from "../comment-list/CommentList";
 
 const CommentArea = () => {
   const { userData } = useAuth();
@@ -39,10 +38,6 @@ const CommentArea = () => {
           <div className="mx-3 comment-area-cancel-button pointer">Cancel</div>
           <Button className="comment-area-add-button">Add</Button>
         </div>
-      </div>
-      <hr />
-      <div className="my-5">
-        <CommentList />
       </div>
     </div>
   );

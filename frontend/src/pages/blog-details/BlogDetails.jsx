@@ -73,10 +73,11 @@ const BlogDetails = () => {
               </div>
               <p>{blog.content}</p>
               {blog.cover && (
-                <div className="blog-cover-container mt-4">
+                <div className="d-flex justify-content-center mt-4">
                   <Image
                     src={blog.cover}
                     alt="cover-img"
+                    width={500}
                     className="blog-cover"
                   />
                 </div>

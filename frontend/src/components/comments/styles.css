@@ -45,13 +45,36 @@
   border: 1px solid rgb(54, 54, 54);
   color: rgb(252, 252, 252);
 }
-
+.comment-list-container {
+  margin-bottom: 80px;
+}
+.comment-single-container {
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgb(219, 219, 219);
+}
+.comment-author {
+  font-size: 14px;
+}
+.comment-createdat {
+  font-size: 11px;
+  color: grey;
+}
+.comment-content {
+  font-size: 14px;
+  max-height: calc(14px * 3);
+  overflow: hidden;
+  white-space: pre-line;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 @media screen and (max-width: 1170px) {
   .sidebar-comments {
     width: 100%;
     transform: translateX(-100%);
   }
-  .comment-area-container {
+  .comment-area-container,
+  .comment-list-container {
     justify-content: center;
   }
 }
