@@ -14,10 +14,7 @@ const NewPost = () => {
       value: 1,
       unit: "min",
     },
-    author: {
-      name: "",
-      avatar: "",
-    },
+    author: "",
     content: "",
   };
   const [formData, setFormData] = useState(initialFormData);
@@ -43,6 +40,15 @@ const NewPost = () => {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    if (userData && userData._id) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        author: userData._id,
+      }));
+    }
+  }, [userData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,19 +86,6 @@ const NewPost = () => {
 
     return () => clearTimeout(hideAlerts);
   }, [showSuccessAlert, showErrorAlert]);
-
-  useEffect(() => {
-    if (userData) {
-      setFormData((formData) => ({
-        ...formData,
-        author: {
-          id: userData._id,
-          name: userData.name + " " + userData.surname,
-          avatar: userData.avatar,
-        },
-      }));
-    }
-  }, [userData]);
 
   return (
     <>
