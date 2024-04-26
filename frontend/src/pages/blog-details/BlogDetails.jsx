@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Image, Spinner } from "react-bootstrap";
+import { Container, Image, Spinner, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import "./styles.css";
@@ -48,46 +48,52 @@ const BlogDetails = () => {
       ) : (
         <>
           <HomeNavBar />
-          <div className="mt-5 page">
-            <Container className="blog-container">
-              <h1 className="mt-5 blog-title">{blog.title}</h1>
-              <div className="d-flex align-items-center">
-                <Image
-                  src={blog.author.avatar}
-                  className="rounded-circle object-fit-cover"
-                  width={50}
-                  height={50}
-                />
-                <h1 className="fs-4 mx-3 my-5 blog-author-name">
-                  {blog.author.name}
-                </h1>
-              </div>
-              <div className="mb-5 comments-box">
-                <IoChatbubbleOutline
-                  onClick={handleToggleSidebar}
-                  className="pointer"
-                />
-              </div>
-              <div className="mb-4 category">
-                <p className="ellipsis px-3 category-text">{blog.category}</p>
-              </div>
-              <p>{blog.content}</p>
-              {blog.cover && (
-                <div className="d-flex justify-content-center mt-4">
-                  <Image
-                    src={blog.cover}
-                    alt="cover-img"
-                    width={500}
-                    className="blog-cover"
-                  />
+          <Container>
+            <Row>
+              <Col md={7} className="mx-auto">
+                <div className="mt-5 page">
+                  <div className="blog-container">
+                    <h1 className="mt-5 blog-title">{blog.title}</h1>
+                    <div className="d-flex align-items-center">
+                      <Image
+                        src={blog.author.avatar}
+                        className="rounded-circle object-fit-cover"
+                        width={50}
+                        height={50}
+                      />
+                      <h1 className="fs-4 mx-3 my-5 blog-author-name">
+                        {blog.author.name}
+                      </h1>
+                    </div>
+                    <div className="mb-5 comments-box">
+                      <IoChatbubbleOutline
+                        onClick={handleToggleSidebar}
+                        className="pointer"
+                      />
+                    </div>
+                    <div className="mb-4 d-flex">
+                      <p className="ellipsis px-3 category">{blog.category}</p>
+                    </div>
+                    <p>{blog.content}</p>
+                    {blog.cover && (
+                      <div className="d-flex justify-content-center mt-4">
+                        <Image
+                          src={blog.cover}
+                          alt="cover-img"
+                          width={500}
+                          className="blog-cover"
+                        />
+                      </div>
+                    )}
+                    <Sidebar
+                      isVisible={showSidebar}
+                      handleClose={() => setShowSidebar(false)}
+                    />
+                  </div>
                 </div>
-              )}
-              <Sidebar
-                isVisible={showSidebar}
-                handleClose={() => setShowSidebar(false)}
-              />
-            </Container>
-          </div>
+              </Col>
+            </Row>
+          </Container>
         </>
       )}
     </>
