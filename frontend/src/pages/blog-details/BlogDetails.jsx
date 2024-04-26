@@ -63,7 +63,10 @@ const BlogDetails = () => {
                 </h1>
               </div>
               <div className="mb-5 comments-box">
-                <IoChatbubbleOutline onClick={handleToggleSidebar} />
+                <IoChatbubbleOutline
+                  onClick={handleToggleSidebar}
+                  className="pointer"
+                />
               </div>
               <div className="mb-4 category">
                 <p className="ellipsis px-3 category-text">{blog.category}</p>
