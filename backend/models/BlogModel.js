@@ -29,19 +29,24 @@ const blogSchema = new mongoose.Schema({
       required: true,
     },
   },
+  // author: {
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   name: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   avatar: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
   author: {
-    id: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    avatar: {
-      type: String,
-      required: true,
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Author",
+    required: true,
   },
   content: {
     type: String,

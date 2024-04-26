@@ -13,7 +13,7 @@ module.exports.getBlogs = async (req, res, next) => {
     }
 
     // Esegui la query al database utilizzando il filtro
-    const blogs = await BlogModel.find(filter);
+    const blogs = await BlogModel.find(filter).populate("author").exec();
 
     // Invia la lista dei blog filtrata come risposta
     res.send(blogs);
