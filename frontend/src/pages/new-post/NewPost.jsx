@@ -54,10 +54,15 @@ const NewPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.cover) {
+      console.error("Cover image is not selected.");
+      return;
+    }
     console.log("Read Time before submission:", formData.readTime);
     console.log("Author before submission:", formData.author);
     console.log(formData.content);
     console.log(formData.cover);
+    console.log(formData);
 
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
@@ -75,6 +80,7 @@ const NewPost = () => {
 
       const response = await fetch("http://localhost:5000/api/blogPosts", {
         method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
         body: form,
       });
 
@@ -155,6 +161,7 @@ const NewPost = () => {
                     accept="image/*"
                     name="cover"
                     value={formData.cover}
+                    required
                     onChange={(e) => {
                       handleChange(e);
                       if (e.target.files && e.target.files[0]) {
