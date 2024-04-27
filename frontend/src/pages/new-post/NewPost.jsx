@@ -6,7 +6,8 @@ import { useAuth } from "../../context/AuthenticationContext";
 import "./styles.css";
 
 const NewPost = () => {
-  const initialFormData = {
+  const { userData } = useAuth();
+  const [formData, setFormData] = useState({
     category: "",
     title: "",
     cover: "",
@@ -16,30 +17,10 @@ const NewPost = () => {
     },
     author: "",
     content: "",
-  };
-  const [formData, setFormData] = useState(initialFormData);
+  });
   const [showSuccessAlert, setshowSuccessAlert] = useState(false);
   const [showErrorAlert, setshowErrorAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { userData } = useAuth();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      setFormData({ ...formData, cover: reader.result });
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
 
   useEffect(() => {
     if (userData && userData._id) {
@@ -50,6 +31,15 @@ const NewPost = () => {
     }
   }, [userData]);
 
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "cover") {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setshowSuccessAlert(false);
@@ -57,15 +47,32 @@ const NewPost = () => {
     setIsLoading(true);
 
     try {
-      await fetch("https://epicode-api.onrender.com/api/blogPosts", {
+      const form = new FormData();
+      form.append("category", formData.category);
+      form.append("title", formData.title);
+      form.append("cover", formData.cover);
+      form.append("readTime", JSON.stringify(formData.readTime));
+      form.append("author", formData.author);
+      form.append("content", formData.content);
+
+      console.log(form);
+
+      // Invia i dati del form al backend
+      const response = await fetch("http://localhost:5000/api/blogPosts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: form,
       });
-      console.log(JSON.stringify(formData));
-      setshowSuccessAlert(true);
+
+      if (response.ok) {
+        setshowSuccessAlert(true);
+        const blogPostsData = await response.json();
+        console.log(blogPostsData);
+        // Aggiorna eventualmente lo stato dopo il successo dell'upload
+        setFormData(formData); // Resettare il form dopo l'upload
+      } else {
+        // Gestisci eventuali errori nel caso la richiesta non sia andata a buon fine
+        throw new Error("Failed to upload form data");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
       setshowErrorAlert(true);
@@ -75,7 +82,14 @@ const NewPost = () => {
   };
 
   const handleReset = () => {
-    setFormData(initialFormData);
+    setFormData({
+      category: "",
+      title: "",
+      cover: "",
+      readTime: { value: 1, unit: "min" },
+      author: userData ? userData._id : "",
+      content: "",
+    });
   };
 
   useEffect(() => {
@@ -112,10 +126,7 @@ const NewPost = () => {
           />
         )}
         <Form className="mt-3" onSubmit={handleSubmit}>
-          <Form.Group
-            controlId="cover"
-            className="mt-3 d-flex justify-content-center"
-          >
+          <Form.Group className="mt-3 d-flex justify-content-center">
             {formData.cover ? (
               <img
                 src={formData.cover}
@@ -125,16 +136,15 @@ const NewPost = () => {
                 className="cover-image"
               />
             ) : (
-              <div className="upload-container">
-                <Form.Group controlId="formFile" className="mb-3">
+              <>
+                <Form.Group className="mb-3">
                   <Form.Control
-                    id="upload"
                     type="file"
                     accept="image/*"
-                    onChange={handleFileChange}
+                    onChange={handleChange}
                   />
                 </Form.Group>
-              </div>
+              </>
             )}
           </Form.Group>
           <Form.Group controlId="title" className="mt-3">

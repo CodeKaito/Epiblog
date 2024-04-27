@@ -1,3 +1,4 @@
+const cloudinaryMiddleware = require("../middlewares/multer.js");
 // Importa il modello del author per interagire con il database
 const BlogModel = require("../models/BlogModel");
 
@@ -147,15 +148,22 @@ module.exports.getPostsByAuthorId = async (req, res, next) => {
   }
 };
 
-// Funzione per salvare un nuovo author nel database e inviare il risultato della creazione come risposta
+// Funzione per salvare un nuovo post nel database e inviare il risultato della creazione come risposta
 module.exports.saveBlog = async (req, res, next) => {
   try {
-    const blog = req.body;
-    // Crea un nuovo author nel database utilizzando i dati forniti
-    const data = await BlogModel.create(blog);
-    // Invia il nuovo author creato come risposta con stato 201
-    console.log("Saved successfully, blog: " + JSON.stringify(data));
-    res.status(201).send(data);
+    // Esegui il middleware di Cloudinary per caricare l'immagine del post
+    cloudinaryMiddleware(req, res, async () => {
+      const blogData = req.body;
+      // Aggiungi il percorso dell'immagine dal req.file se è stato caricato correttamente
+      blogData.cover = req.file ? req.file.path : null;
+
+      // Crea un nuovo post nel database utilizzando i dati forniti
+      const newBlog = await BlogModel.create(blogData);
+
+      // Invia il nuovo post creato come risposta con stato 201
+      console.log("Saved successfully, blog: " + JSON.stringify(newBlog));
+      res.status(201).send(newBlog);
+    });
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
@@ -167,7 +175,7 @@ module.exports.saveBlog = async (req, res, next) => {
     // Passa l'errore al middleware successivo
     next(error);
   } finally {
-    // Stampa a console il completamento del processo di creazione del author
+    // Stampa a console il completamento del processo di creazione del post
     console.log(`Blog creation process completed.`);
   }
 };
