@@ -63,7 +63,7 @@ const BlogDetails = () => {
                         height={50}
                       />
                       <h1 className="fs-4 mx-3 my-5 blog-author-name">
-                        {blog.author.name}
+                        {blog.author.name} {blog.author.surname}
                       </h1>
                     </div>
                     <div className="mb-5 comments-box">

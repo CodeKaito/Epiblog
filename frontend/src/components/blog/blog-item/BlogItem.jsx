@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const BlogItem = (props) => {
   const { _id, title, content, category, cover, readTime, author } = props;
-  const { name, avatar } = author;
+  const { name, avatar, surname } = author;
   const { value, unit } = readTime;
   return (
     <Container fluid="lg" className="article-container">
@@ -23,7 +23,9 @@ const BlogItem = (props) => {
           />
         </div>
         <div className="author-name">
-          <p>{name}</p>
+          <p>
+            {name} {surname}
+          </p>
         </div>
       </div>
 
