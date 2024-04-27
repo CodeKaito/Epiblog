@@ -36,17 +36,20 @@ const NewPost = () => {
     const { name, value, files } = e.target;
     if (name === "cover") {
       setFormData({ ...formData, [name]: files[0] });
-    } else if (name === "readTimeValue" || name === "readTimeUnit") {
-      setFormData({
-        ...formData,
-        readTime: {
-          ...formData.readTime,
-          [name === "readTimeValue" ? "value" : "unit"]: value,
-        },
-      });
     } else {
       setFormData({ ...formData, [name]: value });
     }
+  };
+
+  const handleReadTimeChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      readTime: {
+        ...formData.readTime,
+        [name]: value,
+      },
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -54,6 +57,7 @@ const NewPost = () => {
     console.log("Read Time before submission:", formData.readTime);
     console.log("Author before submission:", formData.author);
     console.log(formData.content);
+    console.log(formData.cover);
 
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
@@ -63,15 +67,14 @@ const NewPost = () => {
       const form = new FormData();
       form.append("category", formData.category);
       form.append("title", formData.title);
-      form.append("readTime", JSON.stringify(formData.readTime));
+      form.append("readTime.value", formData.readTime.value);
+      form.append("readTime.unit", formData.readTime.unit);
       form.append("content", formData.content);
       form.append("author", formData.author);
       form.append("cover", formData.cover);
 
-      // Invia i dati del form al backend
       const response = await fetch("http://localhost:5000/api/blogPosts", {
         method: "POST",
-        headers: { "Content-Type": "multipart/form-data" },
         body: form,
       });
 
@@ -79,9 +82,7 @@ const NewPost = () => {
         setshowSuccessAlert(true);
         const blogPostsData = await response.json();
         console.log(blogPostsData);
-        // Aggiorna eventualmente lo stato dopo il successo dell'upload
       } else {
-        // Gestisci eventuali errori nel caso la richiesta non sia andata a buon fine
         throw new Error("Failed to upload form data");
       }
     } catch (error) {
@@ -153,9 +154,20 @@ const NewPost = () => {
                     type="file"
                     accept="image/*"
                     name="cover"
-                    onChange={
-                      ((e) => console.log(e.target.files), handleChange)
-                    }
+                    value={formData.cover}
+                    onChange={(e) => {
+                      handleChange(e);
+                      if (e.target.files && e.target.files[0]) {
+                        let reader = new FileReader();
+                        reader.onload = function (e) {
+                          setFormData((prevFormData) => ({
+                            ...prevFormData,
+                            cover: e.target.result,
+                          }));
+                        };
+                        reader.readAsDataURL(e.target.files[0]);
+                      }
+                    }}
                   />
                 </Form.Group>
               </>
@@ -206,7 +218,7 @@ const NewPost = () => {
                   size="lg"
                   name="readTimeUnit"
                   value={formData.readTime.unit}
-                  onChange={handleChange}
+                  onChange={handleReadTimeChange}
                   required
                 >
                   <option value="min">min</option>

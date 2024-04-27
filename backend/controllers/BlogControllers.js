@@ -1,4 +1,4 @@
-const cloudinaryMiddleware = require("../middlewares/multer.js");
+const cloudinaryPostsMiddleware = require("../middlewares/multer.js");
 // Importa il modello del author per interagire con il database
 const BlogModel = require("../models/BlogModel");
 
@@ -152,10 +152,10 @@ module.exports.getPostsByAuthorId = async (req, res, next) => {
 module.exports.saveBlog = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'immagine del post
-    cloudinaryMiddleware(req, res, async () => {
+    cloudinaryPostsMiddleware(req, res, async () => {
       const newPost = await BlogModel.create({
         ...req.body,
-        cover: req.file.path,
+        cover: req.file ? req.file.path : null,
       });
       console.log("Saved successfully, blog: " + JSON.stringify(newPost));
       res.status(201).send(newPost);

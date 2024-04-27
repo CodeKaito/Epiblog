@@ -16,5 +16,6 @@ const storage = new CloudinaryStorage({
 });
 
 const cloudinaryMiddleware = multer({ storage: storage }).single("avatar");
+const cloudinaryPostsMiddleware = multer({ storage: storage }).single("cover");
 
-module.exports = cloudinaryMiddleware;
+(module.exports = cloudinaryMiddleware), cloudinaryPostsMiddleware;
