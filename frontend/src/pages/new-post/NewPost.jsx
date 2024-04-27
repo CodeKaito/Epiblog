@@ -52,6 +52,8 @@ const NewPost = () => {
     e.preventDefault();
     console.log("Read Time before submission:", formData.readTime);
     console.log("Author before submission:", formData.author);
+    console.log(formData.content);
+
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
     setIsLoading(true);
