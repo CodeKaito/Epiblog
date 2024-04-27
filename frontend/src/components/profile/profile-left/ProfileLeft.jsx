@@ -7,7 +7,6 @@ import { useAuth } from "../../../context/AuthenticationContext";
 const ProfileLeft = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { userData } = useAuth();
 
   useEffect(() => {
@@ -25,10 +24,10 @@ const ProfileLeft = () => {
           const data = await response.json();
 
           setPosts(data);
+          console.log(data);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);
-          setError("Failed to fetch data");
           setLoading(false);
         }
       };
@@ -42,12 +41,6 @@ const ProfileLeft = () => {
       {loading ? (
         <div className="loader-overlay">
           <Spinner animation="border" role="status" className="loader" />
-        </div>
-      ) : error ? (
-        <div>Error: {error}</div>
-      ) : posts.length === 0 ? (
-        <div className="d-flex h-50 justify-content-center align-items-center">
-          <h2>No posts found for this author.</h2>
         </div>
       ) : (
         <>
@@ -63,11 +56,16 @@ const ProfileLeft = () => {
           >
             <Tab eventKey="posts" title="Posts">
               <div className="mt-5">
-                {posts.map((post) => (
-                  <BlogItem key={post._id} {...post} />
-                ))}
+                {posts.length > 0 ? (
+                  posts.map((post) => <BlogItem key={post._id} {...post} />)
+                ) : (
+                  <div className="d-flex justify-content-center mt-3">
+                    <p>No posts found for this author</p>
+                  </div>
+                )}
               </div>
             </Tab>
+
             <Tab eventKey="bio" title="Bio">
               <Biography {...userData} />
             </Tab>

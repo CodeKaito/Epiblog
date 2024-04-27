@@ -8,8 +8,6 @@ import { useAuth } from "../../context/AuthenticationContext";
 const Profile = () => {
   const { userData, isLoading } = useAuth();
 
-  console.log(userData);
-
   return (
     <>
       <ProfileNavbar />
