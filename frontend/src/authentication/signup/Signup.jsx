@@ -39,7 +39,7 @@ const Signup = ({ showLoginModal }) => {
         "https://epicode-api.onrender.com/api/authors",
         {
           method: "POST",
-          body: form, // Passa l'oggetto FormData come corpo della richiesta
+          body: form,
         }
       );
       const authorData = await response.json();

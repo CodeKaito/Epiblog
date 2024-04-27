@@ -153,16 +153,17 @@ module.exports.saveBlog = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'immagine del post
     cloudinaryMiddleware(req, res, async () => {
-      const blogData = req.body;
-      // Aggiungi il percorso dell'immagine dal req.file se è stato caricato correttamente
-      blogData.cover = req.file ? req.file.path : null;
-
-      // Crea un nuovo post nel database utilizzando i dati forniti
-      const newBlog = await BlogModel.create(blogData);
-
-      // Invia il nuovo post creato come risposta con stato 201
-      console.log("Saved successfully, blog: " + JSON.stringify(newBlog));
-      res.status(201).send(newBlog);
+      const { category, title, author, readTime, content, cover } = req.body;
+      const newPost = await BlogModel.create({
+        category,
+        title,
+        author,
+        readTime,
+        content,
+        cover: req.file ? req.file.path : null,
+      });
+      console.log("Saved successfully, blog: " + JSON.stringify(newPost));
+      res.status(201).send(newPost);
     });
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client

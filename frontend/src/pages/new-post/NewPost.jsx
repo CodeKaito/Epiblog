@@ -35,6 +35,14 @@ const NewPost = () => {
     const { name, value, files } = e.target;
     if (name === "cover") {
       setFormData({ ...formData, [name]: files[0] });
+    } else if (name === "readTimeValue" || name === "readTimeUnit") {
+      setFormData({
+        ...formData,
+        readTime: {
+          ...formData.readTime,
+          [name === "readTimeValue" ? "value" : "unit"]: value,
+        },
+      });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -42,6 +50,8 @@ const NewPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Read Time before submission:", formData.readTime);
+    console.log("Author before submission:", formData.author);
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
     setIsLoading(true);
@@ -51,11 +61,9 @@ const NewPost = () => {
       form.append("category", formData.category);
       form.append("title", formData.title);
       form.append("cover", formData.cover);
-      form.append("readTime", JSON.stringify(formData.readTime));
       form.append("author", formData.author);
+      form.append("readTime", JSON.stringify(formData.readTime));
       form.append("content", formData.content);
-
-      console.log(form);
 
       // Invia i dati del form al backend
       const response = await fetch("http://localhost:5000/api/blogPosts", {
@@ -68,7 +76,6 @@ const NewPost = () => {
         const blogPostsData = await response.json();
         console.log(blogPostsData);
         // Aggiorna eventualmente lo stato dopo il successo dell'upload
-        setFormData(formData); // Resettare il form dopo l'upload
       } else {
         // Gestisci eventuali errori nel caso la richiesta non sia andata a buon fine
         throw new Error("Failed to upload form data");
@@ -141,7 +148,10 @@ const NewPost = () => {
                   <Form.Control
                     type="file"
                     accept="image/*"
-                    onChange={handleChange}
+                    name="cover"
+                    onChange={
+                      ((e) => console.log(e.target.files), handleChange)
+                    }
                   />
                 </Form.Group>
               </>
@@ -173,24 +183,31 @@ const NewPost = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="readTime" className="mt-3">
+            <Form.Group controlId="readTimeValue" className="mt-3">
               <Form.Label>Read Time in minutes</Form.Label>
               <div className="d-flex">
                 <Form.Control
                   className="form-container input-readtime"
                   size="lg"
                   type="number"
-                  name="readTime"
+                  name="readTimeValue"
                   placeholder="Enter read time"
                   value={formData.readTime.value}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      readTime: { ...formData.readTime, value: e.target.value },
-                    })
-                  }
+                  onChange={handleChange}
                   required
                 />
+                <Form.Control
+                  as="select"
+                  className="form-container input-readtime"
+                  size="lg"
+                  name="readTimeUnit"
+                  value={formData.readTime.unit}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="min">min</option>
+                  <option value="hour">hour</option>
+                </Form.Control>
               </div>
             </Form.Group>
           </div>

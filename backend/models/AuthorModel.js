@@ -25,6 +25,10 @@ const authorSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 // Esporta il modello mongoose associato allo schema definito sopra
