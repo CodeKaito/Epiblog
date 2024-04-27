@@ -77,52 +77,54 @@ const HomeNavBar = () => {
             >
               <PiNotePencilThin className="PiNotePencilThin fs-4 mx-1" /> Write
             </Link>
-            <TfiBell className="mx-0 my-2 my-lg-0 fs-5 mx-lg-3 TfiBell pointer" />
-            <div className="btn-group">
-              <Dropdown align="end">
-                <Dropdown.Toggle
-                  className="dropdown-toggle"
-                  variant="light"
-                  id="dropdown-basic"
-                >
-                  <User />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <div className="my-4">
-                    <Container>
-                      <div className="mx-2">
-                        <Link to="/profile">
-                          <div className="d-flex align-items-center pointer font-weight">
-                            <RxPerson className="fs-5" />
-                            <p className="ms-3">Profile</p>
-                          </div>
-                        </Link>
-                        <Link to="/authors">
-                          <div className="mt-3 d-flex align-items-center pointer font-weight">
-                            <BsPeople className="fs-5" />
-                            <p className="ms-3">Authors</p>
-                          </div>
-                        </Link>
-                        <Link to="/posts">
-                          <div className="mt-3 d-flex align-items-center pointer font-weight">
-                            <MdOutlineBookmarks className="fs-5" />
-                            <p className="ms-3">Library</p>
-                          </div>
-                        </Link>
-                      </div>
-                    </Container>
-                    <hr />
-                    <Container>
-                      <div onClick={handleLogout}>
-                        <div className="mx-2 sign-out">
-                          <p className="pointer">Sign Out</p>
-                          <p className="userEmail mt-1">{hiddenEmail}</p>
+            <div className="d-flex justify-content-between align-items-center">
+              <TfiBell className="mx-1 my-2 my-lg-0 fs-5 mx-lg-3 TfiBell pointer" />
+              <div className="btn-group">
+                <Dropdown align="end">
+                  <Dropdown.Toggle
+                    className="dropdown-toggle"
+                    variant="light"
+                    id="dropdown-basic"
+                  >
+                    <User />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <div className="my-4">
+                      <Container>
+                        <div className="mx-2">
+                          <Link to="/profile">
+                            <div className="d-flex align-items-center pointer font-weight">
+                              <RxPerson className="fs-5" />
+                              <p className="ms-3">Profile</p>
+                            </div>
+                          </Link>
+                          <Link to="/authors">
+                            <div className="mt-3 d-flex align-items-center pointer font-weight">
+                              <BsPeople className="fs-5" />
+                              <p className="ms-3">Authors</p>
+                            </div>
+                          </Link>
+                          <Link to="/posts">
+                            <div className="mt-3 d-flex align-items-center pointer font-weight">
+                              <MdOutlineBookmarks className="fs-5" />
+                              <p className="ms-3">Library</p>
+                            </div>
+                          </Link>
                         </div>
-                      </div>
-                    </Container>
-                  </div>
-                </Dropdown.Menu>
-              </Dropdown>
+                      </Container>
+                      <hr />
+                      <Container>
+                        <div onClick={handleLogout}>
+                          <div className="mx-2 sign-out">
+                            <p className="pointer">Sign Out</p>
+                            <p className="userEmail mt-1">{hiddenEmail}</p>
+                          </div>
+                        </div>
+                      </Container>
+                    </div>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </div>
           </Navbar.Collapse>
         </Navbar>

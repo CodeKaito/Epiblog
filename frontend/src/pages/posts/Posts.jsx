@@ -28,7 +28,6 @@ const Posts = () => {
         console.log("Query from URL:", query);
 
         const data = await response.json();
-        console.log(data);
         setPosts(data);
         setLoading(false);
       } catch (error) {

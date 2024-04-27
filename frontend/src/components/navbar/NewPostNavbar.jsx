@@ -45,7 +45,7 @@ const HomeNavBar = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto"></Nav>
-              <div className="btn-group">
+              <div className="d-flex btn-group justify-content-end">
                 <Dropdown align="end">
                   <Dropdown.Toggle
                     className="dropdown-toggle"

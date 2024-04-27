@@ -126,13 +126,14 @@ const NewPost = () => {
               />
             ) : (
               <div className="upload-container">
-                <input
-                  id="upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="upload-input"
-                />
+                <Form.Group controlId="formFile" className="mb-3">
+                  <Form.Control
+                    id="upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                </Form.Group>
               </div>
             )}
           </Form.Group>
