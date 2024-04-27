@@ -16,7 +16,7 @@ const blogSchema = new mongoose.Schema({
   // Definisce il campo 'cover' di tipo String
   cover: {
     type: String,
-    required: false,
+    required: true,
   },
   // Definisce il campo 'readTime' di tipo String e richiesto
   readTime: {
