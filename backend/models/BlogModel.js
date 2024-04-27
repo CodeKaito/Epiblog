@@ -22,11 +22,11 @@ const blogSchema = new mongoose.Schema({
   readTime: {
     value: {
       type: Number,
-      required: true,
+      required: false,
     },
     unit: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   // author: {

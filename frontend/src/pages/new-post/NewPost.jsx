@@ -23,6 +23,7 @@ const NewPost = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    console.log(userData);
     if (userData && userData._id) {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -62,14 +63,15 @@ const NewPost = () => {
       const form = new FormData();
       form.append("category", formData.category);
       form.append("title", formData.title);
-      form.append("cover", formData.cover);
-      form.append("author", formData.author);
       form.append("readTime", JSON.stringify(formData.readTime));
       form.append("content", formData.content);
+      form.append("author", formData.author);
+      form.append("cover", formData.cover);
 
       // Invia i dati del form al backend
       const response = await fetch("http://localhost:5000/api/blogPosts", {
         method: "POST",
+        headers: { "Content-Type": "multipart/form-data" },
         body: form,
       });
 
