@@ -103,7 +103,7 @@ module.exports.detailBlog = async (req, res, next) => {
   const { id } = req.params;
   try {
     // Cerca il author nel database utilizzando l'ID fornito
-    const blog = await BlogModel.findById(id);
+    const blog = await BlogModel.findById(id).populate("author").exec();
     // Invia i dettagli del author come risposta
     res.send(blog);
   } catch (error) {
