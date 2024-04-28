@@ -31,7 +31,13 @@ const CommentList = (props) => {
         .slice()
         .reverse()
         .map((comment) => (
-          <CommentSingle key={comment._id} {...comment} />
+          <CommentSingle
+            key={comment._id}
+            postId={postId}
+            commentId={comment._id}
+            setComments={setComments}
+            {...comment}
+          />
         ))}
     </div>
   );

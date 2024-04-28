@@ -78,6 +78,36 @@
 .comment-list-container {
     justify-content: center;
   }
+.tag {
+  height: 15px;
+  min-width: 40px;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-wrap: wrap;
+  display: flex;
+}
+.tag-text {
+  font-size: 10px;
+}
+.bstrash:hover,
+.confirm-deletion:hover {
+  color: rgb(168, 0, 0);
+}
+.MdEditNote:hover {
+  color: rgb(0, 25, 168);
+}
+.confirm:hover {
+  color: rgb(22, 168, 0);
+}
+.cancel,
+.confirm,
+.confirm-deletion {
+  font-size: 12px;
+}
 @media screen and (max-width: 1170px) {
   .sidebar-comments {
     width: 100%;

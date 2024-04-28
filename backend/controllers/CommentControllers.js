@@ -24,25 +24,26 @@ module.exports.getComments = async (req, res, next) => {
 };
 
 // Funzione asincrona per ottenere tutti i commenti relativi a un post specifico e inviarli come risposta
-module.exports.getCommentsByPostId = async (req, res, next) => {
-  const { postId, commentId } = req.params;
+module.exports.getCommentDetails = async (req, res, next) => {
+  const { id, commentId } = req.params;
   try {
-    // Esegui la query al database per trovare tutti i commenti relativi a un post specifico
-    const comments = await CommentModel.find({
-      postId,
+    // Esegui la query al database per trovare il commento specifico utilizzando l'ID del post e l'ID del commento
+    const comment = await CommentModel.findOne({
       _id: commentId,
+      postId: id,
     }).populate("author");
 
-    // Invia la lista dei commenti come risposta
-    res.send(comments);
+    if (!comment) {
+      // Se il commento non è stato trovato, restituisci uno stato 404
+      return res.status(404).json({ error: "Comment not found" });
+    }
+
+    // Invia i dettagli del commento come risposta
+    res.json(comment);
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
-    res.status(500).send({
-      error: error.message,
-      stack: error.stack,
-      msg: "Something went wrong!",
-    });
+    res.status(500).json({ error: "Something went wrong" });
     // Passa l'errore al middleware successivo
     next(error);
   }
@@ -74,27 +75,28 @@ module.exports.saveComment = async (req, res, next) => {
 
 // Funzione per aggiornare un commento esistente nel database e inviare il risultato dell'aggiornamento come risposta
 module.exports.updateComment = async (req, res, next) => {
-  const { id } = req.params;
-  const newData = req.body;
+  const { id, commentId } = req.params; // Ottieni l'ID del post e l'ID del commento dai parametri della richiesta
+  const newData = req.body; // Nuovi dati del commento da aggiornare
+
   try {
     // Aggiorna il commento nel database utilizzando l'ID fornito e i nuovi dati del commento
-    const updatedComment = await CommentModel.findByIdAndUpdate(id, newData, {
-      new: true,
-    });
+    const updatedComment = await CommentModel.findOneAndUpdate(
+      { _id: commentId, postId: id }, // Filtra il commento per ID del post e ID del commento
+      newData, // Nuovi dati da aggiornare
+      { new: true } // Opzione per restituire il documento aggiornato
+    );
+
     if (!updatedComment) {
-      // Se il commento non è stato trovato, restituisci un messaggio di errore
-      return res.status(404).send("Comment not found");
+      // Se il commento non è stato trovato, restituisci uno stato 404
+      return res.status(404).json({ error: "Comment not found" });
     }
-    // Invia una conferma di aggiornamento come risposta
-    res.send(updatedComment);
+
+    // Invia il commento aggiornato come risposta
+    res.json(updatedComment);
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
-    res.status(500).send({
-      error: error.message,
-      stack: error.stack,
-      msg: "Something went wrong!",
-    });
+    res.status(500).json({ error: "Something went wrong" });
     // Passa l'errore al middleware successivo
     next(error);
   }
@@ -102,12 +104,21 @@ module.exports.updateComment = async (req, res, next) => {
 
 // Funzione per eliminare un commento esistente dal database e inviare il risultato dell'eliminazione come risposta
 module.exports.deleteComment = async (req, res, next) => {
-  const { id } = req.params;
+  const { id, commentId } = req.params;
   try {
-    // Elimina il commento dal database utilizzando l'ID fornito
-    await CommentModel.findByIdAndDelete(id);
+    // Elimina il commento dal database utilizzando l'ID del post e l'ID del commento forniti
+    const deletedComment = await CommentModel.findOneAndDelete({
+      _id: commentId,
+      postId: id,
+    });
+
+    if (!deletedComment) {
+      // Se il commento non è stato trovato, restituisci uno stato 404
+      return res.status(404).json({ error: "Comment not found" });
+    }
+
     // Invia una conferma di eliminazione come risposta
-    res.send(`Comment with id ${id} deleted successfully.`);
+    res.send(`Comment with id ${commentId} deleted successfully.`);
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);

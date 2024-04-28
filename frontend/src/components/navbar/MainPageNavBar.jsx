@@ -13,29 +13,26 @@ const HomeNavBar = ({ showSignupModal, showLoginModal }) => {
             <Image className="blog-navbar-brand ms-3" alt="logo" src={logo} />
           </Navbar.Brand>
 
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <div className="me-auto" />
-            <div className="btn-group d-flex align-items-center">
-              <div className="mx-2">
-                <p>Our Story</p>
-              </div>
-              <div className="mx-2">
-                <p>Membership</p>
-              </div>
-              <div className="mx-2">
-                <p>Write</p>
-              </div>
-              <div className="mx-2 pointer" onClick={showLoginModal}>
-                <p>Sign in</p>
-              </div>
-              <div className="mx-2">
-                <Button className="getstarted-button" onClick={showSignupModal}>
-                  Get Started
-                </Button>
-              </div>
+          <div className="me-auto" />
+          <div className="btn-group d-flex align-items-center">
+            <div className="d-none d-md-block mx-2">
+              <p>Our Story</p>
             </div>
-          </Navbar.Collapse>
+            <div className="d-none d-md-block mx-2">
+              <p>Membership</p>
+            </div>
+            <div className="d-none d-md-block mx-2">
+              <p>Write</p>
+            </div>
+            <div className="mx-2 pointer" onClick={showLoginModal}>
+              <p>Sign in</p>
+            </div>
+            <div className="mx-2">
+              <Button className="getstarted-button" onClick={showSignupModal}>
+                Get Started
+              </Button>
+            </div>
+          </div>
         </Container>
       </Navbar>
     </div>
