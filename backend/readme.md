@@ -38,6 +38,9 @@ L'API del Blog è un servizio RESTful che consente di gestire operazioni CRUD (C
    ```plaintext
    PORT=5000
    MONGO_URI=<URI_del_database_MongoDB>
+   CLOUDINARY_CLOUD_NAME=dkj3atfao
+   CLOUDINARY_API_KEY=132136827968491
+   CLOUDINARY_API_SECRET=IW5Y5s5w7IVkqvSb3sp_9mAjSbc
    ```
 
 4. Avviare il server:
