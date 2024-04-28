@@ -29,20 +29,6 @@ const blogSchema = new mongoose.Schema({
       required: true,
     },
   },
-  // author: {
-  //   id: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   name: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   avatar: {
-  //     type: String,
-  //     required: true,
-  //   },
-  // },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Author",
@@ -52,6 +38,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   createdAt: {
     type: Date,
     default: Date.now,
