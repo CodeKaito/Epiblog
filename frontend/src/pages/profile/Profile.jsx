@@ -1,9 +1,10 @@
 import React from "react";
-import { Container, Col, Row, Spinner } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import ProfileNavbar from "../../components/navbar/ProfileNavbar";
 import ProfileRight from "../../components/profile/profile-right/ProfileRight";
 import ProfileLeft from "../../components/profile/profile-left/ProfileLeft";
 import { useAuth } from "../../context/AuthenticationContext";
+import CustomLoader from "../../utils/CustomLoader";
 
 const Profile = () => {
   const { userData, isLoading } = useAuth();
@@ -13,9 +14,7 @@ const Profile = () => {
       <ProfileNavbar />
       <Container className="page">
         {isLoading ? (
-          <div className="loader-overlay">
-            <Spinner animation="border" role="status" className="loader" />
-          </div>
+          <CustomLoader />
         ) : (
           <Row>
             <Col sm={12} lg={8}>

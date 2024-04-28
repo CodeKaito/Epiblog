@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import BlogItem from "../../components/blog/blog-item/BlogItem";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import "./styles.css";
 import PopularPosts from "../../components/sidebar/popular/PopularPosts";
 import Topics from "../../components/sidebar/topics/Topics";
 import Follows from "../../components/sidebar/follow/Follows";
 import SavedPosts from "../../components/sidebar/saved/SavedPosts";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
+import "./styles.css";
 
 const Posts = () => {
   const location = useLocation();
