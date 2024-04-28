@@ -2,9 +2,11 @@ const CommentModel = require("../models/CommentModel");
 
 // Funzione asincrona per ottenere tutti i commenti dal database e inviarli come risposta
 module.exports.getComments = async (req, res, next) => {
+  const { id } = req.params; // Ottieni l'ID del post dai parametri della richiesta
+
   try {
-    // Esegui la query al database per trovare tutti i commenti
-    const comments = await CommentModel.find();
+    // Esegui la query al database per trovare tutti i commenti con postId uguale all'ID del post
+    const comments = await CommentModel.find({ postId: id }).populate("author");
 
     // Invia la lista dei commenti come risposta
     res.send(comments);
@@ -26,7 +28,10 @@ module.exports.getCommentsByPostId = async (req, res, next) => {
   const { postId, commentId } = req.params;
   try {
     // Esegui la query al database per trovare tutti i commenti relativi a un post specifico
-    const comments = await CommentModel.find({ postId, _id: commentId });
+    const comments = await CommentModel.find({
+      postId,
+      _id: commentId,
+    }).populate("author");
 
     // Invia la lista dei commenti come risposta
     res.send(comments);
@@ -50,7 +55,10 @@ module.exports.saveComment = async (req, res, next) => {
     // Crea un nuovo commento nel database utilizzando i dati forniti
     const comment = await CommentModel.create(commentData);
     // Invia il nuovo commento creato come risposta con stato 201
-    res.status(201).send(comment);
+    res.status(201).send({
+      message: "Comment created successfully",
+      commentId: comment._id,
+    });
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);

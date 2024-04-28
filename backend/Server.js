@@ -15,6 +15,7 @@ require("dotenv").config(); // Configurazione dotenv per caricare le variabili d
 
 const AuthorRoutes = require("./routes/AuthorRoute"); // Importa le route necessarie per le chiamate HTTP degli autori
 const BlogRoutes = require("./routes/BlogRoute"); // Importa le route necessarie per le chiamate HTTP dei post blog
+const CommentRoute = require("./routes/CommentRoute"); // Importa le route necessarie per le chiamate HTTP dei commenti dei post blog
 
 const PORT = process.env.PORT || 5001; // Imposta la porta del server di default a 5000, se la 5000non é disponibile allora utilizza la 5001
 const db = process.env.MONGO_URI; // Imposto una costante dove inserisco l'endpoint del mongodb
@@ -47,6 +48,7 @@ startServer();
 
 app.use("/api", AuthorRoutes); // Utilizza le route definite nel file AuthorRoute per gli endpoint API
 app.use("/api", BlogRoutes); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
+app.use("/api", CommentRoute); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
 
 app.use([
   badRequestHandler,

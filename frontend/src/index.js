@@ -5,12 +5,15 @@ import "./index.css";
 import App from "./App";
 import { SearchQueryProvider } from "./context/SearchQueryContext";
 import { AuthProvider } from "./context/AuthenticationContext";
+import { CommentContextProvider } from "./context/CommentContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
       <SearchQueryProvider>
-        <App />
+        <CommentContextProvider>
+          <App />
+        </CommentContextProvider>
       </SearchQueryProvider>
     </AuthProvider>
   </React.StrictMode>

@@ -5,7 +5,7 @@ import CommentArea from "../comments/comment-area/CommentArea";
 import "./styles.css";
 import CommentList from "./comment-list/CommentList";
 
-const Sidebar = ({ isVisible, handleClose }) => {
+const Sidebar = ({ isVisible, handleClose, postId }) => {
   return (
     <div
       className="sidebar-comments"
@@ -19,7 +19,7 @@ const Sidebar = ({ isVisible, handleClose }) => {
 
           <div className="comment-area-container d-flex p-2">
             <div className="p-3">
-              <CommentArea />
+              <CommentArea postId={postId} />
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@ const Sidebar = ({ isVisible, handleClose }) => {
       <Container>
         <div className="comment-list-container d-flex p-2">
           <div className="p-3">
-            <CommentList />
+            <CommentList postId={postId} />
             <div className="my-5 d-flex justify-content-center">
               <p>End of the comments</p>
             </div>

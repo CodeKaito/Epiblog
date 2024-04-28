@@ -89,6 +89,7 @@ const BlogDetails = () => {
                     <Sidebar
                       isVisible={showSidebar}
                       handleClose={() => setShowSidebar(false)}
+                      postId={params.id}
                     />
                   </div>
                 </div>

@@ -51,6 +51,7 @@
 .comment-single-container {
   padding-bottom: 15px;
   border-bottom: 1px solid rgb(219, 219, 219);
+  min-width: 400px;
 }
 .comment-author {
   font-size: 14px;
@@ -68,13 +69,18 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.comment-area-container,
+.comment-list-container {
+    justify-content: center;
+  }
 @media screen and (max-width: 1170px) {
   .sidebar-comments {
     width: 100%;
     transform: translateX(-100%);
   }
-  .comment-area-container,
-  .comment-list-container {
-    justify-content: center;
+  .comment-single-container {
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgb(219, 219, 219);
+    min-width: 300px;
   }
 }
