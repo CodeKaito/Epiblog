@@ -13,8 +13,10 @@ const Sidebar = ({ isVisible, handleClose, postId }) => {
     >
       <Container>
         <div>
-          <div className="close-btn p-3" onClick={handleClose}>
-            <FaTimes className="fatimes pointer" />
+          <div className="fatimes-container">
+            <div className="close-btn p-2" onClick={handleClose}>
+              <FaTimes className="fatimes pointer" />
+            </div>
           </div>
 
           <div className="comment-area-container d-flex p-2">

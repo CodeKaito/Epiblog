@@ -9,9 +9,9 @@ const CommentSingle = ({ author, createdAt, content }) => {
   const formattedCreatedAt = `${createdDate.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
-  })} on ${createdDate.toLocaleDateString("en-US", {
-    month: "2-digit",
+  })} - ${createdDate.toLocaleDateString("it-IT", {
     day: "2-digit",
+    month: "2-digit",
     year: "numeric",
   })}`;
 

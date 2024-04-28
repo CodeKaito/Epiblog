@@ -69,6 +69,11 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+.fatimes-container {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
 .comment-area-container,
 .comment-list-container {
     justify-content: center;
