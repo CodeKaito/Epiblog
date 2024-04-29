@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Follow from "./Follow";
+import { useAuth } from "../../../context/AuthenticationContext";
+import { Spinner } from "react-bootstrap";
 
 const Follows = () => {
   const [authors, setAuthors] = useState([]);
-  const loggedInUser = process.env.REACT_APP_USER_LOGGED_IN_ID;
+  const [loading, setLoading] = useState(true);
+  const { userData } = useAuth();
+
+  console.log(userData);
 
   useEffect(() => {
     const fetchAuthors = async () => {
@@ -16,28 +21,39 @@ const Follows = () => {
         }
         const data = await response.json();
         const filteredAuthors = data.filter(
-          (author) => author._id !== loggedInUser
+          (author) => author._id !== userData._id
         );
         const randomAuthors = filteredAuthors
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
         setAuthors(randomAuthors);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching authors:", error);
+        setLoading(false);
       }
     };
 
     fetchAuthors();
-  }, [loggedInUser]);
-
+  }, [userData]);
   return (
     <div className="mt-5">
       <h3 className="follows-name">Who to follow</h3>
-      <div>
-        {authors.map((author) => (
-          <Follow key={author._id} {...author} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="d-flex align-items-center justify-content-center sidebar">
+          <Spinner
+            animation="border"
+            role="status"
+            className="loader-sidebar"
+          />
+        </div>
+      ) : (
+        <div>
+          {authors.map((author) => (
+            <Follow key={author._id} {...author} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
