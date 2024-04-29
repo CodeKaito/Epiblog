@@ -108,6 +108,16 @@
 .confirm-deletion {
   font-size: 12px;
 }
+.form-control:focus {
+  border-color: transparent;
+  outline: 0;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 8px;
+}
+.form-control-editable {
+  border-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 6px;
+  font-size: 14px;
+}
 @media screen and (max-width: 1170px) {
   .sidebar-comments {
     width: 100%;

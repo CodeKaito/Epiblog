@@ -151,6 +151,7 @@ const CommentSingle = ({
       <div className="mt-2">
         {isEditing ? (
           <Form.Control
+            className="form-control-editable"
             as="textarea"
             value={editedContent}
             onChange={(e) => setEditedContent(e.target.value)}
