@@ -10,7 +10,7 @@ const CommentList = (props) => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/blogPosts/${postId}/comments`
+          `https://epicode-api.onrender.com/api/blogPosts/${postId}/comments`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch comments");

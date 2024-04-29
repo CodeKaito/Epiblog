@@ -44,7 +44,7 @@ const CommentSingle = ({
   const handleConfirmEdit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/blogPosts/${postId}/comments/${commentId}`,
+        `https://epicode-api.onrender.com/api/blogPosts/${postId}/comments/${commentId}`,
         {
           method: "PUT",
           headers: {
