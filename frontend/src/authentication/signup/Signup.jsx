@@ -6,42 +6,27 @@ import "../styles.css";
 const Signup = ({ showLoginModal }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
+    username: "",
     email: "",
-    birth: "",
-    avatar: null,
-    bio: "",
+    password: "",
   });
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "avatar") {
-      setFormData({ ...formData, [name]: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const form = new FormData();
-      form.append("name", formData.name);
-      form.append("surname", formData.surname);
-      form.append("email", formData.email);
-      form.append("birth", formData.birth);
-      form.append("avatar", formData.avatar);
-      form.append("bio", formData.bio);
-
-      const response = await fetch(
-        "https://epicode-api.onrender.com/api/authors",
-        {
-          method: "POST",
-          body: form,
-        }
-      );
+      const response = await fetch("http://localhost:5000/api/authors", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       const authorData = await response.json();
       console.log("Author created:", authorData);
     } catch (error) {
@@ -58,25 +43,16 @@ const Signup = ({ showLoginModal }) => {
       {loading && <CustomLoader />}
 
       <Form onSubmit={handleSubmit}>
-        <div className="d-flex gap-2">
-          <Form.Group controlId="formName">
+        <div className="mt-1">
+          <Form.Group controlId="formUsername">
             <Form.Control
               type="text"
-              placeholder="Name"
-              name="name"
-              value={formData.name}
+              placeholder="Username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               className="form-signup"
-            />
-          </Form.Group>
-          <Form.Group controlId="formSurname">
-            <Form.Control
-              type="text"
-              placeholder="Surname"
-              name="surname"
-              value={formData.surname}
-              onChange={handleChange}
-              className="form-signup"
+              required
             />
           </Form.Group>
         </div>
@@ -89,44 +65,20 @@ const Signup = ({ showLoginModal }) => {
               value={formData.email}
               onChange={handleChange}
               className="form-signup"
+              required
             />
           </Form.Group>
         </div>
         <div className="mt-1">
-          {" "}
-          <Form.Group controlId="formBirth">
+          <Form.Group controlId="formPassword">
             <Form.Control
-              type="date"
-              name="birth"
-              value={formData.birth}
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={formData.password}
               onChange={handleChange}
               className="form-signup"
-            />
-          </Form.Group>
-        </div>
-        <div className="mt-1">
-          <Form.Group controlId="formAvatar">
-            <Form.Control
-              type="file"
-              accept="image/*"
-              name="avatar"
-              onChange={handleChange}
-              className="form-signup"
-            />
-          </Form.Group>
-        </div>
-        <div className="mt-3">
-          <Form.Group controlId="formBio">
-            <Form.Label className="text-center">
-              Write something about yourself..
-            </Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              className="form-signup text-center"
+              required
             />
           </Form.Group>
         </div>

@@ -3,6 +3,12 @@ const cloudinaryMiddleware = require("../middlewares/multer.js");
 const AuthorModel = require("../models/AuthorModel");
 
 const sendEmail = require("../middlewares/sendMail.js");
+const bcrypt = require("bcryptjs");
+
+const {
+  authMiddleware,
+  generateJWT,
+} = require("../middlewares/authentication.js");
 
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getAuthors = async (req, res, next) => {
@@ -24,6 +30,35 @@ module.exports.getAuthors = async (req, res, next) => {
   } finally {
     // Stampa a console il completamento del processo di recupero dei author
     console.log("Authors retrieval process completed.");
+  }
+};
+
+module.exports.login = async (req, res, next) => {
+  try {
+    let userFound = await User.findOne({
+      username: req.body.username,
+    });
+
+    if (userFound) {
+      const isPasswordMatching = await bcrypt.compare(
+        req.body.password,
+        userFound.password
+      );
+
+      if (isPasswordMatching) {
+        const token = await generateJWT({
+          username: userFound.username,
+        });
+
+        res.send({ user: userFound, token });
+      } else {
+        res.status(401).send("Wrong username or password");
+      }
+    } else {
+      res.status(401).send("Wrong username or password");
+    }
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -120,27 +155,24 @@ module.exports.detailAuthor = async (req, res, next) => {
 module.exports.saveAuthor = async (req, res, next) => {
   try {
     // Esegue il middleware di Cloudinary per caricare l'avatar + i dati dell'autore
-    cloudinaryMiddleware(req, res, async () => {
-      // Estrai i dati dell'autore dalla richiesta
-      const { name, surname, email, birth, bio } = req.body;
+    // Estrai i dati dell'autore dalla richiesta
+    const { username, email, password } = req.body;
 
-      // Crea un nuovo autore nel database utilizzando i dati forniti
-      const newAuthor = await AuthorModel.create({
-        name,
-        surname,
-        email,
-        birth,
-        bio,
-        // Aggiungi il percorso dell'avatar dal req.file se è stato caricato correttamente
-        avatar: req.file ? req.file.path : null,
-      });
+    // Password crittografata
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-      await sendEmail({ name, surname, email });
-
-      // Invia il nuovo autore creato come risposta con stato 201
-      console.log("Saved successfully, author: " + JSON.stringify(newAuthor));
-      res.status(201).send(newAuthor);
+    // Crea un nuovo autore nel database utilizzando i dati forniti
+    const newAuthor = await AuthorModel.create({
+      username,
+      email,
+      password: hashedPassword,
     });
+
+    await sendEmail({ username, email });
+
+    // Invia il nuovo autore creato come risposta con stato 201
+    console.log("Saved successfully, author: " + JSON.stringify(newAuthor));
+    res.status(201).send(newAuthor);
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
@@ -156,6 +188,50 @@ module.exports.saveAuthor = async (req, res, next) => {
     console.log(`Author creation process completed.`);
   }
 };
+
+// module.exports.saveAuthor = async (req, res, next) => {
+//   try {
+//     // Esegue il middleware di Cloudinary per caricare l'avatar + i dati dell'autore
+//     cloudinaryMiddleware(req, res, async () => {
+//       // Estrai i dati dell'autore dalla richiesta
+//       const { name, surname, email, birth, bio, password } = req.body;
+
+//       // Password crittografata
+//       const hashedPassword = await bcrypt.hash(password, 10);
+
+//       // Crea un nuovo autore nel database utilizzando i dati forniti
+//       const newAuthor = await AuthorModel.create({
+//         name,
+//         surname,
+//         email,
+//         birth,
+//         bio,
+//         password: hashedPassword,
+//         // Aggiunge il percorso dell'avatar dal req.file se è stato caricato correttamente
+//         avatar: req.file ? req.file.path : null,
+//       });
+
+//       await sendEmail({ name, surname, email });
+
+//       // Invia il nuovo autore creato come risposta con stato 201
+//       console.log("Saved successfully, author: " + JSON.stringify(newAuthor));
+//       res.status(201).send(newAuthor);
+//     });
+//   } catch (error) {
+//     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+//     console.error(error.message);
+//     res.status(500).send({
+//       error: error.message,
+//       stack: error.stack,
+//       msg: "Something went wrong!",
+//     });
+//     // Passa l'errore al middleware successivo
+//     next(error);
+//   } finally {
+//     // Stampa a console il completamento del processo di creazione del author
+//     console.log(`Author creation process completed.`);
+//   }
+// };
 
 // Funzione per aggiornare un author esistente nel database e inviare il risultato dell'aggiornamento come risposta
 module.exports.updateAuthor = async (req, res, next) => {

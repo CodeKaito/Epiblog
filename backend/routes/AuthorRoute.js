@@ -4,6 +4,7 @@ const { Router } = require("express");
 // Importa i controller necessari per gestire le richieste relative ai blog
 const {
   getAuthors,
+  login,
   getAuthorsPaginations,
   getAuthorsPaginationOrders,
   detailAuthor,
@@ -19,6 +20,7 @@ const router = Router();
 // Definisci le route utilizzando il metodo corrispondente del router e associa ciascuna a una funzione del controller
 router
   .get("/authors", getAuthors) // Route per ottenere tutti i blog
+  .post("/login", login) // Route per ottenere il token di accesso
   .get("/authors/pagination/", getAuthorsPaginations) // Route per ottenere la paginazione dei blog
   .get("/authors/pagination/:order", getAuthorsPaginationOrders) // Route per ottenere la paginazione dei blog
   .get("/authors/:id", detailAuthor) // Route per ottenere i dettagli di un blog specifico in base all'ID
