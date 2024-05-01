@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import ProfileNavbar from "../../components/navbar/ProfileNavbar";
 import ProfileRight from "../../components/profile/profile-right/ProfileRight";
 import ProfileLeft from "../../components/profile/profile-left/ProfileLeft";
-import { useAuth } from "../../context/AuthenticationContext";
+import { useUser } from "../../context/UserContext";
 import CustomLoader from "../../utils/CustomLoader";
 
 const Profile = () => {
-  const { userData, isLoading } = useAuth();
+  const { userData } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -21,7 +22,7 @@ const Profile = () => {
               <ProfileLeft />
             </Col>
             <Col md={4} className="d-none d-lg-block sidebar-container">
-              <ProfileRight {...userData} />{" "}
+              <ProfileRight {...userData} />
             </Col>
           </Row>
         )}

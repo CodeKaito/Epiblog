@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Spinner, Tabs, Tab } from "react-bootstrap";
 import BlogItem from "../../../components/blog/blog-item/BlogItem";
 import Biography from "./Biography";
-import { useAuth } from "../../../context/AuthenticationContext";
+import { useUser } from "../../../context/UserContext";
 
 const ProfileLeft = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { userData } = useAuth();
+  const { userData } = useUser();
+
+  console.log(userData);
 
   useEffect(() => {
     if (userData && userData._id) {
       const fetchData = async () => {
         try {
-          let url = `https://epicode-api.onrender.com/api/blogPosts/author/${encodeURIComponent(
+          let url = `http://localhost:5000/api/blogPosts/author/${encodeURIComponent(
             userData._id
           )}`;
 

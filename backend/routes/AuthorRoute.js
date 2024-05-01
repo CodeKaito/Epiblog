@@ -1,10 +1,13 @@
 // Importa il modulo Router da Express per gestire le route
 const { Router } = require("express");
 
+const { authMiddleware } = require("../middlewares/authentication");
+
 // Importa i controller necessari per gestire le richieste relative ai blog
 const {
   getAuthors,
   login,
+  getMyProfile,
   getAuthorsPaginations,
   getAuthorsPaginationOrders,
   detailAuthor,
@@ -21,6 +24,7 @@ const router = Router();
 router
   .get("/authors", getAuthors) // Route per ottenere tutti i blog
   .post("/login", login) // Route per ottenere il token di accesso
+  .get("/me", authMiddleware, getMyProfile) // Route per ottenere il mio profilo
   .get("/authors/pagination/", getAuthorsPaginations) // Route per ottenere la paginazione dei blog
   .get("/authors/pagination/:order", getAuthorsPaginationOrders) // Route per ottenere la paginazione dei blog
   .get("/authors/:id", detailAuthor) // Route per ottenere i dettagli di un blog specifico in base all'ID

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Author = require("../models/AuthorModel");
+const AuthorModel = require("../models/AuthorModel");
 
 // Funzione per generare un token JWT
 exports.generateJWT = (payload) => {
@@ -7,7 +7,7 @@ exports.generateJWT = (payload) => {
     jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: "30d" },
+      { expiresIn: "1d" },
       (err, token) => {
         if (err) {
           reject(err);
@@ -38,17 +38,23 @@ exports.authMiddleware = async (req, res, next) => {
     if (!req.headers.authorization) {
       return res.status(400).send("Login Required");
     } else {
-      const decoded = await exports.verifyJWT(
-        req.headers.authorization.replace("Bearer ", "")
-      );
+      const token = req.headers.authorization.replace("Bearer ", "");
+      const decoded = await exports.verifyJWT(token);
+
+      //   console.log("Token Payload:", decoded);
+      //   console.log("Token Exp:", decoded.exp);
+      //   console.log("Token Iat:", decoded.iat);
+      //   console.log("User Id:", decoded.id);
 
       if (decoded.exp) {
         delete decoded.iat;
         delete decoded.exp;
 
-        const me = await Author.findOne({
-          ...decoded,
-        });
+        // console.log("Token Payload after delete:", decoded);
+
+        const me = await AuthorModel.findById(decoded.id);
+
+        console.log(JSON.stringify(me));
 
         if (me) {
           req.user = me;
@@ -61,6 +67,11 @@ exports.authMiddleware = async (req, res, next) => {
       }
     }
   } catch (err) {
+    res.status(400).send("Token error: " + err.message);
     next(err);
   }
 };
+
+// const me = await AuthorModel.findOne({
+//   ...decoded,
+// });

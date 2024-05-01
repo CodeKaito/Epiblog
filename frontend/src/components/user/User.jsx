@@ -1,10 +1,10 @@
 import React from "react";
 import { Image } from "react-bootstrap";
-import { useAuth } from "../../context/AuthenticationContext";
+import { useUser } from "../../context/UserContext";
 import "./style.css";
 
 const User = () => {
-  const { userData } = useAuth();
+  const { userData } = useUser();
 
   return (
     <div className="image-container pointer">

@@ -5,16 +5,13 @@ const AuthorModel = require("../models/AuthorModel");
 const sendEmail = require("../middlewares/sendMail.js");
 const bcrypt = require("bcryptjs");
 
-const {
-  authMiddleware,
-  generateJWT,
-} = require("../middlewares/authentication.js");
+const { generateJWT } = require("../middlewares/authentication.js");
 
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getAuthors = async (req, res, next) => {
   try {
     // Recupera tutti i author dal database utilizzando il modello author
-    const author = await AuthorModel.find();
+    const author = await AuthorModel.find().select("-password");
     // Invia la lista dei author come risposta
     res.send(author);
   } catch (error) {
@@ -35,7 +32,7 @@ module.exports.getAuthors = async (req, res, next) => {
 
 module.exports.login = async (req, res, next) => {
   try {
-    let userFound = await User.findOne({
+    let userFound = await AuthorModel.findOne({
       username: req.body.username,
     });
 
@@ -47,10 +44,15 @@ module.exports.login = async (req, res, next) => {
 
       if (isPasswordMatching) {
         const token = await generateJWT({
-          username: userFound.username,
+          id: userFound._id,
         });
 
-        res.send({ user: userFound, token });
+        res.json({
+          username: userFound.username,
+          email: userFound.email,
+          id: userFound._id,
+          token,
+        });
       } else {
         res.status(401).send("Wrong username or password");
       }
@@ -59,6 +61,28 @@ module.exports.login = async (req, res, next) => {
     }
   } catch (err) {
     next(err);
+  }
+};
+
+// Funzione per ottenere l'utente loggato in base al token, utilizzerá il middleware authentication
+module.exports.getMyProfile = async (req, res) => {
+  try {
+    // Assume che il metodo per ottenere il profilo dell'autore prende l'ID dell'autore come parametro
+    let user = await AuthorModel.findById(req.user.id).select("-password");
+
+    // Verifica se l'autore esiste
+    if (!user) {
+      return res.status(404).json({ message: "Profilo autore non trovato" });
+    }
+
+    // Se l'autore esiste, restituisci il profilo
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Errore durante il recupero del profilo dell'autore:", error);
+    res.status(500).json({
+      message:
+        "Si è verificato un errore durante il recupero del profilo dell'autore",
+    });
   }
 };
 
@@ -132,7 +156,7 @@ module.exports.detailAuthor = async (req, res, next) => {
   const { id } = req.params;
   try {
     // Cerca il author nel database utilizzando l'ID fornito
-    const author = await AuthorModel.findById(id);
+    const author = await AuthorModel.findById(id).select("-password");
     // Invia i dettagli del author come risposta
     res.send(author);
   } catch (error) {

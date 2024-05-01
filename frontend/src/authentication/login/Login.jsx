@@ -8,11 +8,11 @@ import { useAuth } from "../../context/AuthenticationContext.js";
 const Login = ({ showSignupModal }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const navigate = useNavigate();
-  const { login, setUserData } = useAuth();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,22 +23,29 @@ const Login = ({ showSignupModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(
-        "https://epicode-api.onrender.com/api/authors"
-      );
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
       if (!response.ok) {
-        throw new Error("Failed to fetch user data");
+        throw new Error("Failed to log in");
       }
+
       const userData = await response.json();
 
-      const user = userData.find((user) => user.email === formData.email);
-      if (!user) {
-        throw new Error("User not found");
+      // Controllo se il token è presente nella risposta
+      if (!userData.token) {
+        throw new Error("Token not found in response");
       }
 
-      setUserData(user);
-      login();
-      localStorage.setItem("userData", JSON.stringify(user));
+      // Utilizzo la funzione di login dal contesto di autenticazione per impostare lo stato di autenticazione
+      login(userData.token, userData);
+
+      // Reindirizzo l'utente alla home page
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
@@ -55,12 +62,12 @@ const Login = ({ showSignupModal }) => {
 
       <Form onSubmit={handleSubmit}>
         <div className="mt-1">
-          <Form.Group controlId="formEmail">
+          <Form.Group controlId="formUsername">
             <Form.Control
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              value={formData.email}
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               className="form-signup"
             />
