@@ -25,7 +25,7 @@ const cloudinaryMiddleware = multer({ storage: storageAvatar }).single(
   "avatar"
 );
 const cloudinaryPostsMiddleware = multer({ storage: storagePosts }).single(
-  "posts"
+  "post"
 );
 
 (module.exports = cloudinaryMiddleware), cloudinaryPostsMiddleware;

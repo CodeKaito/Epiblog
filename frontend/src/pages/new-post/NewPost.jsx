@@ -75,11 +75,7 @@ const NewPost = () => {
       form.append("readTime.unit", formData.readTime.unit);
       form.append("content", formData.content);
       form.append("author", formData.author);
-      form.append("cover", {
-        uri: formData.cover,
-        name: "image.png",
-        type: "image/png",
-      });
+      form.append("cover", formData.cover);
 
       console.log("Cover:", formData.cover);
 
@@ -105,6 +101,9 @@ const NewPost = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+
+      // Logga anche i dati del modulo in caso di errore
+      console.log("Form data:", formData);
       setshowErrorAlert(true);
     } finally {
       setIsLoading(false);
