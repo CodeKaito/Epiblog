@@ -16,16 +16,13 @@ const {
 // Crea un'istanza di Router di Express
 const router = Router();
 
-// Applica il middleware di autorizzazione JWT a tutte le route di commenti
-router.use("/blogPosts/:id/comments", authMiddleware);
-
 // Definisci le route utilizzando il metodo corrispondente del router e associa ciascuna a una funzione del controller
 router
   .get("/blogPosts/:id/comments", getComments) // Route per ottenere tutti i commenti in base all'id di un post specifico
   .get("/blogPosts/:id/comments/:commentId", getCommentDetails) // Route per ottenere un commento specifico relativo a un post specifico
-  .post("/blogPosts/:id/comments", saveComment) // Route per salvare un nuovo commento
-  .put("/blogPosts/:id/comments/:commentId", updateComment) // Route per aggiornare un commento esistente in base all'ID
-  .delete("/blogPosts/:id/comments/:commentId", deleteComment); // Route per eliminare un commento esistente in base all'ID
+  .post("/blogPosts/:id/comments", authMiddleware, saveComment) // Route per salvare un nuovo commento
+  .put("/blogPosts/:id/comments/:commentId", authMiddleware, updateComment) // Route per aggiornare un commento esistente in base all'ID
+  .delete("/blogPosts/:id/comments/:commentId", authMiddleware, deleteComment); // Route per eliminare un commento esistente in base all'ID
 
 // Esporta il router per renderlo disponibile ad altri moduli
 module.exports = router;
