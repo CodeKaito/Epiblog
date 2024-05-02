@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Form, Image } from "react-bootstrap";
-import { useAuth } from "../../../context/AuthenticationContext";
+import { useUser } from "../../../context/UserContext";
 import { useCommentContext } from "../../../context/CommentContext";
 import "../styles.css";
 
 const CommentArea = (props) => {
-  const { userData } = useAuth();
+  const { userData } = useUser();
+  const token = localStorage.getItem("token");
   const { addComment } = useCommentContext();
   const [commentContent, setCommentContent] = useState("");
   const { postId } = props;
@@ -24,6 +25,7 @@ const CommentArea = (props) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(newComment),
         }

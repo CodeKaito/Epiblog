@@ -153,6 +153,7 @@ module.exports.saveBlog = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'immagine del post
     cloudinaryPostsMiddleware(req, res, async () => {
+      console.log("Uploaded file:", req.file);
       const newPost = await BlogModel.create({
         ...req.body,
         cover: req.file ? req.file.path : null,

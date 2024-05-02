@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Button, Container, Form, Spinner } from "react-bootstrap";
 import NewPostNavbar from "../../components/navbar/NewPostNavbar";
 import CustomAlert from "../../utils/CustomAlert";
-import { useAuth } from "../../context/AuthenticationContext";
+import { useUser } from "../../context/UserContext";
 import "./styles.css";
 
 const NewPost = () => {
-  const { userData } = useAuth();
+  const { userData } = useUser();
   const [formData, setFormData] = useState({
     category: "",
     title: "",
@@ -22,8 +22,9 @@ const NewPost = () => {
   const [showErrorAlert, setshowErrorAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    console.log(userData);
     if (userData && userData._id) {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -38,22 +39,6 @@ const NewPost = () => {
       setFormData({
         ...formData,
         [name]: files[0],
-      });
-    } else if (name === "readTimeValue") {
-      setFormData({
-        ...formData,
-        readTime: {
-          ...formData.readTime,
-          value: value,
-        },
-      });
-    } else if (name === "readTimeUnit") {
-      setFormData({
-        ...formData,
-        readTime: {
-          ...formData.readTime,
-          unit: value,
-        },
       });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -90,10 +75,24 @@ const NewPost = () => {
       form.append("readTime.unit", formData.readTime.unit);
       form.append("content", formData.content);
       form.append("author", formData.author);
-      form.append("cover", formData.cover);
+      form.append("cover", {
+        uri: formData.cover,
+        name: "image.png",
+        type: "image/png",
+      });
+
+      console.log("Cover:", formData.cover);
+
+      for (let item of form.entries()) {
+        console.log(item[0] + ", " + item[1]);
+      }
 
       const response = await fetch("http://localhost:5000/api/blogPosts", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+
         body: form,
       });
 
@@ -159,13 +158,22 @@ const NewPost = () => {
         <Form className="mt-3" onSubmit={handleSubmit}>
           <Form.Group className="mt-3 d-flex justify-content-center">
             {formData.cover ? (
-              <img
-                src={formData.cover}
-                width={1000}
-                height={300}
-                alt="Cover"
-                className="cover-image"
-              />
+              <div className="cover-image-container position-relative">
+                <img
+                  src={formData.cover}
+                  width={1000}
+                  height={300}
+                  alt="Cover"
+                  className="cover-image"
+                />
+                <Button
+                  variant="danger"
+                  className="remove-cover-button position-absolute top-50 start-50"
+                  onClick={() => setFormData({ ...formData, cover: "" })}
+                >
+                  Remove
+                </Button>
+              </div>
             ) : (
               <>
                 <Form.Group className="mb-3">

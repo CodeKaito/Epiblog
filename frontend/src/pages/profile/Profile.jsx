@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import ProfileNavbar from "../../components/navbar/ProfileNavbar";
 import ProfileRight from "../../components/profile/profile-right/ProfileRight";
@@ -7,8 +7,7 @@ import { useUser } from "../../context/UserContext";
 import CustomLoader from "../../utils/CustomLoader";
 
 const Profile = () => {
-  const { userData } = useUser();
-  const [isLoading, setIsLoading] = useState(false);
+  const { userData, isLoading } = useUser();
 
   return (
     <>

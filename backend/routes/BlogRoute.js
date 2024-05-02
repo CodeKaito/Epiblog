@@ -1,6 +1,9 @@
 // Importa il modulo Router da Express per gestire le route
 const { Router } = require("express");
 
+// Importa il middleware per l'autenticazione JWT
+const { authMiddleware } = require("../middlewares/authentication");
+
 // Importa i controller necessari per gestire le richieste relative ai blog
 const {
   getBlogs,
@@ -15,6 +18,9 @@ const {
 
 // Crea un'istanza di Router di Express
 const router = Router();
+
+// Applica il middleware di autorizzazione JWT a tutte le route di commenti
+router.use("/blogPosts", authMiddleware);
 
 // Definisci le route utilizzando il metodo corrispondente del router e associa ciascuna a una funzione del controller
 router

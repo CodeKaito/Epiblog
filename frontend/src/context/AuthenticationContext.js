@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 
 const AuthContext = createContext();
 
@@ -9,8 +15,8 @@ export const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false); // Stato per gestire se l'utente è autenticato o meno
   const [sessionExpired, setSessionExpired] = useState(false); // Stato per gestire l'avviso di sessione scaduta
 
-  // Funzione per controllare la validità del token
-  const checkTokenValidity = () => {
+  // Wrapper di checkTokenValidity con useCallback
+  const checkTokenValidity = useCallback(() => {
     const storedToken = localStorage.getItem("token");
     if (!storedToken) return; // Se non c'è un token salvato, esci
 
@@ -23,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("sessionExpired", sessionExpired); // Salva sessionExpired nel localStorage
       logout();
     }
-  };
+  }, [sessionExpired]); // Aggiunta di sessionExpired come dipendenza
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -36,7 +42,7 @@ export const AuthContextProvider = ({ children }) => {
 
       checkTokenValidity();
     }
-  }, []);
+  }, [checkTokenValidity]); // Aggiunta di checkTokenValidity come dipendenza
 
   useEffect(() => {
     // Esegue il controllo della validità del token ogni 5 minuti
@@ -46,7 +52,7 @@ export const AuthContextProvider = ({ children }) => {
 
     // Pulisce l'intervallo quando il componente si smonta
     return () => clearInterval(interval);
-  }, []);
+  }, [checkTokenValidity]); // Aggiunta di checkTokenValidity come dipendenza
 
   const login = (token) => {
     setToken(token);

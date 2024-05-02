@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Image } from "react-bootstrap";
 import "./styles.css";
+import ProfileDataEdit from "./ProfileDataEdit";
 
 const ProfileRight = (props) => {
   const { name, surname, avatar } = props;
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditProfile = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+  };
+
   return (
     <Container>
       <div className="m-4 ">
@@ -19,9 +30,12 @@ const ProfileRight = (props) => {
         <div className="name-profile">
           {name} {surname}
         </div>
-        <div className="edit-profile mt-4">
-          <p>Edit profile</p>
-        </div>
+        {!isEditing && (
+          <div className="edit-profile mt-4" onClick={handleEditProfile}>
+            <p>Edit profile</p>
+          </div>
+        )}
+        {isEditing && <ProfileDataEdit onCancel={handleCancelEdit} />}
       </div>
     </Container>
   );

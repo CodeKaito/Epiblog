@@ -13,6 +13,7 @@ const CommentSingle = ({
   setComments,
 }) => {
   const { name, surname, avatar } = author;
+  const token = localStorage.getItem("token");
 
   const createdDate = new Date(createdAt);
 
@@ -49,6 +50,7 @@ const CommentSingle = ({
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             content: editedContent,
@@ -66,7 +68,13 @@ const CommentSingle = ({
         }, 1000);
 
         const updatedCommentsResponse = await fetch(
-          `http://localhost:5000/api/blogPosts/${postId}/comments`
+          `http://localhost:5000/api/blogPosts/${postId}/comments`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const updatedCommentsData = await updatedCommentsResponse.json();
 
@@ -94,6 +102,9 @@ const CommentSingle = ({
           `http://localhost:5000/api/blogPosts/${postId}/comments/${commentId}`,
           {
             method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -103,10 +114,16 @@ const CommentSingle = ({
           setAlertMessage("Comment deleted successfully");
           setTimeout(() => {
             setShowAlert(false);
-          }, 1000);
+          }, 2000);
 
           const updatedCommentsResponse = await fetch(
-            `http://localhost:5000/api/blogPosts/${postId}/comments`
+            `http://localhost:5000/api/blogPosts/${postId}/comments`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           const updatedCommentsData = await updatedCommentsResponse.json();
 
