@@ -8,24 +8,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storageAvatar = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "avatars",
-  },
-});
-const storagePosts = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "posts",
-  },
-});
+const options = {
+  storage: new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: "avatars",
+    },
+  }),
+};
 
-const cloudinaryMiddleware = multer({ storage: storageAvatar }).single(
-  "avatar"
-);
-const cloudinaryPostsMiddleware = multer({ storage: storagePosts }).single(
-  "post"
-);
+const cloudinaryMiddleware = multer(options).single("cover");
 
-(module.exports = cloudinaryMiddleware), cloudinaryPostsMiddleware;
+module.exports = cloudinaryMiddleware;

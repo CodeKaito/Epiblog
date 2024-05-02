@@ -35,14 +35,14 @@ const NewPost = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "cover") {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      });
+    if (name === "cover" && files && files[0]) {
+      setFormData({ ...formData, [name]: files[0] });
+      console.log("sono nell if");
     } else {
       setFormData({ ...formData, [name]: value });
+      console.log("sono nell else");
     }
+    console.log(formData);
   };
 
   const handleReadTimeChange = (e) => {
@@ -58,10 +58,7 @@ const NewPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Read Time before submission:", formData.readTime);
-    console.log("Author before submission:", formData.author);
-    console.log(formData.content);
-    console.log(formData.cover);
+    console.log("Linea 60 " + formData.cover);
 
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
@@ -77,7 +74,7 @@ const NewPost = () => {
       form.append("author", formData.author);
       form.append("cover", formData.cover);
 
-      console.log("Cover:", formData.cover);
+      console.log("linea 76 cover:", formData.cover);
 
       for (let item of form.entries()) {
         console.log(item[0] + ", " + item[1]);
@@ -87,6 +84,7 @@ const NewPost = () => {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
+          // "Content-Type": "multipart/form-data",
         },
 
         body: form,
@@ -159,10 +157,11 @@ const NewPost = () => {
             {formData.cover ? (
               <div className="cover-image-container position-relative">
                 <img
-                  src={formData.cover}
+                  src={URL.createObjectURL(formData.cover)}
                   width={1000}
                   height={300}
                   alt="Cover"
+                  name="cover"
                   className="cover-image"
                 />
                 <Button
@@ -180,20 +179,7 @@ const NewPost = () => {
                     type="file"
                     accept="image/*"
                     name="cover"
-                    value={formData.cover}
-                    onChange={(e) => {
-                      handleChange(e);
-                      if (e.target.files && e.target.files[0]) {
-                        let reader = new FileReader();
-                        reader.onload = function (e) {
-                          setFormData((prevFormData) => ({
-                            ...prevFormData,
-                            cover: e.target.result,
-                          }));
-                        };
-                        reader.readAsDataURL(e.target.files[0]);
-                      }
-                    }}
+                    onChange={handleChange}
                   />
                 </Form.Group>
               </>
