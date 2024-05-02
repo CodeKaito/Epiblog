@@ -6,7 +6,9 @@ module.exports.getComments = async (req, res, next) => {
 
   try {
     // Esegui la query al database per trovare tutti i commenti con postId uguale all'ID del post
-    const comments = await CommentModel.find({ postId: id }).populate("author");
+    const comments = await CommentModel.find({ postId: id })
+      .populate("author")
+      .select("-password");
 
     // Invia la lista dei commenti come risposta
     res.send(comments);
@@ -31,7 +33,9 @@ module.exports.getCommentDetails = async (req, res, next) => {
     const comment = await CommentModel.findOne({
       _id: commentId,
       postId: id,
-    }).populate("author");
+    })
+      .populate("author")
+      .select("-password");
 
     if (!comment) {
       // Se il commento non è stato trovato, restituisci uno stato 404

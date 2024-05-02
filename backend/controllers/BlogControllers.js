@@ -14,7 +14,9 @@ module.exports.getBlogs = async (req, res, next) => {
     }
 
     // Esegui la query al database utilizzando il filtro
-    const blogs = await BlogModel.find(filter).populate("author").exec();
+    const blogs = await BlogModel.find(filter)
+      .populate("author")
+      .select("-password");
 
     // Invia la lista dei blog filtrata come risposta
     res.send(blogs);
@@ -104,7 +106,9 @@ module.exports.detailBlog = async (req, res, next) => {
   const { id } = req.params;
   try {
     // Cerca il author nel database utilizzando l'ID fornito
-    const blog = await BlogModel.findById(id).populate("author").exec();
+    const blog = await BlogModel.findById(id)
+      .populate("author")
+      .select("-password");
     // Invia i dettagli del author come risposta
     res.send(blog);
   } catch (error) {
@@ -128,7 +132,9 @@ module.exports.getPostsByAuthorId = async (req, res, next) => {
   const authorId = req.params.id; // Id dell'autore fornito nella richiesta
   try {
     // Esegui la query al database per trovare tutti i post con il nome dell'autore specificato
-    const posts = await BlogModel.find({ author: authorId }).populate("author");
+    const posts = await BlogModel.find({ author: authorId })
+      .populate("author")
+      .select("-password");
 
     // Invia la lista dei post come risposta
     res.send(posts);
@@ -157,7 +163,7 @@ module.exports.saveBlog = async (req, res, next) => {
       // console.log("Uploaded file:", req.body);
       const newPost = await BlogModel.create({
         ...req.body,
-        cover: req.body.cover,
+        cover: req.body.cover ? req.body.cover.path : null,
       });
       console.log("Saved successfully, blog: " + JSON.stringify(newPost));
       res.status(201).send(newPost);
