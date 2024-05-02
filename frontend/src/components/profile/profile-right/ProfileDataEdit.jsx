@@ -4,18 +4,18 @@ import CustomLoader from "../../../utils/CustomLoader";
 import { useUser } from "../../../context/UserContext";
 
 const ProfileDataEdit = ({ onCancel }) => {
-  const { userData } = useUser();
+  const { userData, updateUser } = useUser();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: userData.name,
-    surname: userData.surname,
-    email: userData.email,
-    birth: userData.birth,
-    password: userData.password,
-    avatar: null,
+    name: "",
+    surname: "",
+    email: "",
+    birth: "",
+    password: "",
+    avatar: "",
   });
 
-  console.log(userData);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     setFormData({
@@ -24,12 +24,13 @@ const ProfileDataEdit = ({ onCancel }) => {
       email: userData.email,
       birth: userData.birth,
       password: userData.password,
+      avatar: userData.avatar,
     });
   }, [userData]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "avatar") {
+    if (name === "avatar" && files && files[0]) {
       setFormData({ ...formData, [name]: files[0] });
     } else {
       setFormData({ ...formData, [name]: value });
@@ -48,25 +49,29 @@ const ProfileDataEdit = ({ onCancel }) => {
       form.append("password", formData.password);
       form.append("avatar", formData.avatar);
 
-      //   const formattedDate = new Date(formData.birth)
-      //     .toISOString()
-      //     .split("T")[0];
-      //   form.append("birth", formattedDate);
-
       const response = await fetch(
-        `http://localhost:5000/api/authors/${userData._id}/avatar`,
+        `http://localhost:5000/api/authors/${userData._id}`,
         {
-          method: "PATCH",
+          method: "PUT",
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: form,
         }
       );
+      console.log("Profile updated successfully!");
       if (!response.ok) {
         throw new Error("Failed to update profile");
       }
-      console.log("Profile updated successfully!");
+
+      updateUser({
+        ...userData,
+        name: formData.name,
+        surname: formData.surname,
+        email: formData.email,
+        birth: formData.birth,
+        avatar: formData.avatar,
+      });
     } catch (error) {
       console.error("Error updating profile:", error);
     } finally {
@@ -83,6 +88,7 @@ const ProfileDataEdit = ({ onCancel }) => {
       <Form onSubmit={handleSubmit}>
         <div className="d-flex gap-2">
           <Form.Group controlId="formName">
+            <Form.Label className="text-center">Name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Name"
@@ -93,6 +99,7 @@ const ProfileDataEdit = ({ onCancel }) => {
             />
           </Form.Group>
           <Form.Group controlId="formSurname">
+            <Form.Label className="text-center">Surname</Form.Label>
             <Form.Control
               type="text"
               placeholder="Surname"
@@ -105,6 +112,7 @@ const ProfileDataEdit = ({ onCancel }) => {
         </div>
         <div className="mt-1">
           <Form.Group controlId="formEmail">
+            <Form.Label className="text-center">Email</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
@@ -117,6 +125,7 @@ const ProfileDataEdit = ({ onCancel }) => {
         </div>
         <div className="mt-1">
           <Form.Group controlId="formPassword">
+            <Form.Label className="text-center">Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -159,7 +168,7 @@ const ProfileDataEdit = ({ onCancel }) => {
           <Button variant="primary" type="submit">
             Save Changes
           </Button>
-          <Button variant="secondary" onClick={onCancel}>
+          <Button variant="secondary" className="mx-2" onClick={onCancel}>
             Cancel
           </Button>
         </div>

@@ -14,6 +14,7 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [isLogged, setIsLogged] = useState(false);
   const [sessionExpired, setSessionExpired] = useState(false);
+  const [inactiveTimer, setInactiveTimer] = useState(null);
 
   const checkTokenValidity = useCallback(() => {
     const storedToken = localStorage.getItem("token");
@@ -55,8 +56,9 @@ export const AuthContextProvider = ({ children }) => {
       setToken("");
       setIsLogged(false);
       localStorage.removeItem("token");
-      localStorage.removeItem("isLogged");
+      localStorage.setItem("isLogged", "false");
       alert("Session expired. Please login again.");
+      window.location.href = "/";
     }
   }, [sessionExpired]);
 
@@ -65,15 +67,44 @@ export const AuthContextProvider = ({ children }) => {
     setIsLogged(true);
     localStorage.setItem("token", token);
     localStorage.setItem("isLogged", "true");
+
+    setInactiveTimer(
+      setTimeout(() => {
+        logout();
+      }, 200000)
+    );
   };
 
   const logout = () => {
     setIsLogged(false);
     setToken("");
     localStorage.removeItem("token");
-    localStorage.removeItem("isLogged");
-    window.location.href = "/login";
+    localStorage.setItem("isLogged", "false");
+    window.location.href = "/";
   };
+
+  const resetInactiveTimer = () => {
+    clearTimeout(inactiveTimer);
+    setInactiveTimer(
+      setTimeout(() => {
+        logout();
+      }, 200000)
+    );
+  };
+
+  useEffect(() => {
+    const handleUserActivity = () => {
+      resetInactiveTimer();
+    };
+
+    window.addEventListener("mousemove", handleUserActivity);
+    window.addEventListener("keydown", handleUserActivity);
+
+    return () => {
+      window.removeEventListener("mousemove", handleUserActivity);
+      window.removeEventListener("keydown", handleUserActivity);
+    };
+  }, [resetInactiveTimer]);
 
   return (
     <AuthContext.Provider
@@ -84,6 +115,7 @@ export const AuthContextProvider = ({ children }) => {
         logout,
         sessionExpired,
         setSessionExpired,
+        resetInactiveTimer,
       }}
     >
       {children}

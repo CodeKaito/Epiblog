@@ -1,4 +1,4 @@
-const cloudinaryMiddleware = require("../middlewares/multer.js");
+const cloudinaryAvatarMiddleware = require("../middlewares/multer.js");
 // Importa il modello del author per interagire con il database
 const AuthorModel = require("../models/AuthorModel");
 
@@ -11,7 +11,7 @@ const { generateJWT } = require("../middlewares/authentication.js");
 module.exports.getAuthors = async (req, res, next) => {
   try {
     // Recupera tutti i author dal database utilizzando il modello author
-    const author = await AuthorModel.find().select("-password");
+    const author = await AuthorModel.find();
     // Invia la lista dei author come risposta
     res.send(author);
   } catch (error) {
@@ -34,7 +34,7 @@ module.exports.login = async (req, res, next) => {
   try {
     let userFound = await AuthorModel.findOne({
       username: req.body.username,
-    });
+    }).select("+password");
 
     if (userFound) {
       const isPasswordMatching = await bcrypt.compare(
@@ -68,7 +68,7 @@ module.exports.login = async (req, res, next) => {
 module.exports.getMyProfile = async (req, res) => {
   try {
     // Assume che il metodo per ottenere il profilo dell'autore prende l'ID dell'autore come parametro
-    let user = await AuthorModel.findById(req.user.id).select("-password");
+    let user = await AuthorModel.findById(req.user.id);
 
     // Verifica se l'autore esiste
     if (!user) {
@@ -258,45 +258,64 @@ module.exports.saveAuthor = async (req, res, next) => {
 // };
 
 // Funzione per aggiornare un author esistente nel database e inviare il risultato dell'aggiornamento come risposta
-module.exports.updateAuthor = async (req, res, next) => {
-  const id = req.params.id;
-  const author = req.body;
-  try {
-    // Aggiorna il author nel database utilizzando l'ID fornito e i dati del author
-    const updatedAuthor = await AuthorModel.findByIdAndUpdate(id, author, {
-      new: true, // Restituisce l'oggetto aggiornato
-    });
-    if (!updatedAuthor) {
-      // Se l'autore non è stato trovato, restituisci un messaggio di errore
-      return res.status(404).send("Author not found");
-    }
-    // Invia una conferma di aggiornamento come risposta
-    res.send("Updated successfully, author: " + JSON.stringify(updatedAuthor));
-  } catch (error) {
-    // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
-    console.error(error.message);
-    res.status(500).send({
-      error: error.message,
-      stack: error.stack,
-      msg: "Something went wrong!",
-    });
-    // Passa l'errore al middleware successivo
-    next(error);
-  } finally {
-    // Stampa a console il completamento del processo di aggiornamento del author
-    console.log(`Author with id: ${id} update process completed.`);
-  }
-};
+// module.exports.updateAuthor = async (req, res, next) => {
+//   const id = req.params.id;
+//   const author = req.body;
+//   try {
+//     // Aggiorna il author nel database utilizzando l'ID fornito e i dati del author
+//     const updatedAuthor = await AuthorModel.findByIdAndUpdate(id, author, {
+//       new: true, // Restituisce l'oggetto aggiornato
+//     });
+//     if (!updatedAuthor) {
+//       // Se l'autore non è stato trovato, restituisci un messaggio di errore
+//       return res.status(404).send("Author not found");
+//     }
+//     // Invia una conferma di aggiornamento come risposta
+//     res.send("Updated successfully, author: " + JSON.stringify(updatedAuthor));
+//   } catch (error) {
+//     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
+//     console.error(error.message);
+//     res.status(500).send({
+//       error: error.message,
+//       stack: error.stack,
+//       msg: "Something went wrong!",
+//     });
+//     // Passa l'errore al middleware successivo
+//     next(error);
+//   } finally {
+//     // Stampa a console il completamento del processo di aggiornamento del author
+//     console.log(`Author with id: ${id} update process completed.`);
+//   }
+// };
 
-module.exports.updateAuthorAvatar = async (req, res, next) => {
+module.exports.updateAuthor = async (req, res, next) => {
   const id = req.params.id;
   try {
     // Esegui il middleware di Cloudinary per caricare l'avatar
-    cloudinaryMiddleware(req, res, async () => {
+    cloudinaryAvatarMiddleware(req, res, async () => {
+      // Trova l'autore nel database
+      const existingAuthor = await AuthorModel.findById(id);
+      if (!existingAuthor) {
+        return res.status(404).send("Author not found");
+      }
+
+      // Costruisci un oggetto con i campi da aggiornare
+      const fieldsToUpdate = {
+        name: req.body.name || existingAuthor.name,
+        surname: req.body.surname || existingAuthor.surname,
+        email: req.body.email || existingAuthor.email,
+        birth: req.body.birth || existingAuthor.birth,
+        bio: req.body.bio || existingAuthor.bio,
+        avatar:
+          existingAuthor.avatar !== null && existingAuthor.avatar !== undefined
+            ? existingAuthor.avatar
+            : req.file.path,
+      };
+
       // Aggiorna l'URL dell'avatar dell'autore nel database
       const updatedAuthor = await AuthorModel.findByIdAndUpdate(
         id,
-        { avatar: req.file.path },
+        fieldsToUpdate,
         { new: true }
       );
       if (!updatedAuthor) {

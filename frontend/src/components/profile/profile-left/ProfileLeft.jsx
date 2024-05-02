@@ -9,8 +9,6 @@ const ProfileLeft = () => {
   const [loading, setLoading] = useState(true);
   const { userData } = useUser();
 
-  console.log(userData);
-
   useEffect(() => {
     if (userData && userData._id) {
       const fetchData = async () => {
@@ -26,7 +24,6 @@ const ProfileLeft = () => {
           const data = await response.json();
 
           setPosts(data);
-          console.log(data);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching data:", error);

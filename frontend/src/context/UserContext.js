@@ -7,12 +7,19 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const token = localStorage.getItem("token");
+  const isLoggedIn = localStorage.getItem("isLogged") === "true";
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getUserData();
-        setUserData(data);
-        setIsLoading(false);
+        if (isLoggedIn) {
+          const data = await getUserData();
+          setUserData(data);
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+        }
       } catch (error) {
         setError(error);
         setIsLoading(false);
@@ -20,12 +27,10 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchData();
-  }, []);
+  }, [isLoggedIn]);
 
   const getUserData = async () => {
     try {
-      const token = localStorage.getItem("token");
-
       const response = await fetch("http://localhost:5000/api/me/", {
         method: "GET",
         headers: {
@@ -35,19 +40,23 @@ export const UserProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        throw new Error(`Errore HTTP ${response.status}`);
+        throw new Error(`HTTP Error ${response.status}`);
       }
 
-      const userData = await response.json();
-      return userData;
+      const data = await response.json();
+      return data;
     } catch (error) {
-      console.error("Errore durante il recupero dei dati dell'utente:", error);
+      console.error("Error retrieving user data:", error);
       throw error;
     }
   };
 
+  const updateUser = (newUserData) => {
+    setUserData(newUserData);
+  };
+
   return (
-    <UserContext.Provider value={{ userData, isLoading, error }}>
+    <UserContext.Provider value={{ userData, isLoading, error, updateUser }}>
       {children}
     </UserContext.Provider>
   );

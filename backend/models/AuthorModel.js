@@ -4,7 +4,7 @@ const authorSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: false,
+      required: true,
     },
     surname: {
       type: String,
@@ -21,6 +21,7 @@ const authorSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      select: false,
     },
     birth: {
       type: Date,

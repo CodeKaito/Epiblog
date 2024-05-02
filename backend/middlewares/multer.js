@@ -12,11 +12,13 @@ const options = {
   storage: new CloudinaryStorage({
     cloudinary,
     params: {
-      folder: "avatars",
+      folder: "uploads",
     },
   }),
 };
 
 const cloudinaryMiddleware = multer(options).single("cover");
+const cloudinaryAvatarMiddleware = multer(options).single("avatar");
 
 module.exports = cloudinaryMiddleware;
+module.exports = cloudinaryAvatarMiddleware;

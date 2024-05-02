@@ -1,5 +1,7 @@
 import React from "react";
 import { Form, Nav, Navbar, Dropdown, Container, Image } from "react-bootstrap";
+import { useAuth } from "../../context/AuthenticationContext";
+
 import { RxPerson } from "react-icons/rx";
 import { MdOutlineBookmarks } from "react-icons/md";
 import { BsPeople } from "react-icons/bs";
@@ -13,8 +15,11 @@ import {
   SearchQueryProvider,
   useSearchQuery,
 } from "../../context/SearchQueryContext";
+import { useUser } from "../../context/UserContext";
 
 const HomeNavBar = () => {
+  const { logout } = useAuth();
+  const { userData } = useUser();
   const { searchQuery, setSearchQuery } = useSearchQuery();
   const navigate = useNavigate();
 
@@ -25,20 +30,12 @@ const HomeNavBar = () => {
     }
   };
 
-  const hideEmail = (email) => {
-    const atIndex = email.indexOf("@");
-    const firstChar = email.charAt(0);
-    const domain = email.substring(atIndex);
-    const hiddenUsername =
-      firstChar + "*".repeat(atIndex - 2) + email.charAt(atIndex - 1);
-
-    const hiddenEmail = hiddenUsername + domain;
-
-    return hiddenEmail;
+  const handleLogout = () => {
+    logout();
   };
 
-  const userEmail = process.env.REACT_APP_USER_LOGGED_IN_EMAIL;
-  const hiddenEmail = hideEmail(userEmail);
+  const userEmail = userData ? userData.email : "";
+  const hiddenEmail = userEmail;
 
   return (
     <div className="navbar-container">
@@ -107,12 +104,12 @@ const HomeNavBar = () => {
                       </Container>
                       <hr />
                       <Container>
-                        <Link to="/signin">
+                        <div onClick={handleLogout}>
                           <div className="mx-2 sign-out">
                             <p className="pointer">Sign Out</p>
                             <p className="userEmail mt-1">{hiddenEmail}</p>
                           </div>
-                        </Link>
+                        </div>
                       </Container>
                     </div>
                   </Dropdown.Menu>

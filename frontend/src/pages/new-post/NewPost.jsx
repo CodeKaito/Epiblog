@@ -84,7 +84,6 @@ const NewPost = () => {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          // "Content-Type": "multipart/form-data",
         },
 
         body: form,
@@ -158,11 +157,11 @@ const NewPost = () => {
               <div className="cover-image-container position-relative">
                 <img
                   src={URL.createObjectURL(formData.cover)}
-                  width={1000}
+                  width={800}
                   height={300}
                   alt="Cover"
                   name="cover"
-                  className="cover-image"
+                  className="cover-image object-fit-contain"
                 />
                 <Button
                   variant="danger"

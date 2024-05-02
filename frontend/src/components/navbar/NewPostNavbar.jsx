@@ -6,16 +6,22 @@ import { BsPeople } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo2.png";
 import { useAuth } from "../../context/AuthenticationContext";
+import { useUser } from "../../context/UserContext";
 
 import "./styles.css";
 import User from "../user/User";
 import { SearchQueryProvider } from "../../context/SearchQueryContext";
 
 const HomeNavBar = () => {
-  const { userData } = useAuth();
+  const { logout } = useAuth();
+  const { userData } = useUser();
   const userLoggedIn = userData ? userData.username : "";
   const userEmail = userData ? userData.email : "";
   const hiddenEmail = userEmail;
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <div className="navbar-container">
@@ -71,12 +77,12 @@ const HomeNavBar = () => {
                       </Container>
                       <hr />
                       <Container>
-                        <Link to="/signin">
+                        <div onClick={handleLogout}>
                           <div className="mx-2 sign-out">
                             <p className="pointer">Sign Out</p>
                             <p className="userEmail mt-1">{hiddenEmail}</p>
                           </div>
-                        </Link>
+                        </div>
                       </Container>
                     </div>
                   </Dropdown.Menu>
