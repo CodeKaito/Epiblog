@@ -7,11 +7,20 @@ const PopularPosts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await fetch(
-          "https://epicode-api.onrender.com/api/blogPosts"
+          "https://epicode-api.onrender.com/api/blogPosts",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
@@ -26,7 +35,7 @@ const PopularPosts = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [token]);
 
   return (
     <div>

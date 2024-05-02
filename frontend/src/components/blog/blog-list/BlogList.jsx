@@ -10,6 +10,8 @@ const BlogList = () => {
   const { searchQuery } = useSearchQuery();
   const [noResults, setNoResults] = useState(false);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +21,12 @@ const BlogList = () => {
           url += `?searchTitle=${encodeURIComponent(searchQuery)}`;
         }
 
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -41,7 +48,7 @@ const BlogList = () => {
     };
 
     fetchData();
-  }, [searchQuery]);
+  }, [searchQuery, token]);
 
   // Aggiungi questa parte per reimpostare l'elenco dei post quando la query di ricerca è vuota
   useEffect(() => {
@@ -49,7 +56,13 @@ const BlogList = () => {
       const fetchAllPosts = async () => {
         try {
           const response = await fetch(
-            "https://epicode-api.onrender.com/api/blogPosts"
+            "https://epicode-api.onrender.com/api/blogPosts",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
           if (!response.ok) {
             throw new Error("Failed to fetch data");
