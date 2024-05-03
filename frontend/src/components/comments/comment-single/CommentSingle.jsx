@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CustomAlert from "../../../utils/CustomAlert";
+import { useUser } from "../../../context/UserContext";
 import { Image, Form } from "react-bootstrap";
 import { BsTrash2 } from "react-icons/bs";
 import { MdEditNote } from "react-icons/md";
@@ -12,6 +13,7 @@ const CommentSingle = ({
   commentId,
   setComments,
 }) => {
+  const { userData } = useUser();
   const { name, surname, avatar } = author;
   const token = localStorage.getItem("token");
 
@@ -93,6 +95,8 @@ const CommentSingle = ({
     }
   };
 
+  const isAuthor = userData && userData._id === author._id;
+
   const handleDelete = async () => {
     if (!showConfirmDelete) {
       setShowConfirmDelete(true);
@@ -165,72 +169,83 @@ const CommentSingle = ({
           <span className="comment-createdat">{formattedCreatedAt}</span>
         </div>
       </div>
-      <div className="mt-2">
-        {isEditing ? (
-          <Form.Control
-            className="form-control-editable"
-            as="textarea"
-            value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
-          />
-        ) : (
-          <p className="comment-content">{content}</p>
-        )}
-      </div>
-      <div className="d-flex justify-content-between">
-        <div className="d-flex mt-2 tag">
-          <span className="tag-text">Me</span>
-        </div>
-        <div>
-          {isEditing ? (
-            <div className="d-flex align-items-center">
-              <div className="mx-2">
-                <span className="cancel pointer" onClick={handleCancelEdit}>
-                  Cancel
-                </span>
-              </div>
 
-              <div>
-                <span className="confirm pointer" onClick={handleConfirmEdit}>
-                  Confirm
-                </span>
-              </div>
-            </div>
+      <>
+        <div className="mt-2">
+          {isEditing ? (
+            <Form.Control
+              className="form-control-editable"
+              as="textarea"
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
+            />
           ) : (
-            <>
-              {showConfirmDelete ? (
+            <p className="comment-content">{content}</p>
+          )}
+        </div>
+        {isAuthor && (
+          <div className="d-flex justify-content-between">
+            <div className="d-flex mt-2 tag">
+              <span className="tag-text">Me</span>
+            </div>
+            <div>
+              {isEditing ? (
                 <div className="d-flex align-items-center">
                   <div className="mx-2">
-                    <span
-                      className="cancel pointer"
-                      onClick={() => setShowConfirmDelete(false)}
-                    >
+                    <span className="cancel pointer" onClick={handleCancelEdit}>
                       Cancel
                     </span>
                   </div>
 
                   <div>
                     <span
-                      className="confirm-deletion pointer"
-                      onClick={handleDelete}
+                      className="confirm pointer"
+                      onClick={handleConfirmEdit}
                     >
-                      Confirm Deletion
+                      Confirm
                     </span>
                   </div>
                 </div>
               ) : (
-                <BsTrash2 className="pointer bstrash" onClick={handleDelete} />
+                <>
+                  {showConfirmDelete ? (
+                    <div className="d-flex align-items-center">
+                      <div className="mx-2">
+                        <span
+                          className="cancel pointer"
+                          onClick={() => setShowConfirmDelete(false)}
+                        >
+                          Cancel
+                        </span>
+                      </div>
+
+                      <div>
+                        <span
+                          className="confirm-deletion pointer"
+                          onClick={handleDelete}
+                        >
+                          Confirm Deletion
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <BsTrash2
+                      className="pointer bstrash"
+                      onClick={handleDelete}
+                    />
+                  )}
+                  {!showConfirmDelete && (
+                    <MdEditNote
+                      className="pointer MdEditNote mx-2 fs-5"
+                      onClick={handleEdit}
+                    />
+                  )}
+                </>
               )}
-              {!showConfirmDelete && (
-                <MdEditNote
-                  className="pointer MdEditNote mx-2 fs-5"
-                  onClick={handleEdit}
-                />
-              )}
-            </>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
+        )}
+      </>
     </div>
   );
 };

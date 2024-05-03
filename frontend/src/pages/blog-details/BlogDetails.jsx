@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Container, Image, Spinner, Row, Col } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import { IoChatbubbleOutline } from "react-icons/io5";
-import "./styles.css";
+import { Container, Image, Row, Col } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
 import Sidebar from "../../components/comments/Sidebar";
+import CustomLoader from "../../utils/CustomLoader";
+import { IoChatbubbleOutline } from "react-icons/io5";
+import { FaRegEdit } from "react-icons/fa";
+import "./styles.css";
 
 const BlogDetails = () => {
+  const { userData } = useUser();
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(true);
   const [showSidebar, setShowSidebar] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
+
+  const createdDate = new Date(blog.createdAt);
+
+  const formattedCreatedAt = `${createdDate.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })} - ${createdDate.toLocaleDateString("it-IT", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })}`;
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -33,18 +48,16 @@ const BlogDetails = () => {
     fetchBlog();
   }, [params.id, navigate]);
 
+  const isAuthor = userData && blog.author && userData._id === blog.author._id;
+
   const handleToggleSidebar = () => {
-    setTimeout(() => {
-      setShowSidebar(!showSidebar);
-    }, 100);
+    setShowSidebar(!showSidebar);
   };
 
   return (
     <>
       {loading ? (
-        <div className="loader-overlay">
-          <Spinner animation="border" role="status" className="loader" />
-        </div>
+        <CustomLoader />
       ) : (
         <>
           <HomeNavBar />
@@ -61,15 +74,34 @@ const BlogDetails = () => {
                         width={50}
                         height={50}
                       />
-                      <h1 className="fs-4 mx-3 my-5 blog-author-name">
-                        {blog.author.name} {blog.author.surname}
-                      </h1>
+                      <div className="my-5 mx-3">
+                        <h1 className="fs-4 blog-author-name">
+                          {blog.author.name} {blog.author.surname}
+                        </h1>
+                        <div className="me-2 createdat">
+                          Created at {formattedCreatedAt}
+                        </div>
+                      </div>
                     </div>
-                    <div className="mb-5 comments-box">
-                      <IoChatbubbleOutline
-                        onClick={handleToggleSidebar}
-                        className="pointer"
-                      />
+                    <div className="mb-5 comments-box d-flex align-items-center">
+                      {isAuthor && (
+                        <>
+                          <div className="mx-3 mypost px-3">
+                            <p>My post</p>
+                          </div>
+                          <div className="mx-3 pointer">
+                            <Link to={`/edit-blog/${blog._id}`}>
+                              <FaRegEdit />
+                            </Link>
+                          </div>
+                        </>
+                      )}
+                      <div>
+                        <IoChatbubbleOutline
+                          onClick={handleToggleSidebar}
+                          className="pointer"
+                        />
+                      </div>
                     </div>
                     <div className="mb-4 d-flex">
                       <p className="ellipsis px-3 category">{blog.category}</p>

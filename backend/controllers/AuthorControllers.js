@@ -223,17 +223,14 @@ module.exports.updateAuthor = async (req, res, next) => {
         return res.status(404).send("Author not found");
       }
 
-      // Costruisci un oggetto con i campi da aggiornare
+      // Costruisce un oggetto con i campi da aggiornare
       const fieldsToUpdate = {
         name: req.body.name || existingAuthor.name,
         surname: req.body.surname || existingAuthor.surname,
         email: req.body.email || existingAuthor.email,
         birth: req.body.birth || existingAuthor.birth,
         bio: req.body.bio || existingAuthor.bio,
-        avatar:
-          existingAuthor.avatar !== null && existingAuthor.avatar !== undefined
-            ? existingAuthor.avatar
-            : req.file.path,
+        avatar: req.file ? req.file.path : null,
       };
 
       // Aggiorna l'URL dell'avatar dell'autore nel database

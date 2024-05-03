@@ -17,6 +17,7 @@ import Posts from "./pages/posts/Posts";
 import Signup from "./authentication/signup/Signup";
 import MainPage from "./authentication/mainpage/MainPage";
 import { useAuth } from "./context/AuthenticationContext";
+import EditPost from "./pages/edit-post/EditPost";
 
 function App() {
   const { isLogged } = useAuth();
@@ -32,6 +33,7 @@ function App() {
             <Route path="/posts" element={<Posts />} />
             <Route path="/details/:id" element={<BlogDetails />} />
             <Route path="/new-blog" element={<NewPost />} />
+            <Route path="/edit-blog/:id" element={<EditPost />} />
             <Route path="/*" element={<NotFound />} />
           </>
         )}

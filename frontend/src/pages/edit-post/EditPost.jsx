@@ -1,38 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import NewPostNavbar from "../../components/navbar/NewPostNavbar";
 import CustomAlert from "../../utils/CustomAlert";
 import CustomLoader from "../../utils/CustomLoader";
-import { useUser } from "../../context/UserContext";
 import "./styles.css";
 
-const NewPost = () => {
-  const { userData } = useUser();
-  const [formData, setFormData] = useState({
-    category: "",
-    title: "",
+const EditPost = () => {
+  const [blog, setBlog] = useState({});
+  const initialFormData = {
+    category: blog.category || "",
+    title: blog.title || "",
     cover: "",
     readTime: {
-      value: 1,
-      unit: "min",
+      value: blog.readTime ? blog.readTime.value : 1,
+      unit: blog.readTime ? blog.readTime.unit : "min",
     },
-    author: "",
-    content: "",
-  });
+    author: blog.author || "",
+    content: blog.content || "",
+  };
+  const [formData, setFormData] = useState(initialFormData);
   const [showSuccessAlert, setshowSuccessAlert] = useState(false);
   const [showErrorAlert, setshowErrorAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+  const params = useParams();
 
   const token = localStorage.getItem("token");
-
-  useEffect(() => {
-    if (userData && userData._id) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        author: userData._id,
-      }));
-    }
-  }, [userData]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -55,6 +48,48 @@ const NewPost = () => {
     });
   };
 
+  useEffect(() => {
+    const fetchBlogPost = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/blogPosts/${params.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setBlog(data);
+          setFormData({
+            category: data.category,
+            title: data.title,
+            cover: data.cover,
+            readTime: {
+              value: data.readTime.value,
+              unit: data.readTime.unit,
+            },
+            author: data.author,
+            content: data.content,
+          });
+          setLoading(false);
+        } else {
+          throw new Error("Failed to fetch blog post");
+        }
+      } catch (error) {
+        console.error("Error fetching blog post:", error);
+        setshowErrorAlert(true);
+        setLoading(false);
+      }
+    };
+
+    fetchBlogPost();
+  }, [params.id]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,28 +104,29 @@ const NewPost = () => {
       form.append("readTime.value", formData.readTime.value);
       form.append("readTime.unit", formData.readTime.unit);
       form.append("content", formData.content);
-      form.append("author", formData.author);
+      form.append("author", formData.author._id);
       form.append("cover", formData.cover);
 
-      const response = await fetch("http://localhost:5000/api/blogPosts", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: form,
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/blogPosts/${params.id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: form,
+        }
+      );
 
       if (response.ok) {
         setshowSuccessAlert(true);
-        const blogPostsData = await response.json();
-        console.log(blogPostsData);
       } else {
-        throw new Error("Failed to upload form data");
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-
-      console.log("Form data:", formData);
+      console.log(formData);
       setshowErrorAlert(true);
     } finally {
       setLoading(false);
@@ -98,14 +134,7 @@ const NewPost = () => {
   };
 
   const handleReset = () => {
-    setFormData({
-      category: "",
-      title: "",
-      cover: "",
-      readTime: { value: 1, unit: "min" },
-      author: userData ? userData._id : "",
-      content: "",
-    });
+    setFormData(initialFormData);
   };
 
   useEffect(() => {
@@ -125,7 +154,7 @@ const NewPost = () => {
         {showSuccessAlert && (
           <CustomAlert
             type="success"
-            message="Post successfully created."
+            message="Post successfully edited."
             show={showSuccessAlert}
           />
         )}
@@ -133,42 +162,18 @@ const NewPost = () => {
         {showErrorAlert && (
           <CustomAlert
             type="danger"
-            message="Error while creating the post, try again later."
+            message="Error while editing the post, try again later."
             show={showErrorAlert}
           />
         )}
         <Form className="mt-3" onSubmit={handleSubmit}>
-          <Form.Group className="mt-3 d-flex justify-content-center">
-            {formData.cover ? (
-              <div className="cover-image-container position-relative">
-                <img
-                  src={URL.createObjectURL(formData.cover)}
-                  width={800}
-                  height={300}
-                  alt="Cover"
-                  name="cover"
-                  className="cover-image object-fit-contain"
-                />
-                <Button
-                  variant="danger"
-                  className="remove-cover-button position-absolute top-50 start-50"
-                  onClick={() => setFormData({ ...formData, cover: "" })}
-                >
-                  Remove
-                </Button>
-              </div>
-            ) : (
-              <>
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="file"
-                    accept="image/*"
-                    name="cover"
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </>
-            )}
+          <Form.Group controlId="formCover">
+            <Form.Control
+              type="file"
+              accept="image/*"
+              name="cover"
+              onChange={handleChange}
+            />
           </Form.Group>
           <Form.Group controlId="title" className="mt-3">
             <Form.Control
@@ -206,7 +211,7 @@ const NewPost = () => {
                   name="readTimeValue"
                   placeholder="Enter read time"
                   value={formData.readTime.value}
-                  onChange={handleChange}
+                  onChange={handleReadTimeChange}
                   required
                 />
                 <Form.Control
@@ -264,4 +269,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default EditPost;

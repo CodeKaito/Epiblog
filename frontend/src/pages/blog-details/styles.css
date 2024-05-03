@@ -25,6 +25,21 @@
 .comments-box:hover {
   color: black;
 }
+.createdat {
+  font-size: 14px;
+  color: gray;
+}
+.mypost {
+  height: 30px;
+  background-color: #f2f2f2;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-wrap: wrap;
+  display: flex;
+}
 @media screen and (max-width: 770px) {
   .blog-cover {
     width: 300px;

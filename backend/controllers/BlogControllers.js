@@ -1,4 +1,4 @@
-const cloudinaryMiddleware = require("../middlewares/multer.js");
+const cloudinaryCoverMiddleware = require("../middlewares/multer.js");
 // Importa il modello del author per interagire con il database
 const BlogModel = require("../models/BlogModel");
 
@@ -158,7 +158,7 @@ module.exports.getPostsByAuthorId = async (req, res, next) => {
 module.exports.saveBlog = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'immagine del post
-    cloudinaryMiddleware(req, res, async () => {
+    cloudinaryCoverMiddleware(req, res, async () => {
       const newPost = await BlogModel.create({
         ...req.body,
         cover: req.file ? req.file.path : null,
@@ -184,19 +184,38 @@ module.exports.saveBlog = async (req, res, next) => {
 
 // Funzione per aggiornare un author esistente nel database e inviare il risultato dell'aggiornamento come risposta
 module.exports.updateBlog = async (req, res, next) => {
-  const id = req.params;
-  const blog = req.body;
+  const id = req.params.id;
   try {
-    // Aggiorna il author nel database utilizzando l'ID fornito e i dati del author
-    const updatedBlog = await BlogModel.findByIdAndUpdate(id, blog, {
-      new: true,
+    // Esegui il middleware di Cloudinary per caricare l'avatar
+    cloudinaryCoverMiddleware(req, res, async () => {
+      const existingBlog = await BlogModel.findById(id);
+      if (!existingBlog) {
+        return res.status(404).send("Blog not found");
+      }
+
+      // Costruisce un oggetto con i campi da aggiornare
+      const fieldsToUpdate = {
+        category: req.body.category || existingBlog.name,
+        title: req.body.title || existingBlog.title,
+        author: req.body.author || existingBlog.author,
+        content: req.body.content || existingBlog.content,
+        readTime: req.body.readTime || existingBlog.readTime,
+        cover: req.file ? req.file.path : null,
+      };
+
+      // Aggiorna il author nel database utilizzando l'ID fornito e i dati del author
+      const updatedBlog = await BlogModel.findByIdAndUpdate(
+        id,
+        fieldsToUpdate,
+        { new: true }
+      );
+      if (!updatedBlog) {
+        // Se l'autore non è stato trovato, restituisci un messaggio di errore
+        return res.status(404).send("Blog not found");
+      }
+      // Invia una conferma di aggiornamento come risposta
+      res.send("Updated successfully, blog: " + JSON.stringify(updatedBlog));
     });
-    if (!updatedBlog) {
-      // Se l'autore non è stato trovato, restituisci un messaggio di errore
-      return res.status(404).send("Author not found");
-    }
-    // Invia una conferma di aggiornamento come risposta
-    res.send("Updated successfully, blog: " + JSON.stringify(updatedBlog));
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
