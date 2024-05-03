@@ -1,20 +1,35 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthenticationContext";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const { isLogged } = useAuth();
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("token");
-  const isLoggedIn = localStorage.getItem("isLogged") === "true";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (isLoggedIn) {
-          const data = await getUserData();
+        if (isLogged) {
+          const response = await fetch(
+            "https://epicode-api.onrender.com/api/me/",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP Error ${response.status}`);
+          }
+
+          const data = await response.json();
           setUserData(data);
           setIsLoading(false);
         } else {
@@ -27,29 +42,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchData();
-  }, [isLoggedIn]);
-
-  const getUserData = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/me/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error retrieving user data:", error);
-      throw error;
-    }
-  };
+  }, [isLogged, token]);
 
   const updateUser = (newUserData) => {
     setUserData(newUserData);

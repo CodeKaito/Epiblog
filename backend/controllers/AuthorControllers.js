@@ -179,24 +179,23 @@ module.exports.detailAuthor = async (req, res, next) => {
 module.exports.saveAuthor = async (req, res, next) => {
   try {
     // Esegue il middleware di Cloudinary per caricare l'avatar + i dati dell'autore
-    // Estrai i dati dell'autore dalla richiesta
-    const { username, email, password } = req.body;
+    cloudinaryAvatarMiddleware(req, res, async () => {
+      const { username, email, password } = req.body;
+      // Password crittografata
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // Crea un nuovo autore nel database utilizzando i dati forniti
+      const newAuthor = await AuthorModel.create({
+        ...req.body,
+        password: hashedPassword,
+        avatar: req.file ? req.file.path : null,
+      });
 
-    // Password crittografata
-    const hashedPassword = await bcrypt.hash(password, 10);
+      await sendEmail({ username, email });
 
-    // Crea un nuovo autore nel database utilizzando i dati forniti
-    const newAuthor = await AuthorModel.create({
-      username,
-      email,
-      password: hashedPassword,
+      // Invia il nuovo autore creato come risposta con stato 201
+      console.log("Saved successfully, author: " + newAuthor);
+      res.status(201).send(newAuthor);
     });
-
-    await sendEmail({ username, email });
-
-    // Invia il nuovo autore creato come risposta con stato 201
-    console.log("Saved successfully, author: " + JSON.stringify(newAuthor));
-    res.status(201).send(newAuthor);
   } catch (error) {
     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
     console.error(error.message);
@@ -212,81 +211,6 @@ module.exports.saveAuthor = async (req, res, next) => {
     console.log(`Author creation process completed.`);
   }
 };
-
-// module.exports.saveAuthor = async (req, res, next) => {
-//   try {
-//     // Esegue il middleware di Cloudinary per caricare l'avatar + i dati dell'autore
-//     cloudinaryMiddleware(req, res, async () => {
-//       // Estrai i dati dell'autore dalla richiesta
-//       const { name, surname, email, birth, bio, password } = req.body;
-
-//       // Password crittografata
-//       const hashedPassword = await bcrypt.hash(password, 10);
-
-//       // Crea un nuovo autore nel database utilizzando i dati forniti
-//       const newAuthor = await AuthorModel.create({
-//         name,
-//         surname,
-//         email,
-//         birth,
-//         bio,
-//         password: hashedPassword,
-//         // Aggiunge il percorso dell'avatar dal req.file se è stato caricato correttamente
-//         avatar: req.file ? req.file.path : null,
-//       });
-
-//       await sendEmail({ name, surname, email });
-
-//       // Invia il nuovo autore creato come risposta con stato 201
-//       console.log("Saved successfully, author: " + JSON.stringify(newAuthor));
-//       res.status(201).send(newAuthor);
-//     });
-//   } catch (error) {
-//     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
-//     console.error(error.message);
-//     res.status(500).send({
-//       error: error.message,
-//       stack: error.stack,
-//       msg: "Something went wrong!",
-//     });
-//     // Passa l'errore al middleware successivo
-//     next(error);
-//   } finally {
-//     // Stampa a console il completamento del processo di creazione del author
-//     console.log(`Author creation process completed.`);
-//   }
-// };
-
-// Funzione per aggiornare un author esistente nel database e inviare il risultato dell'aggiornamento come risposta
-// module.exports.updateAuthor = async (req, res, next) => {
-//   const id = req.params.id;
-//   const author = req.body;
-//   try {
-//     // Aggiorna il author nel database utilizzando l'ID fornito e i dati del author
-//     const updatedAuthor = await AuthorModel.findByIdAndUpdate(id, author, {
-//       new: true, // Restituisce l'oggetto aggiornato
-//     });
-//     if (!updatedAuthor) {
-//       // Se l'autore non è stato trovato, restituisci un messaggio di errore
-//       return res.status(404).send("Author not found");
-//     }
-//     // Invia una conferma di aggiornamento come risposta
-//     res.send("Updated successfully, author: " + JSON.stringify(updatedAuthor));
-//   } catch (error) {
-//     // Gestisce gli errori inviando un messaggio di errore e uno stato 500 al client
-//     console.error(error.message);
-//     res.status(500).send({
-//       error: error.message,
-//       stack: error.stack,
-//       msg: "Something went wrong!",
-//     });
-//     // Passa l'errore al middleware successivo
-//     next(error);
-//   } finally {
-//     // Stampa a console il completamento del processo di aggiornamento del author
-//     console.log(`Author with id: ${id} update process completed.`);
-//   }
-// };
 
 module.exports.updateAuthor = async (req, res, next) => {
   const id = req.params.id;

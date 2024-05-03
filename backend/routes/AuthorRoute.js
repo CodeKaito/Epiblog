@@ -27,7 +27,7 @@ router
   .get("/authors/pagination/", getAuthorsPaginations) // Route per ottenere la paginazione dei blog
   .get("/authors/pagination/:order", getAuthorsPaginationOrders) // Route per ottenere la paginazione dei blog
   .get("/authors/:id", detailAuthor) // Route per ottenere i dettagli di un blog specifico in base all'ID
-  .post("/authors", authMiddleware, saveAuthor) // Route per salvare un nuovo blog
+  .post("/authors", saveAuthor) // Route per salvare un nuovo blog
   .put("/authors/:id", authMiddleware, updateAuthor) // Route per aggiornare un blog esistente in base all'ID
   // .patch("/authors/:id/avatar", updateAuthorAvatar) // Route per aggiornare l'avatar dell'utente
   .delete("/authors/:id", authMiddleware, deleteAuthor); // Route per eliminare un blog esistente in base all'ID

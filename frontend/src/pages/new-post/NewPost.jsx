@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, Form, Spinner } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import NewPostNavbar from "../../components/navbar/NewPostNavbar";
 import CustomAlert from "../../utils/CustomAlert";
+import CustomLoader from "../../utils/CustomLoader";
 import { useUser } from "../../context/UserContext";
 import "./styles.css";
 
@@ -37,10 +38,8 @@ const NewPost = () => {
     const { name, value, files } = e.target;
     if (name === "cover" && files && files[0]) {
       setFormData({ ...formData, [name]: files[0] });
-      console.log("sono nell if");
     } else {
       setFormData({ ...formData, [name]: value });
-      console.log("sono nell else");
     }
     console.log(formData);
   };
@@ -58,7 +57,6 @@ const NewPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Linea 60 " + formData.cover);
 
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
@@ -74,18 +72,11 @@ const NewPost = () => {
       form.append("author", formData.author);
       form.append("cover", formData.cover);
 
-      console.log("linea 76 cover:", formData.cover);
-
-      for (let item of form.entries()) {
-        console.log(item[0] + ", " + item[1]);
-      }
-
       const response = await fetch("http://localhost:5000/api/blogPosts", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-
         body: form,
       });
 
@@ -99,7 +90,6 @@ const NewPost = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
 
-      // Logga anche i dati del modulo in caso di errore
       console.log("Form data:", formData);
       setshowErrorAlert(true);
     } finally {
@@ -131,11 +121,7 @@ const NewPost = () => {
     <>
       <NewPostNavbar />
       <Container className="new-blog-container">
-        {isLoading && (
-          <div className="loader-overlay">
-            <Spinner animation="border" role="status" className="loader" />
-          </div>
-        )}
+        {isLoading && <CustomLoader />}
         {showSuccessAlert && (
           <CustomAlert
             type="success"

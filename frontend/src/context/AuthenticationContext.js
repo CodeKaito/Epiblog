@@ -80,7 +80,9 @@ export const AuthContextProvider = ({ children }) => {
     setToken("");
     localStorage.removeItem("token");
     localStorage.setItem("isLogged", "false");
-    window.location.href = "/";
+    if (window.location.pathname !== "/") {
+      window.location.href = "/";
+    }
   };
 
   const resetInactiveTimer = () => {
