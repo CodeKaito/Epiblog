@@ -54,8 +54,6 @@ exports.authMiddleware = async (req, res, next) => {
 
         const me = await AuthorModel.findById(decoded.id);
 
-        console.log(JSON.stringify(me));
-
         if (me) {
           req.user = me;
           next();
@@ -71,7 +69,3 @@ exports.authMiddleware = async (req, res, next) => {
     next(err);
   }
 };
-
-// const me = await AuthorModel.findOne({
-//   ...decoded,
-// });

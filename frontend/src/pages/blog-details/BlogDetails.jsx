@@ -3,6 +3,7 @@ import { Container, Image, Row, Col } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
+import { RiDeleteBin7Line } from "react-icons/ri";
 import Sidebar from "../../components/comments/Sidebar";
 import CustomLoader from "../../utils/CustomLoader";
 import { IoChatbubbleOutline } from "react-icons/io5";
@@ -16,6 +17,8 @@ const BlogDetails = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
 
   const createdDate = new Date(blog.createdAt);
 
@@ -54,6 +57,26 @@ const BlogDetails = () => {
     setShowSidebar(!showSidebar);
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/blogPosts/${params.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete blog");
+      }
+      navigate("/");
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -89,14 +112,17 @@ const BlogDetails = () => {
                           <div className="mx-3 mypost px-3">
                             <p>My post</p>
                           </div>
-                          <div className="mx-3 pointer">
+                          <div className="mx-2 pointer">
                             <Link to={`/edit-blog/${blog._id}`}>
                               <FaRegEdit />
                             </Link>
                           </div>
+                          <div className="mx-2 pointer" onClick={handleDelete}>
+                            <RiDeleteBin7Line />
+                          </div>
                         </>
                       )}
-                      <div>
+                      <div className="mx-2">
                         <IoChatbubbleOutline
                           onClick={handleToggleSidebar}
                           className="pointer"
