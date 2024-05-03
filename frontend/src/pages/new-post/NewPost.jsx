@@ -21,7 +21,7 @@ const NewPost = () => {
   });
   const [showSuccessAlert, setshowSuccessAlert] = useState(false);
   const [showErrorAlert, setshowErrorAlert] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -60,7 +60,7 @@ const NewPost = () => {
 
     setshowSuccessAlert(false);
     setshowErrorAlert(false);
-    setIsLoading(true);
+    setLoading(true);
 
     try {
       const form = new FormData();
@@ -72,13 +72,16 @@ const NewPost = () => {
       form.append("author", formData.author);
       form.append("cover", formData.cover);
 
-      const response = await fetch("http://localhost:5000/api/blogPosts", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: form,
-      });
+      const response = await fetch(
+        "https://epicode-api.onrender.com/api/blogPosts",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: form,
+        }
+      );
 
       if (response.ok) {
         setshowSuccessAlert(true);
@@ -93,7 +96,7 @@ const NewPost = () => {
       console.log("Form data:", formData);
       setshowErrorAlert(true);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -121,7 +124,7 @@ const NewPost = () => {
     <>
       <NewPostNavbar />
       <Container className="new-blog-container">
-        {isLoading && <CustomLoader />}
+        {loading && <CustomLoader />}
         {showSuccessAlert && (
           <CustomAlert
             type="success"

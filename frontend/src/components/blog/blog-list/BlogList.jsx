@@ -32,11 +32,10 @@ const BlogList = () => {
         }
         const data = await response.json();
 
-        // Controlla se non ci sono risultati
         if (data.length === 0) {
           setNoResults(true);
         } else {
-          setNoResults(false); // Resetta il flag noResults
+          setNoResults(false);
           setPosts(data);
         }
 
@@ -80,7 +79,7 @@ const BlogList = () => {
 
       fetchAllPosts();
     }
-  }, [searchQuery]);
+  }, [searchQuery, token]);
 
   return (
     <>

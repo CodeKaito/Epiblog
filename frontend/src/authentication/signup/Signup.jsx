@@ -17,8 +17,6 @@ const Signup = ({ showLoginModal }) => {
     avatar: "",
   });
 
-  const token = localStorage.getItem("token");
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "avatar" && files && files[0]) {
@@ -44,10 +42,13 @@ const Signup = ({ showLoginModal }) => {
       form.append("password", formData.password);
       form.append("avatar", formData.avatar);
 
-      const response = await fetch("http://localhost:5000/api/authors", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch(
+        "https://epicode-api.onrender.com/api/authors",
+        {
+          method: "POST",
+          body: form,
+        }
+      );
       if (response.ok) {
         setshowSuccessAlert(true);
         const authorData = await response.json();

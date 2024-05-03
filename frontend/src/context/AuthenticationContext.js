@@ -75,7 +75,7 @@ export const AuthContextProvider = ({ children }) => {
     );
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setIsLogged(false);
     setToken("");
     localStorage.removeItem("token");
@@ -83,16 +83,16 @@ export const AuthContextProvider = ({ children }) => {
     if (window.location.pathname !== "/") {
       window.location.href = "/";
     }
-  };
+  }, []);
 
-  const resetInactiveTimer = () => {
+  const resetInactiveTimer = useCallback(() => {
     clearTimeout(inactiveTimer);
     setInactiveTimer(
       setTimeout(() => {
         logout();
       }, 200000)
     );
-  };
+  }, [inactiveTimer, logout]);
 
   useEffect(() => {
     const handleUserActivity = () => {
