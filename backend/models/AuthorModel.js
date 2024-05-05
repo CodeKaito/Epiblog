@@ -29,7 +29,7 @@ const authorSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      required: true,
+      required: false,
     },
     bio: {
       type: String,

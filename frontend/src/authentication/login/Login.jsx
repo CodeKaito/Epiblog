@@ -4,9 +4,11 @@ import CustomLoader from "../../utils/CustomLoader";
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
 import { useAuth } from "../../context/AuthenticationContext.js";
+import WelcomeModal from "../welcome/Welcome";
 
 const Login = ({ showSignupModal }) => {
   const [loading, setLoading] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -47,6 +49,8 @@ const Login = ({ showSignupModal }) => {
 
       // Reindirizzo l'utente alla home page
       navigate("/");
+
+      setShowWelcomeModal(true);
     } catch (error) {
       console.error("Error during login:", error);
     } finally {
@@ -101,6 +105,12 @@ const Login = ({ showSignupModal }) => {
           Sign up here
         </span>
       </div>
+
+      <WelcomeModal
+        show={showWelcomeModal}
+        onHide={() => setShowWelcomeModal(false)}
+        name={formData.username}
+      />
     </div>
   );
 };

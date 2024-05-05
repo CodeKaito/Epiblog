@@ -53,6 +53,9 @@ const Signup = ({ showLoginModal }) => {
         setshowSuccessAlert(true);
         const authorData = await response.json();
         console.log("Author created:", authorData);
+        setTimeout(() => {
+          showLoginModal();
+        }, 3000);
       } else {
         throw new Error("Failed to upload form data");
       }
@@ -81,7 +84,7 @@ const Signup = ({ showLoginModal }) => {
       {showSuccessAlert && (
         <CustomAlert
           type="success"
-          message="Post successfully created."
+          message="Signup successfully."
           show={showSuccessAlert}
         />
       )}
@@ -89,7 +92,7 @@ const Signup = ({ showLoginModal }) => {
       {showErrorAlert && (
         <CustomAlert
           type="danger"
-          message="Error while creating the post, try again later."
+          message="Error while signup, try again later."
           show={showErrorAlert}
         />
       )}
@@ -121,13 +124,14 @@ const Signup = ({ showLoginModal }) => {
                   accept="image/*"
                   name="avatar"
                   onChange={handleChange}
+                  className="form-signup input-typefile"
                   required
                 />
               </Form.Group>
             </>
           )}
         </Form.Group>
-        <div className="mt-1 d-flex justify-content-center mx-auto">
+        <div className="mt-1 d-flex justify-content-between mx-auto">
           <Form.Group controlId="formName">
             <Form.Control
               type="text"

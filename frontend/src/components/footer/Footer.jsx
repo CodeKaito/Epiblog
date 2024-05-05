@@ -1,7 +1,8 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import "./styles.css";
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <footer
       style={{
@@ -9,7 +10,11 @@ const Footer = (props) => {
         paddingBottom: 40,
       }}
     >
-      <Container>{`${new Date().getFullYear()} - © Epiblog | Developed by CodeKaito`}</Container>
+      <Container>
+        <p className="footer">
+          {`${new Date().getFullYear()} - © Epiblog | Developed by CodeKaito`}
+        </p>
+      </Container>
     </footer>
   );
 };

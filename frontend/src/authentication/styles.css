@@ -42,7 +42,27 @@ main {
 .signup-title {
   font-size: 20px;
 }
-.form-signup:focus {
+.form-signup {
+  font-size: 14px;
+  border-top-left-radius: 20px;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+}
+.form-signup:focus,
+.form-signup:target {
   box-shadow: none;
-  border-color: none;
+  border-color: black;
+}
+.form-signup[type="file"] {
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 30px;
+  border: none;
+}
+.input-typefile {
+  border-color: transparent;
 }
