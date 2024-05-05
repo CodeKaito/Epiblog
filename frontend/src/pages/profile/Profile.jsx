@@ -20,7 +20,7 @@ const Profile = () => {
             <Col sm={12} lg={8}>
               <ProfileLeft />
             </Col>
-            <Col md={4} className="d-none d-lg-block sidebar-container">
+            <Col lg={4} className="sidebar-container">
               <ProfileRight {...userData} />
             </Col>
           </Row>

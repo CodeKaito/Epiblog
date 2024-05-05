@@ -13,6 +13,8 @@ const Biography = (props) => {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchBio = async () => {
       try {
@@ -42,10 +44,11 @@ const Biography = (props) => {
 
   const handleSave = async () => {
     try {
-      await fetch(`https://epicode-api.onrender.com/api/authors/${_id}`, {
+      await fetch(`http://localhost:5000/api/authors/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ bio: editedBio }),
       });

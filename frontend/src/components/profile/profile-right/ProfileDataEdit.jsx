@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import CustomLoader from "../../../utils/CustomLoader";
 import { useUser } from "../../../context/UserContext";
+import "./styles.css";
 
 const ProfileDataEdit = ({ onCancel }) => {
   const { userData, updateUser } = useUser();
@@ -12,17 +13,26 @@ const ProfileDataEdit = ({ onCancel }) => {
     email: "",
     birth: "",
     password: "",
-    avatar: "",
+    avatar: userData.avatar,
   });
 
   const token = localStorage.getItem("token");
 
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = ("0" + (d.getMonth() + 1)).slice(-2);
+    const day = ("0" + d.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
   useEffect(() => {
+    const formattedBirth = userData.birth ? formatDate(userData.birth) : "";
     setFormData({
       name: userData.name,
       surname: userData.surname,
       email: userData.email,
-      birth: userData.birth,
+      birth: formattedBirth,
       password: userData.password,
       avatar: userData.avatar,
     });
@@ -32,6 +42,9 @@ const ProfileDataEdit = ({ onCancel }) => {
     const { name, value, files } = e.target;
     if (name === "avatar" && files && files[0]) {
       setFormData({ ...formData, [name]: files[0] });
+    } else if (name === "birth") {
+      const formattedDate = formatDate(value);
+      setFormData({ ...formData, [name]: formattedDate });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -80,12 +93,12 @@ const ProfileDataEdit = ({ onCancel }) => {
   };
 
   return (
-    <div className="mt-4">
-      <h1 className="mb-5">Edit your profile</h1>
+    <div className="mt-5">
+      <h1 className="mb-5 text-uppercase">Edit in draft</h1>
 
       {loading && <CustomLoader />}
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="form-profiledataedit">
         <div className="d-flex gap-2">
           <Form.Group controlId="formName">
             <Form.Label className="text-center">Name</Form.Label>
@@ -95,7 +108,7 @@ const ProfileDataEdit = ({ onCancel }) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="form-signup"
+              className="form-profiledataedit"
             />
           </Form.Group>
           <Form.Group controlId="formSurname">
@@ -106,7 +119,7 @@ const ProfileDataEdit = ({ onCancel }) => {
               name="surname"
               value={formData.surname}
               onChange={handleChange}
-              className="form-signup"
+              className="form-profiledataedit"
             />
           </Form.Group>
         </div>
@@ -119,7 +132,7 @@ const ProfileDataEdit = ({ onCancel }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="form-signup"
+              className="form-profiledataedit"
             />
           </Form.Group>
         </div>
@@ -128,11 +141,11 @@ const ProfileDataEdit = ({ onCancel }) => {
             <Form.Label className="text-center">Password</Form.Label>
             <Form.Control
               type="password"
-              placeholder="Password"
+              placeholder="************************"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="form-signup"
+              className="form-profiledataedit"
             />
           </Form.Group>
         </div>
@@ -146,7 +159,7 @@ const ProfileDataEdit = ({ onCancel }) => {
               accept="image/*"
               name="avatar"
               onChange={handleChange}
-              className="form-signup"
+              className="form-profiledataedit"
             />
           </Form.Group>
         </div>
@@ -160,15 +173,18 @@ const ProfileDataEdit = ({ onCancel }) => {
               name="birth"
               value={formData.birth}
               onChange={handleChange}
-              className="form-signup"
+              className="form-profiledataedit"
             />
           </Form.Group>
         </div>
-        <div className="mt-2">
-          <Button variant="primary" type="submit">
+        <div className="mt-4">
+          <Button className="save-changes-button mt-2" type="submit">
             Save Changes
           </Button>
-          <Button variant="secondary" className="mx-2" onClick={onCancel}>
+          <Button
+            className="cancel-changes-button mx-2 mt-2"
+            onClick={onCancel}
+          >
             Cancel
           </Button>
         </div>

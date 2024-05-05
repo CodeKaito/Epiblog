@@ -1,4 +1,4 @@
-const cloudinaryAvatarMiddleware = require("../middlewares/multer.js");
+const cloudinaryAvatarMiddleware = require("../middlewares/multerAvatar.js");
 // Importa il modello del author per interagire con il database
 const AuthorModel = require("../models/AuthorModel");
 
@@ -217,10 +217,18 @@ module.exports.updateAuthor = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'avatar
     cloudinaryAvatarMiddleware(req, res, async () => {
+      console.log(req.file);
       // Trova l'autore nel database
       const existingAuthor = await AuthorModel.findById(id);
       if (!existingAuthor) {
         return res.status(404).send("Author not found");
+      }
+
+      let updatedAvatar = existingAuthor.avatar;
+      if (req.file) {
+        updatedAvatar = req.file.path;
+      } else if (req.file === null) {
+        updatedAvatar = existingAuthor.avatar;
       }
 
       // Costruisce un oggetto con i campi da aggiornare
@@ -230,7 +238,7 @@ module.exports.updateAuthor = async (req, res, next) => {
         email: req.body.email || existingAuthor.email,
         birth: req.body.birth || existingAuthor.birth,
         bio: req.body.bio || existingAuthor.bio,
-        avatar: req.file ? req.file.path : null,
+        avatar: updatedAvatar,
       };
 
       // Aggiorna l'URL dell'avatar dell'autore nel database

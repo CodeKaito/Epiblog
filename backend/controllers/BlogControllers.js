@@ -1,4 +1,4 @@
-const cloudinaryCoverMiddleware = require("../middlewares/multer.js");
+const cloudinaryCoverMiddleware = require("../middlewares/multerCover.js");
 // Importa il modello del author per interagire con il database
 const BlogModel = require("../models/BlogModel");
 

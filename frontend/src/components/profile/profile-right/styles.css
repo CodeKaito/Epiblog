@@ -1,9 +1,52 @@
 .name-profile {
-    font-weight: 800;
+  font-weight: 800;
 }
 .edit-profile {
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    color: rgb(18, 155, 0);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: rgb(18, 155, 0);
+}
+.save-changes-button {
+  padding: 10px 20px;
+  border-radius: 70px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(54, 54, 54);
+  color: black;
+  font-size: 13px;
+}
+.save-changes-button:hover {
+  padding: 10px 20px;
+  border-radius: 70px;
+  background-color: rgb(10, 10, 10);
+  border: 1px solid rgb(58, 58, 58);
+  color: rgb(255, 255, 255);
+}
+.save-changes-button:focus {
+  border: transparent;
+  box-shadow: none;
+}
+.cancel-changes-button,
+.cancel-changes-button:hover {
+  font-size: 13px;
+  padding: 10px 20px;
+  border-radius: 70px;
+  background-color: rgb(10, 10, 10);
+  border: 1px solid rgb(58, 58, 58);
+  color: rgb(255, 255, 255);
+}
+.form-profiledataedit,
+.form-profiledataedit:hover,
+.form-profiledataedit:focus {
+  font-size: 13px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+.form-profiledataedit:hover,
+.form-profiledataedit:focus,
+.form-profiledataedit:target {
+  border-color: black;
 }

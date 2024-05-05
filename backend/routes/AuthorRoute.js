@@ -30,7 +30,7 @@ router
   .post("/authors", saveAuthor) // Route per salvare un nuovo blog
   .put("/authors/:id", authMiddleware, updateAuthor) // Route per aggiornare un blog esistente in base all'ID
   // .patch("/authors/:id/avatar", updateAuthorAvatar) // Route per aggiornare l'avatar dell'utente
-  .delete("/authors/:id", authMiddleware, deleteAuthor); // Route per eliminare un blog esistente in base all'ID
+  .delete("/authors/:id", deleteAuthor); // Route per eliminare un blog esistente in base all'ID
 
 // Esporta il router per renderlo disponibile ad altri moduli
 module.exports = router;

@@ -31,9 +31,11 @@ const ProfileRight = (props) => {
           {name} {surname}
         </div>
         {!isEditing && (
-          <div className="edit-profile mt-4" onClick={handleEditProfile}>
-            <p>Edit profile</p>
-          </div>
+          <>
+            <div className="edit-profile mt-4" onClick={handleEditProfile}>
+              <p>Edit your profile</p>
+            </div>
+          </>
         )}
         {isEditing && <ProfileDataEdit onCancel={handleCancelEdit} />}
       </div>

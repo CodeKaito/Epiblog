@@ -24,16 +24,21 @@ const authorSchema = new mongoose.Schema(
       select: false,
     },
     birth: {
-      type: Date,
+      type: String,
       required: false,
     },
     avatar: {
       type: String,
-      required: false,
+      required: true,
     },
     bio: {
       type: String,
       required: false,
+    },
+    role: {
+      type: String,
+      required: false,
+      default: "user",
     },
   },
   {

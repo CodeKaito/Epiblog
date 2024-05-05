@@ -8,13 +8,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "uploads",
-  },
-});
-
 const coverStorage = new CloudinaryStorage({
   cloudinary,
   params: {
@@ -25,6 +18,5 @@ const coverStorage = new CloudinaryStorage({
 const cloudinaryCoverMiddleware = multer({ storage: coverStorage }).single(
   "cover"
 );
-const cloudinaryAvatarMiddleware = multer({ storage }).single("avatar");
 
-(module.exports = cloudinaryCoverMiddleware), cloudinaryAvatarMiddleware;
+module.exports = cloudinaryCoverMiddleware;

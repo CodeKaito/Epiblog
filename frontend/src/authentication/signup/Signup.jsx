@@ -121,6 +121,7 @@ const Signup = ({ showLoginModal }) => {
                   accept="image/*"
                   name="avatar"
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
             </>
