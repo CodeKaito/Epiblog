@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./styles.css";
 import BlogList from "../../components/blog/blog-list/BlogList";
@@ -8,21 +8,19 @@ import Follows from "../../components/sidebar/follow/Follows";
 import SavedPosts from "../../components/sidebar/saved/SavedPosts";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
 import WelcomeModal from "../../authentication/welcome/Welcome";
-import { useAuth } from "../../context/AuthenticationContext";
+import CustomLoader from "../../utils/CustomLoader";
+import { useUser } from "../../context/UserContext";
 
 const Home = () => {
-  const { userData, isLoading } = useAuth();
+  const { userData } = useUser();
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const hasShownModal = localStorage.getItem("hasShownModal");
-    if (hasShownModal) {
-      setShowModal(true);
-      setTimeout(() => {
-        localStorage.removeItem("hasShownModal");
-      }, 1000);
+    if (userData) {
+      setLoading(false);
     }
-  }, []);
+  }, [userData]);
 
   const handleModalClose = () => setShowModal(false);
 
@@ -38,10 +36,10 @@ const Home = () => {
           </Col>
           <Col md={4} className="d-none d-lg-block sidebar-container sidebar">
             <div className="m-5">
-              {isLoading ? (
-                <div>Loading...</div>
+              {loading ? (
+                <CustomLoader />
               ) : (
-                <div>
+                <>
                   {userData && (
                     <WelcomeModal
                       show={showModal}
@@ -49,7 +47,7 @@ const Home = () => {
                       {...userData}
                     />
                   )}
-                </div>
+                </>
               )}
               <PopularPosts />
               <Topics />

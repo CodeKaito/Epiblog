@@ -1,9 +1,10 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
+import "../styles.css";
 
 const WelcomeModal = ({ show, onHide, name, surname }) => {
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={onHide} centered className="welcome-modal">
       <Modal.Header closeButton>
         <Modal.Title>
           Welcome back, {name} {surname}!

@@ -66,3 +66,6 @@ main {
 .input-typefile {
   border-color: transparent;
 }
+.welcome-modal {
+  z-index: 999;
+}
