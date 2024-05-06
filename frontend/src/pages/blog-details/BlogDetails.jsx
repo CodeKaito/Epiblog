@@ -107,10 +107,15 @@ const BlogDetails = () => {
                       </div>
                     </div>
                     <div className="mb-5 comments-box d-flex align-items-center">
-                      {isAuthor && (
+                      {(isAuthor ||
+                        (userData && userData.role === "admin")) && (
                         <>
                           <div className="mx-3 mypost px-3">
-                            <p>My post</p>
+                            <p>
+                              {userData.role === "admin"
+                                ? "Admin Privileges"
+                                : "My post"}
+                            </p>
                           </div>
                           <div className="mx-2 pointer">
                             <Link to={`/edit-blog/${blog._id}`}>

@@ -183,68 +183,74 @@ const CommentSingle = ({
             <p className="comment-content">{content}</p>
           )}
         </div>
-        {isAuthor && (
-          <div className="d-flex justify-content-between">
-            <div className="d-flex mt-2 tag">
-              <span className="tag-text">Me</span>
-            </div>
-            <div>
-              {isEditing ? (
-                <div className="d-flex align-items-center">
-                  <div className="mx-2">
-                    <span className="cancel pointer" onClick={handleCancelEdit}>
-                      Cancel
-                    </span>
-                  </div>
-
-                  <div>
-                    <span
-                      className="confirm pointer"
-                      onClick={handleConfirmEdit}
-                    >
-                      Confirm
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  {showConfirmDelete ? (
-                    <div className="d-flex align-items-center">
-                      <div className="mx-2">
-                        <span
-                          className="cancel pointer"
-                          onClick={() => setShowConfirmDelete(false)}
-                        >
-                          Cancel
-                        </span>
-                      </div>
-
-                      <div>
-                        <span
-                          className="confirm-deletion pointer"
-                          onClick={handleDelete}
-                        >
-                          Confirm Deletion
-                        </span>
-                      </div>
+        {isAuthor ||
+          (userData && userData.role === "admin" && (
+            <div className="d-flex justify-content-between">
+              <div className="d-flex mt-2 tag">
+                <span className="tag-text px-2">
+                  {userData.role === "admin" ? "Admin Privileges" : "Me"}
+                </span>
+              </div>
+              <div>
+                {isEditing ? (
+                  <div className="d-flex align-items-center">
+                    <div className="mx-2">
+                      <span
+                        className="cancel pointer"
+                        onClick={handleCancelEdit}
+                      >
+                        Cancel
+                      </span>
                     </div>
-                  ) : (
-                    <BsTrash2
-                      className="pointer bstrash"
-                      onClick={handleDelete}
-                    />
-                  )}
-                  {!showConfirmDelete && (
-                    <MdEditNote
-                      className="pointer MdEditNote mx-2 fs-5"
-                      onClick={handleEdit}
-                    />
-                  )}
-                </>
-              )}
+
+                    <div>
+                      <span
+                        className="confirm pointer"
+                        onClick={handleConfirmEdit}
+                      >
+                        Confirm
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {showConfirmDelete ? (
+                      <div className="d-flex align-items-center">
+                        <div className="mx-2">
+                          <span
+                            className="cancel pointer"
+                            onClick={() => setShowConfirmDelete(false)}
+                          >
+                            Cancel
+                          </span>
+                        </div>
+
+                        <div>
+                          <span
+                            className="confirm-deletion pointer"
+                            onClick={handleDelete}
+                          >
+                            Confirm Deletion
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <BsTrash2
+                        className="pointer bstrash"
+                        onClick={handleDelete}
+                      />
+                    )}
+                    {!showConfirmDelete && (
+                      <MdEditNote
+                        className="pointer MdEditNote mx-2 fs-5"
+                        onClick={handleEdit}
+                      />
+                    )}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          ))}
       </>
     </div>
   );

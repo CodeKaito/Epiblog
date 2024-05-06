@@ -15,6 +15,7 @@ const Signup = ({ showLoginModal }) => {
     email: "",
     password: "",
     avatar: "",
+    role: "user",
   });
 
   const handleChange = (e) => {
@@ -41,6 +42,7 @@ const Signup = ({ showLoginModal }) => {
       form.append("email", formData.email);
       form.append("password", formData.password);
       form.append("avatar", formData.avatar);
+      form.append("role", formData.role);
 
       const response = await fetch(
         "https://epicode-api.onrender.com/api/authors",

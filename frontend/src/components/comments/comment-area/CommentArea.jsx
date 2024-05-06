@@ -51,14 +51,20 @@ const CommentArea = (props) => {
       </div>
       <div className="newcomment-area my-5">
         <div className="d-flex p-3">
-          <Image
-            src={userData.avatar}
-            alt={userData.name}
-            width={30}
-            className="me-3 rounded-circle"
-          />
+          {userData && (
+            <Image
+              src={userData.avatar}
+              alt={userData.name}
+              width={30}
+              className="me-3 rounded-circle"
+            />
+          )}
           <p>
-            {userData.name} {userData.surname}
+            {userData && (
+              <>
+                {userData.name} {userData.surname}
+              </>
+            )}
           </p>
         </div>
         <div>

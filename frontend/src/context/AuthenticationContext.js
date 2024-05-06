@@ -16,6 +16,43 @@ export const AuthContextProvider = ({ children }) => {
   const [sessionExpired, setSessionExpired] = useState(false);
   const [inactiveTimer, setInactiveTimer] = useState(null);
 
+  const logout = useCallback(() => {
+    setIsLogged(false);
+    setToken("");
+    localStorage.removeItem("token");
+    localStorage.setItem("isLogged", "false");
+    if (window.location.pathname !== "/") {
+      window.location.href = "/";
+    }
+  }, []);
+
+  const logoutInactive = useCallback(() => {
+    alert("Sei stato disconnesso per inattività.");
+    logout();
+  }, [logout]);
+
+  const login = (token) => {
+    setToken(token);
+    setIsLogged(true);
+    localStorage.setItem("token", token);
+    localStorage.setItem("isLogged", "true");
+
+    setInactiveTimer(
+      setTimeout(() => {
+        logoutInactive();
+      }, 3000)
+    );
+  };
+
+  const resetInactiveTimer = useCallback(() => {
+    clearTimeout(inactiveTimer);
+    setInactiveTimer(
+      setTimeout(() => {
+        logoutInactive();
+      }, 3000)
+    );
+  }, [inactiveTimer, logoutInactive]);
+
   const checkTokenValidity = useCallback(() => {
     const storedToken = localStorage.getItem("token");
     if (!storedToken) return;
@@ -52,61 +89,30 @@ export const AuthContextProvider = ({ children }) => {
   }, [checkTokenValidity]);
 
   useEffect(() => {
-    if (sessionExpired) {
-      setToken("");
-      setIsLogged(false);
-      localStorage.removeItem("token");
-      localStorage.setItem("isLogged", "false");
-      alert("Session expired. Please login again.");
-      window.location.href = "/";
-    }
-  }, [sessionExpired]);
-
-  const login = (token) => {
-    setToken(token);
-    setIsLogged(true);
-    localStorage.setItem("token", token);
-    localStorage.setItem("isLogged", "true");
-
-    setInactiveTimer(
-      setTimeout(() => {
-        logout();
-      }, 2000000)
-    );
-  };
-
-  const logout = useCallback(() => {
-    setIsLogged(false);
-    setToken("");
-    localStorage.removeItem("token");
-    localStorage.setItem("isLogged", "false");
-    if (window.location.pathname !== "/") {
-      window.location.href = "/";
-    }
-  }, []);
-
-  const resetInactiveTimer = useCallback(() => {
-    clearTimeout(inactiveTimer);
-    setInactiveTimer(
-      setTimeout(() => {
-        logout();
-      }, 2000000)
-    );
-  }, [inactiveTimer, logout]);
-
-  useEffect(() => {
     const handleUserActivity = () => {
+      clearTimeout(inactiveTimer);
       resetInactiveTimer();
     };
 
-    window.addEventListener("mousemove", handleUserActivity);
-    window.addEventListener("keydown", handleUserActivity);
+    const handleAlertInteraction = () => {
+      window.addEventListener("mousemove", handleUserActivity);
+      window.addEventListener("keydown", handleUserActivity);
+    };
+
+    if (sessionExpired) {
+      window.removeEventListener("mousemove", handleUserActivity);
+      window.removeEventListener("keydown", handleUserActivity);
+      alert("Session expired. Please login again.");
+      handleAlertInteraction();
+    } else {
+      handleAlertInteraction();
+    }
 
     return () => {
       window.removeEventListener("mousemove", handleUserActivity);
       window.removeEventListener("keydown", handleUserActivity);
     };
-  }, [resetInactiveTimer]);
+  }, [inactiveTimer, resetInactiveTimer, sessionExpired]);
 
   return (
     <AuthContext.Provider
