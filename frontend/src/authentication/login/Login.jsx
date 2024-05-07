@@ -4,6 +4,7 @@ import CustomLoader from "../../utils/CustomLoader";
 import { useNavigate } from "react-router-dom";
 import "../styles.css";
 import { useAuth } from "../../context/AuthenticationContext.js";
+import CustomAlert from "../../utils/CustomAlert.jsx";
 
 const Login = ({ showSignupModal }) => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ const Login = ({ showSignupModal }) => {
     username: "",
     password: "",
   });
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -48,14 +50,26 @@ const Login = ({ showSignupModal }) => {
       // Reindirizzo l'utente alla home page
       navigate("/");
     } catch (error) {
+      setError(true);
       console.error("Error during login:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleAlertClose = () => {
+    setError(false);
+  };
+
   return (
     <div className="w-100 container mt-4 mx-auto p-5">
+      {error && (
+        <CustomAlert
+          type="danger"
+          message="Invalid username or password."
+          onClose={handleAlertClose}
+        />
+      )}
       <h1 className="signup-title text-center mb-5">Login to Epiblog</h1>
 
       {loading && <CustomLoader />}

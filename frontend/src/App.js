@@ -1,6 +1,5 @@
 import React from "react";
 import Footer from "./components/footer/Footer";
-// import Blog from "./pages/blog/Blog";
 import NewPost from "./pages/new-post/NewPost";
 import {
   BrowserRouter as Router,

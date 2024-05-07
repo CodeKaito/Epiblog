@@ -40,7 +40,7 @@ export const AuthContextProvider = ({ children }) => {
     setInactiveTimer(
       setTimeout(() => {
         logoutInactive();
-      }, 3000)
+      }, 300000)
     );
   };
 
@@ -49,7 +49,7 @@ export const AuthContextProvider = ({ children }) => {
     setInactiveTimer(
       setTimeout(() => {
         logoutInactive();
-      }, 3000)
+      }, 300000)
     );
   }, [inactiveTimer, logoutInactive]);
 
