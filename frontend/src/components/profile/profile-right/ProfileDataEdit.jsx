@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import CustomLoader from "../../../utils/CustomLoader";
 import { useUser } from "../../../context/UserContext";
+import CustomAlert from "../../../utils/CustomAlert";
 import "./styles.css";
 
 const ProfileDataEdit = ({ onCancel }) => {
   const { userData, updateUser } = useUser();
   const [loading, setLoading] = useState(false);
+  const [showSuccessAlert, setshowSuccessAlert] = useState(false);
+  const [showErrorAlert, setshowErrorAlert] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -63,7 +66,7 @@ const ProfileDataEdit = ({ onCancel }) => {
       form.append("avatar", formData.avatar);
 
       const response = await fetch(
-        `https://epicode-api.onrender.com/api/authors/${userData._id}`,
+        `http://epicode-api.onrender.com/api/authors/${userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -72,8 +75,9 @@ const ProfileDataEdit = ({ onCancel }) => {
           body: form,
         }
       );
-      console.log("Profile updated successfully!");
+      setshowSuccessAlert(true);
       if (!response.ok) {
+        setshowErrorAlert(true);
         throw new Error("Failed to update profile");
       }
 
@@ -88,9 +92,24 @@ const ProfileDataEdit = ({ onCancel }) => {
       });
     } catch (error) {
       console.error("Error updating profile:", error);
+      setshowErrorAlert(true);
     } finally {
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    const hideAlerts = setTimeout(() => {
+      setshowSuccessAlert(false);
+      setshowErrorAlert(false);
+    }, 5000);
+
+    return () => clearTimeout(hideAlerts);
+  }, [showSuccessAlert, showErrorAlert]);
+
+  const handleAlertClose = () => {
+    setshowErrorAlert(false);
+    setshowSuccessAlert(false);
   };
 
   return (
@@ -98,6 +117,24 @@ const ProfileDataEdit = ({ onCancel }) => {
       <h1 className="mb-5 text-uppercase">Edit in draft</h1>
 
       {loading && <CustomLoader />}
+
+      {showSuccessAlert && (
+        <CustomAlert
+          type="success"
+          message="Profile successfully edited."
+          show={showSuccessAlert}
+          onClose={handleAlertClose}
+        />
+      )}
+
+      {showErrorAlert && (
+        <CustomAlert
+          type="danger"
+          message="Error while editing your profile, try again later."
+          show={showErrorAlert}
+          onClose={handleAlertClose}
+        />
+      )}
 
       <Form onSubmit={handleSubmit} className="form-profiledataedit">
         <div className="d-flex gap-2">

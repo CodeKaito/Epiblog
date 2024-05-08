@@ -205,7 +205,11 @@ module.exports.updateBlog = async (req, res, next) => {
         title: req.body.title || existingBlog.title,
         author: req.body.author || existingBlog.author,
         content: req.body.content || existingBlog.content,
-        cover: req.file ? req.file.path : null,
+        cover: req.body.cover
+          ? existingBlog.cover
+          : req.file
+          ? req.file.path
+          : null,
       };
 
       // Aggiorna il author nel database utilizzando l'ID fornito e i dati del author

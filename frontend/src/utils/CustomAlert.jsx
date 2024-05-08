@@ -9,7 +9,7 @@ const CustomAlert = ({ type, message, onClose }) => {
         <div className="d-flex">
           <Button
             onClick={onClose}
-            className="btn-close me-2 btn-danger"
+            className={`btn-close me-2 btn-${type}`}
             aria-label="Close"
           ></Button>{" "}
           <div>{message}</div>

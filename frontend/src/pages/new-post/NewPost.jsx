@@ -120,6 +120,11 @@ const NewPost = () => {
     return () => clearTimeout(hideAlerts);
   }, [showSuccessAlert, showErrorAlert]);
 
+  const handleAlertClose = () => {
+    setshowErrorAlert(false);
+    setshowSuccessAlert(false);
+  };
+
   return (
     <>
       <NewPostNavbar />
@@ -130,6 +135,7 @@ const NewPost = () => {
             type="success"
             message="Post successfully created."
             show={showSuccessAlert}
+            onClose={handleAlertClose}
           />
         )}
 
@@ -138,6 +144,7 @@ const NewPost = () => {
             type="danger"
             message="Error while creating the post, try again later."
             show={showErrorAlert}
+            onClose={handleAlertClose}
           />
         )}
         <Form className="mt-3" onSubmit={handleSubmit}>

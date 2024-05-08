@@ -160,7 +160,6 @@ const Signup = ({ showLoginModal }) => {
               value={formData.surname}
               onChange={handleChange}
               className="form-signup"
-              required
             />
           </Form.Group>
         </div>

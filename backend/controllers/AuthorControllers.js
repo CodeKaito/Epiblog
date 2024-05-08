@@ -227,6 +227,8 @@ module.exports.updateAuthor = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'avatar
     cloudinaryAvatarMiddleware(req, res, async () => {
+      const body = req.body;
+      console.log(body);
       const { password } = req.body;
       // Password crittografata
       const hashedPassword = await bcrypt.hash(password, 10);

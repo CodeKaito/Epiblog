@@ -11,7 +11,7 @@ const EditPost = () => {
   const initialFormData = {
     category: blog.category || "",
     title: blog.title || "",
-    cover: "",
+    cover: blog.cover || "",
     readTime: {
       value: blog.readTime ? blog.readTime.value : 1,
       unit: blog.readTime ? blog.readTime.unit : "min",
@@ -108,7 +108,7 @@ const EditPost = () => {
       form.append("cover", formData.cover);
 
       const response = await fetch(
-        `https://epicode-api.onrender.com/api/blogPosts/${params.id}`,
+        `http://localhost:5000/api/blogPosts/${params.id}`,
         {
           method: "PUT",
           headers: {
@@ -146,6 +146,11 @@ const EditPost = () => {
     return () => clearTimeout(hideAlerts);
   }, [showSuccessAlert, showErrorAlert]);
 
+  const handleAlertClose = () => {
+    setshowErrorAlert(false);
+    setshowSuccessAlert(false);
+  };
+
   return (
     <>
       <NewPostNavbar />
@@ -156,6 +161,7 @@ const EditPost = () => {
             type="success"
             message="Post successfully edited."
             show={showSuccessAlert}
+            onClose={handleAlertClose}
           />
         )}
 
@@ -164,6 +170,7 @@ const EditPost = () => {
             type="danger"
             message="Error while editing the post, try again later."
             show={showErrorAlert}
+            onClose={handleAlertClose}
           />
         )}
         <Form className="mt-3" onSubmit={handleSubmit}>
