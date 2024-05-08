@@ -53,7 +53,7 @@ const Posts = () => {
       ) : (
         <>
           <HomeNavBar />
-          <Container fluid="lg">
+          <Container fluid="lg" className="page">
             <Row>
               <Col sm={12} lg={8}>
                 <div className="m-5 main">
@@ -64,9 +64,11 @@ const Posts = () => {
                     </h1>
                   </div>
 
-                  {posts.map((post) => (
-                    <BlogItem key={post._id} {...post} />
-                  ))}
+                  {posts.length === 0 ? (
+                    <div className="no-posts-message">No posts available</div>
+                  ) : (
+                    posts.map((post) => <BlogItem key={post._id} {...post} />)
+                  )}
                 </div>
               </Col>
               <Col
@@ -79,9 +81,11 @@ const Posts = () => {
                       Users: <span className="posts-title-result">{query}</span>
                     </h1>
                   </div>
-                  {users.map((user) => (
-                    <Follow key={user._id} {...user} />
-                  ))}
+                  {users.length === 0 ? (
+                    <div className="no-posts-message">No users available</div>
+                  ) : (
+                    users.map((user) => <Follow key={user._id} {...user} />)
+                  )}
                 </div>
               </Col>
             </Row>
