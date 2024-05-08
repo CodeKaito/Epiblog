@@ -192,6 +192,11 @@ module.exports.updateBlog = async (req, res, next) => {
       if (!existingBlog) {
         return res.status(404).send("Blog not found");
       }
+      const body = req.body;
+
+      console.log(body);
+
+      const readTime = JSON.parse(body.readTime || "{}");
 
       // Costruisce un oggetto con i campi da aggiornare
       const fieldsToUpdate = {
@@ -199,7 +204,7 @@ module.exports.updateBlog = async (req, res, next) => {
         title: req.body.title || existingBlog.title,
         author: req.body.author || existingBlog.author,
         content: req.body.content || existingBlog.content,
-        readTime: req.body.readTime || existingBlog.readTime,
+        readTime: readTime,
         cover: req.file ? req.file.path : null,
       };
 

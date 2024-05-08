@@ -48,6 +48,17 @@ const EditPost = () => {
     });
   };
 
+  const handleUnitChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      readTime: {
+        ...formData.readTime,
+        unit: value,
+      },
+    });
+  };
+
   useEffect(() => {
     const fetchBlogPost = async () => {
       setLoading(true);
@@ -101,14 +112,20 @@ const EditPost = () => {
       const form = new FormData();
       form.append("category", formData.category);
       form.append("title", formData.title);
-      form.append("readTime.value", formData.readTime.value);
-      form.append("readTime.unit", formData.readTime.unit);
+      const readTimeObject = {
+        value: formData.readTime.value,
+        unit: formData.readTime.unit,
+      };
+      const readTimeJSON = JSON.stringify(readTimeObject);
+      form.append("readTime", readTimeJSON);
       form.append("content", formData.content);
       form.append("author", formData.author._id);
       form.append("cover", formData.cover);
 
+      console.log(readTimeJSON);
+
       const response = await fetch(
-        `https://epicode-api.onrender.com/api/blogPosts/${params.id}`,
+        `http://localhost:5000/api/blogPosts/${params.id}`,
         {
           method: "PUT",
           headers: {
@@ -220,7 +237,7 @@ const EditPost = () => {
                   size="lg"
                   name="unit"
                   value={formData.readTime.unit}
-                  onChange={handleReadTimeChange}
+                  onChange={handleUnitChange}
                   required
                 >
                   <option value="min">min</option>
