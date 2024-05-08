@@ -227,7 +227,10 @@ module.exports.updateAuthor = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'avatar
     cloudinaryAvatarMiddleware(req, res, async () => {
-      console.log(req.file);
+      const { password } = req.body;
+      // Password crittografata
+      const hashedPassword = await bcrypt.hash(password, 10);
+
       // Trova l'autore nel database
       const existingAuthor = await AuthorModel.findById(id);
       if (!existingAuthor) {
@@ -248,7 +251,7 @@ module.exports.updateAuthor = async (req, res, next) => {
         email: req.body.email || existingAuthor.email,
         birth: req.body.birth || existingAuthor.birth,
         bio: req.body.bio || existingAuthor.bio,
-        password: req.body.password || existingAuthor.password,
+        password: hashedPassword || existingAuthor.password,
         avatar: updatedAvatar,
       };
 
