@@ -208,7 +208,7 @@ const EditPost = () => {
                   className="form-container input-readtime"
                   size="lg"
                   type="number"
-                  name="readTimeValue"
+                  name="value"
                   placeholder="Enter read time"
                   value={formData.readTime.value}
                   onChange={handleReadTimeChange}
@@ -218,7 +218,7 @@ const EditPost = () => {
                   as="select"
                   className="form-container input-readtime"
                   size="lg"
-                  name="readTimeUnit"
+                  name="unit"
                   value={formData.readTime.unit}
                   onChange={handleReadTimeChange}
                   required

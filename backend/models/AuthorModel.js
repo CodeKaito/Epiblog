@@ -23,6 +23,10 @@ const authorSchema = new mongoose.Schema(
       required: true,
       select: false,
     },
+    googleId: {
+      type: String,
+      required: false,
+    },
     birth: {
       type: String,
       required: false,

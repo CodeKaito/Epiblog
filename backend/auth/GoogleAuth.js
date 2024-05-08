@@ -1,6 +1,6 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import dotenv from "dotenv";
-import User from "../models/AuthorModel.js";
+import AuthorModel from "../models/AuthorModel.js";
 import { generateJWT } from "../middlewares/authentication.js";
 
 dotenv.config();
@@ -17,7 +17,7 @@ const googleStrategy = new GoogleStrategy(
     try {
       const { email, given_name, family_name, sub, picture } = profile._json;
 
-      const user = await User.findOne({ email });
+      const user = await AuthorModel.findOne({ email });
 
       if (user) {
         const accToken = await createAccessToken({

@@ -206,17 +206,17 @@ const NewPost = () => {
                   className="form-container input-readtime"
                   size="lg"
                   type="number"
-                  name="readTimeValue"
+                  name="value"
                   placeholder="Enter read time"
                   value={formData.readTime.value}
-                  onChange={handleChange}
+                  onChange={handleReadTimeChange}
                   required
                 />
                 <Form.Control
                   as="select"
                   className="form-container input-readtime"
                   size="lg"
-                  name="readTimeUnit"
+                  name="unit"
                   value={formData.readTime.unit}
                   onChange={handleReadTimeChange}
                   required
