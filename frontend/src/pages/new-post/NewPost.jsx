@@ -72,13 +72,16 @@ const NewPost = () => {
       form.append("author", formData.author);
       form.append("cover", formData.cover);
 
-      const response = await fetch("http://localhost:5000/api/blogPosts", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: form,
-      });
+      const response = await fetch(
+        "https://epicode-api.onrender.com/api/blogPosts",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: form,
+        }
+      );
 
       if (response.ok) {
         setshowSuccessAlert(true);

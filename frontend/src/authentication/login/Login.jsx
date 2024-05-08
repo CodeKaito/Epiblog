@@ -25,13 +25,16 @@ const Login = ({ showSignupModal }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://epicode-api.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to log in");
@@ -70,11 +73,17 @@ const Login = ({ showSignupModal }) => {
           onClose={handleAlertClose}
         />
       )}
-      <h1 className="signup-title text-center mb-5">Login to Epiblog</h1>
+      <h1 className="signup-title text-center mb-3">Login to Epiblog</h1>
 
       {loading && <CustomLoader />}
 
-      <Form onSubmit={handleSubmit}>
+      <div className="d-flex justify-content-center">
+        <Button type="button" className="login-with-google-btn">
+          Sign in with Google
+        </Button>
+      </div>
+
+      <Form onSubmit={handleSubmit} className="mt-4">
         <div className="mt-1">
           <Form.Group controlId="formUsername">
             <Form.Control

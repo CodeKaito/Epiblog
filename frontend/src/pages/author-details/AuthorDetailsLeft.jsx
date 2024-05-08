@@ -11,7 +11,7 @@ const ProfileLeft = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = `http://localhost:5000/api/blogPosts/author/${_id}`;
+        let url = `https://epicode-api.onrender.com/api/blogPosts/author/${_id}`;
 
         const response = await fetch(url);
         if (!response.ok) {

@@ -80,7 +80,7 @@ const Signup = ({ showLoginModal }) => {
 
   return (
     <div className="w-100 container mt-4 mx-auto p-5">
-      <h1 className="signup-title text-center mb-5">Signup on Epiblog</h1>
+      <h1 className="signup-title text-center mb-3">Signup on Epiblog</h1>
 
       {loading && <CustomLoader />}
       {showSuccessAlert && (
@@ -99,16 +99,23 @@ const Signup = ({ showLoginModal }) => {
         />
       )}
 
-      <Form onSubmit={handleSubmit}>
+      <div className="d-flex justify-content-center">
+        <Button type="button" className="login-with-google-btn">
+          Sign in with Google
+        </Button>
+      </div>
+
+      <Form onSubmit={handleSubmit} className="mt-5">
         <Form.Group className="mt-2 d-flex justify-content-center">
           {formData.avatar ? (
             <div className="cover-image-container position-relative">
               <img
                 src={URL.createObjectURL(formData.avatar)}
                 height={100}
+                width={100}
                 alt="Avatar"
                 name="avatar"
-                className="cover-image object-fit-contain rounded-circle"
+                className="cover-image object-fit-cover rounded-circle"
               />
               <Button
                 variant="danger"

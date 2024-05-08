@@ -71,7 +71,7 @@ const CommentSingle = ({
         }, 1000);
 
         const updatedCommentsResponse = await fetch(
-          `http://localhost:5000/api/blogPosts/${postId}/comments`,
+          `https://epicode-api.onrender.com/api/blogPosts/${postId}/comments`,
           {
             method: "GET",
             headers: {
