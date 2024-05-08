@@ -104,7 +104,7 @@ const CommentSingle = ({
     } else {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/blogPosts/${postId}/comments/${commentId}`,
+          `https://epicode-api.onrender.com/api/blogPosts/${postId}/comments/${commentId}`,
           {
             method: "DELETE",
             headers: {
@@ -122,7 +122,7 @@ const CommentSingle = ({
           }, 2000);
 
           const updatedCommentsResponse = await fetch(
-            `http://localhost:5000/api/blogPosts/${postId}/comments`,
+            `https://epicode-api.onrender.com/api/blogPosts/${postId}/comments`,
             {
               method: "GET",
               headers: {

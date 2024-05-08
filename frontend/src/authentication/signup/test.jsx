@@ -37,10 +37,13 @@ const Signup = ({ showLoginModal }) => {
       form.append("avatar", formData.avatar);
       form.append("bio", formData.bio);
 
-      const response = await fetch("http://localhost:5000/api/authors", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch(
+        "https://epicode-api.onrender.com/api/authors",
+        {
+          method: "POST",
+          body: form,
+        }
+      );
       const authorData = await response.json();
       console.log("Author created:", authorData);
     } catch (error) {

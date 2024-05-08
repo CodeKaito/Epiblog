@@ -60,7 +60,7 @@ const BlogDetails = () => {
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/blogPosts/${params.id}`,
+        `https://epicode-api.onrender.com/api/blogPosts/${params.id}`,
         {
           method: "DELETE",
           headers: {

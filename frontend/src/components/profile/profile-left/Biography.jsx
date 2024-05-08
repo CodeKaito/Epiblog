@@ -44,7 +44,7 @@ const Biography = (props) => {
 
   const handleSave = async () => {
     try {
-      await fetch(`http://localhost:5000/api/authors/${_id}`, {
+      await fetch(`https://epicode-api.onrender.com/api/authors/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

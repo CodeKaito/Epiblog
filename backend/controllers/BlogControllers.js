@@ -159,6 +159,8 @@ module.exports.saveBlog = async (req, res, next) => {
   try {
     // Esegui il middleware di Cloudinary per caricare l'immagine del post
     cloudinaryCoverMiddleware(req, res, async () => {
+      const body = req.body;
+      console.log(body);
       const newPost = await BlogModel.create({
         ...req.body,
         cover: req.file ? req.file.path : null,
@@ -196,15 +198,13 @@ module.exports.updateBlog = async (req, res, next) => {
 
       console.log(body);
 
-      const readTime = JSON.parse(body.readTime || "{}");
-
       // Costruisce un oggetto con i campi da aggiornare
       const fieldsToUpdate = {
+        ...req.body,
         category: req.body.category || existingBlog.name,
         title: req.body.title || existingBlog.title,
         author: req.body.author || existingBlog.author,
         content: req.body.content || existingBlog.content,
-        readTime: readTime,
         cover: req.file ? req.file.path : null,
       };
 
