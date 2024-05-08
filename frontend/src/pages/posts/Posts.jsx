@@ -27,7 +27,7 @@ const Posts = () => {
         setPosts(postsData);
 
         const usersResponse = await fetch(
-          `http://localhost:5000/api/authors/?searchAuthor=${query}`
+          `https://epicode-api.onrender.com/api/authors/?searchAuthor=${query}`
         );
         if (!usersResponse.ok) {
           throw new Error("Failed to fetch users");
