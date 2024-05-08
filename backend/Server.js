@@ -3,6 +3,8 @@ const mongoose = require("mongoose"); // Importa il modulo mongoose per interagi
 const cors = require("cors"); // Importa il modulo cors per interagire con il frontend
 const fs = require("fs"); // Importa il modulo fs per la lettura dei file
 const logger = require("./middlewares/logger.js");
+const passport = require("passport");
+const GoogleStrategy = require("./auth/GoogleAuth.js");
 
 const {
   badRequestHandler,
@@ -34,6 +36,8 @@ app.use(cors()); // Middleware per abilitare le richieste da diversi domini
 //     .connect(process.env.MONGO_URI)
 //     .then(() => console.log('Connected to Mongodb')) // Messaggio di connessione riuscita
 //     .catch((err) => console.log(err)); // Gestione degli errori di connessione al database
+
+passport.use("google", GoogleStrategy);
 
 const startServer = async () => {
   try {

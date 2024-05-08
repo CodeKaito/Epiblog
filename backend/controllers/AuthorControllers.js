@@ -6,6 +6,7 @@ const sendEmail = require("../middlewares/sendMail.js");
 const bcrypt = require("bcryptjs");
 
 const { generateJWT } = require("../middlewares/authentication.js");
+const passport = require("passport");
 
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getAuthors = async (req, res, next) => {
@@ -183,6 +184,23 @@ module.exports.detailAuthor = async (req, res, next) => {
     // Stampa a console il completamento del processo di recupero dei dettagli del author
     console.log(`Author with id: ${id} details retrieval process completed.`);
   }
+};
+
+module.exports.googleLogin = () => {
+  passport.authenticate("google", { scope: ["profile", "email"] });
+};
+
+module.exports.googleCallback = () => {
+  passport.authenticate("google", { session: false }),
+    (req, res, next) => {
+      try {
+        res.redirect(
+          `http://localhost:3000/api/profile?accessToken=${req.user.accessToken}`
+        );
+      } catch (error) {
+        next(error);
+      }
+    };
 };
 
 // Funzione per salvare un nuovo author nel database e inviare il risultato della creazione come risposta

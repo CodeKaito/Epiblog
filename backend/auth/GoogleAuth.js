@@ -1,9 +1,7 @@
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import dotenv from "dotenv";
-import AuthorModel from "../models/AuthorModel.js";
-import { generateJWT } from "../middlewares/authentication.js";
-
-dotenv.config();
+const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
+const AuthorModel = require("../models/AuthorModel.js");
+const generateJWT = require("../middlewares/authentication.js");
+require("dotenv").config();
 
 const options = {
   clientID: process.env.GOOGLE_CLIENT_ID,
@@ -43,4 +41,4 @@ const googleStrategy = new GoogleStrategy(
   }
 );
 
-export default googleStrategy;
+module.exports = googleStrategy;
