@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import BlogItem from "../../components/blog/blog-item/BlogItem";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
-import PopularPosts from "../../components/sidebar/popular/PopularPosts";
-import Topics from "../../components/sidebar/topics/Topics";
-import Follows from "../../components/sidebar/follow/Follows";
-import SavedPosts from "../../components/sidebar/saved/SavedPosts";
 import HomeNavBar from "../../components/navbar/HomeNavbar";
 import "./styles.css";
+import Follow from "../../components/sidebar/follow/Follow";
 
 const Posts = () => {
   const location = useLocation();
   const [posts, setPosts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const query = new URLSearchParams(location.search).get("query");
@@ -19,19 +17,27 @@ const Posts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch(
+        const postsResponse = await fetch(
           `https://epicode-api.onrender.com/api/blogPosts?searchTitle=${query}`
         );
-        if (!response.ok) {
+        if (!postsResponse.ok) {
           throw new Error("Failed to fetch posts");
         }
-        console.log("Query from URL:", query);
+        const postsData = await postsResponse.json();
+        setPosts(postsData);
 
-        const data = await response.json();
-        setPosts(data);
+        const usersResponse = await fetch(
+          `http://localhost:5000/api/authors/?searchAuthor=${query}`
+        );
+        if (!usersResponse.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const usersData = await usersResponse.json();
+        setUsers(usersData);
+
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -68,10 +74,14 @@ const Posts = () => {
                 className="d-none d-lg-block sidebar-container sidebar"
               >
                 <div className="m-5">
-                  <PopularPosts />
-                  <Topics />
-                  <Follows />
-                  <SavedPosts />
+                  <div className="posts-title-container mx-auto">
+                    <h1 className="posts-title mb-5">
+                      Users: <span className="posts-title-result">{query}</span>
+                    </h1>
+                  </div>
+                  {users.map((user) => (
+                    <Follow key={user._id} {...user} />
+                  ))}
                 </div>
               </Col>
             </Row>

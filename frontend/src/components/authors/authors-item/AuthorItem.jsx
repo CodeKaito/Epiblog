@@ -1,20 +1,35 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Button, Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./styles.css";
-import AuthorCard from "../author-card/AuthorCard";
 
-const AuthorItem = ({ _id, name, surname, email, birth, avatar }) => {
+const AuthorItem = ({ _id, name, surname, email, avatar }) => {
   return (
-    <Link to={`/details/${_id}`} className="author-link">
-      <Card className="author-card">
-        <Card.Img variant="top" src={avatar} className="author-cover" />
-        <Card.Body>
-          <Card.Title>{name} {surname}</Card.Title>
-        </Card.Body>
-        <Card.Footer>
-          <AuthorCard avatar={avatar} name={name} surname={surname} email={email} birth={birth} />
-        </Card.Footer>
+    <Link to={`/author/details/${_id}`} className="author-link">
+      <Card className="card-author">
+        <div className="image-background mb-5">
+          <div className="mt-3 d-flex justify-content-center">
+            <Image
+              src={avatar}
+              alt={name}
+              width={100}
+              height={100}
+              className="rounded-circle object-fit-cover d-flex justify-content-center"
+            />
+          </div>
+        </div>
+
+        <div className="d-flex justify-content-center">
+          <p className="fw-bold mt-1">
+            {name} {surname}
+          </p>
+        </div>
+        <div className="d-flex justify-content-center">
+          <p className="card-email mt-1">{email}</p>
+        </div>
+        <div className="d-flex justify-content-center my-3">
+          <Button className="card-button">Connect</Button>
+        </div>
       </Card>
     </Link>
   );

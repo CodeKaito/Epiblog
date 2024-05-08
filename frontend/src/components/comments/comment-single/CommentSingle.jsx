@@ -4,6 +4,7 @@ import { useUser } from "../../../context/UserContext";
 import { Image, Form } from "react-bootstrap";
 import { BsTrash2 } from "react-icons/bs";
 import { MdEditNote } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const CommentSingle = ({
   author,
@@ -14,7 +15,7 @@ const CommentSingle = ({
   setComments,
 }) => {
   const { userData } = useUser();
-  const { name, surname, avatar } = author;
+  const { _id, name, surname, avatar } = author;
   const token = localStorage.getItem("token");
 
   const createdDate = new Date(createdAt);
@@ -154,12 +155,14 @@ const CommentSingle = ({
       {showAlert && <CustomAlert type={alertType} message={alertMessage} />}
       <div className="d-flex">
         <div className=" d-flex align-items-center">
-          <Image
-            src={avatar}
-            width={30}
-            height={30}
-            className="rounded-circle object-fit-cover me-3"
-          />
+          <Link to={`/author/details/${_id}`} className="author-link">
+            <Image
+              src={avatar}
+              width={30}
+              height={30}
+              className="rounded-circle object-fit-cover me-3"
+            />
+          </Link>
         </div>
 
         <div className="d-flex flex-column">

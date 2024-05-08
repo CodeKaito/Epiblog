@@ -90,17 +90,30 @@ const BlogDetails = () => {
                 <div className="mt-5 page">
                   <div className="blog-container">
                     <h1 className="mt-5 blog-title">{blog.title}</h1>
+
                     <div className="d-flex align-items-center">
-                      <Image
-                        src={blog.author.avatar}
-                        className="rounded-circle object-fit-cover"
-                        width={50}
-                        height={50}
-                      />
+                      <Link
+                        to={`/author/details/${blog.author._id}`}
+                        className="author-link"
+                      >
+                        <Image
+                          src={blog.author.avatar}
+                          className="rounded-circle object-fit-cover"
+                          width={50}
+                          height={50}
+                        />
+                      </Link>
+
                       <div className="my-5 mx-3">
-                        <h1 className="fs-4 blog-author-name">
-                          {blog.author.name} {blog.author.surname}
-                        </h1>
+                        <Link
+                          to={`/author/details/${blog.author._id}`}
+                          className="author-link"
+                        >
+                          <h1 className="fs-4 blog-author-name">
+                            {blog.author.name} {blog.author.surname}
+                          </h1>
+                        </Link>
+
                         <div className="me-2 createdat">
                           Created at {formattedCreatedAt}
                         </div>

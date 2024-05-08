@@ -1,9 +1,31 @@
-.author-author {
-    width: 40px;
-    height: 40px;
+.card-email {
+  font-size: 12px;
 }
-.author-cover {
-  min-height: 300px;
-  max-height: 300px;
-  object-fit: cover;
+.card-author:hover {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 83ms;
+}
+.image-background {
+  background-image: url("https://images.pexels.com/photos/924824/pexels-photo-924824.jpeg?auto=compress&cs=tinysrgb&w=600");
+  height: 70px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.card-button {
+  padding: 5px 35px;
+  border-radius: 70px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(54, 54, 54);
+  color: black;
+  font-size: 13px;
+}
+.card-button:hover {
+  border-radius: 70px;
+  background-color: rgb(10, 10, 10);
+  border: 1px solid rgb(58, 58, 58);
+  color: rgb(255, 255, 255);
+}
+.card-button:focus {
+  border: transparent;
+  box-shadow: none;
 }

@@ -17,6 +17,7 @@ import Signup from "./authentication/signup/Signup";
 import MainPage from "./authentication/mainpage/MainPage";
 import { useAuth } from "./context/AuthenticationContext";
 import EditPost from "./pages/edit-post/EditPost";
+import AuthorDetails from "./pages/author-details/AuthorDetails";
 
 function App() {
   const { isLogged } = useAuth();
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" exact element={<Home />} />
             <Route path="/authors" element={<Author />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/author/details/:id" element={<AuthorDetails />} />
             <Route path="/posts" element={<Posts />} />
             <Route path="/details/:id" element={<BlogDetails />} />
             <Route path="/new-blog" element={<NewPost />} />

@@ -10,8 +10,18 @@ const { generateJWT } = require("../middlewares/authentication.js");
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getAuthors = async (req, res, next) => {
   try {
+    let filter = {}; // Inizializza il filtro come un oggetto vuoto
+
+    console.log(req.query.searchAuthor);
+
+    // Controlla se la query di ricerca è presente e non è vuota
+    if (req.query.searchAuthor && req.query.searchAuthor.trim() !== "") {
+      // Utilizza una espressione regolare per trovare corrispondenze parziali nel titolo
+      filter.name = { $regex: req.query.searchAuthor, $options: "i" };
+    }
+
     // Recupera tutti i author dal database utilizzando il modello author
-    const author = await AuthorModel.find();
+    const author = await AuthorModel.find(filter);
     // Invia la lista dei author come risposta
     res.send(author);
   } catch (error) {

@@ -19,18 +19,15 @@ const Follows = () => {
 
         let filteredAuthors = data;
         if (userData) {
-          // Filtra gli autori escludendo quello con ID specifico
           filteredAuthors = data.filter(
             (author) => author._id !== userData._id
           );
         }
 
-        // Seleziona casualmente 3 autori dalla lista filtrata
         const randomAuthors = filteredAuthors
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
 
-        // Imposta gli autori e il flag di caricamento
         setAuthors(randomAuthors);
         setLoading(false);
       } catch (error) {
