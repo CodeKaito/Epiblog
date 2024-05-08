@@ -248,6 +248,7 @@ module.exports.updateAuthor = async (req, res, next) => {
         email: req.body.email || existingAuthor.email,
         birth: req.body.birth || existingAuthor.birth,
         bio: req.body.bio || existingAuthor.bio,
+        password: req.body.password || existingAuthor.password,
         avatar: updatedAvatar,
       };
 

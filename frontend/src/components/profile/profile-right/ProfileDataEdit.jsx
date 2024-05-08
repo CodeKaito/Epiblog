@@ -84,6 +84,7 @@ const ProfileDataEdit = ({ onCancel }) => {
         email: formData.email,
         birth: formData.birth,
         avatar: formData.avatar,
+        password: formData.password,
       });
     } catch (error) {
       console.error("Error updating profile:", error);
