@@ -13,19 +13,22 @@ const authorSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     email: {
       type: String,
       required: false,
+      unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: false,
       select: false,
     },
     googleId: {
       type: String,
       required: false,
+      unique: true,
     },
     birth: {
       type: String,

@@ -69,6 +69,11 @@ const Signup = ({ showLoginModal }) => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    const googleAuthUrl = "http://localhost:5000/api/googleLogin";
+    window.open(googleAuthUrl, "_self");
+  };
+
   useEffect(() => {
     const hideAlerts = setTimeout(() => {
       setshowSuccessAlert(false);
@@ -100,7 +105,11 @@ const Signup = ({ showLoginModal }) => {
       )}
 
       <div className="d-flex justify-content-center">
-        <Button type="button" className="login-with-google-btn">
+        <Button
+          type="button"
+          className="login-with-google-btn"
+          onClick={handleGoogleLogin}
+        >
           Sign in with Google
         </Button>
       </div>

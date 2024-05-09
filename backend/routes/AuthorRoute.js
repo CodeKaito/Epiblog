@@ -1,6 +1,6 @@
 // Importa il modulo Router da Express per gestire le route
 const { Router } = require("express");
-
+const passport = require("passport");
 const { authMiddleware } = require("../middlewares/authentication");
 
 // Importa i controller necessari per gestire le richieste relative ai blog
@@ -11,8 +11,6 @@ const {
   getAuthorsPaginations,
   getAuthorsPaginationOrders,
   detailAuthor,
-  googleLogin,
-  googleCallback,
   updateAuthor,
   saveAuthor,
   deleteAuthor,
@@ -29,8 +27,27 @@ router
   .get("/authors/pagination/", getAuthorsPaginations) // Route per ottenere la paginazione dei blog
   .get("/authors/pagination/:order", getAuthorsPaginationOrders) // Route per ottenere la paginazione dei blog
   .get("/authors/:id", detailAuthor) // Route per ottenere i dettagli di un blog specifico in base all'ID
-  .get("/googleLogin", googleLogin) // Route per effettuare il signup e login con Google
-  .get("/callback", googleCallback) // Route per la callback di Google Authentication
+  .get(
+    "/googleLogin",
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+    })
+  ) // Route per effettuare il signup e login con Google
+  .get(
+    "/callback",
+    passport.authenticate("google", { session: false }),
+    (req, res) => {
+      try {
+        res.redirect(
+          `http://localhost:3000/?accessToken=${req.user.accessToken}`
+        );
+      } catch (error) {
+        // Gestisci eventuali errori qui
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+      }
+    }
+  ) // Route per la callback di Google Authentication
   .post("/authors", saveAuthor) // Route per salvare un nuovo blog
   .put("/authors/:id", authMiddleware, updateAuthor) // Route per aggiornare un blog esistente in base all'ID
   // .patch("/authors/:id/avatar", updateAuthorAvatar) // Route per aggiornare l'avatar dell'utente

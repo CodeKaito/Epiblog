@@ -37,8 +37,6 @@ app.use(cors()); // Middleware per abilitare le richieste da diversi domini
 //     .then(() => console.log('Connected to Mongodb')) // Messaggio di connessione riuscita
 //     .catch((err) => console.log(err)); // Gestione degli errori di connessione al database
 
-passport.use("google", GoogleStrategy);
-
 const startServer = async () => {
   try {
     await mongoose.connect(db); // Connessione con il database
@@ -60,6 +58,7 @@ app.post("/api/me", getMyProfile);
 app.use("/api", AuthorRoutes); // Utilizza le route definite nel file AuthorRoute per gli endpoint API
 app.use("/api", BlogRoutes); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
 app.use("/api", CommentRoute); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
+passport.use("google", GoogleStrategy);
 
 app.use([
   badRequestHandler,

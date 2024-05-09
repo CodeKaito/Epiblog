@@ -23,14 +23,19 @@ const googleStrategy = new GoogleStrategy(
         });
         passportNext(null, { accToken });
       } else {
-        const newUser = new User({
+        const newUser = new AuthorModel({
+          name: given_name,
+          surname: family_name,
+          email: email,
+          avatar: picture,
           username: email,
           googleId: sub,
+          password: sub,
         });
         await newUser.save();
 
         const accToken = await generateJWT({
-          username: newUser.username,
+          _id: newUser._id,
         });
 
         passportNext(null, { accToken });

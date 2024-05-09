@@ -186,22 +186,21 @@ module.exports.detailAuthor = async (req, res, next) => {
   }
 };
 
-module.exports.googleLogin = () => {
-  passport.authenticate("google", { scope: ["profile", "email"] });
-};
+// module.exports.googleLogin = passport.authenticate("google", {
+//   scope: ["profile", "email"],
+// });
 
-module.exports.googleCallback = () => {
-  passport.authenticate("google", { session: false }),
-    (req, res, next) => {
-      try {
-        res.redirect(
-          `http://localhost:3000/api/profile?accessToken=${req.user.accessToken}`
-        );
-      } catch (error) {
-        next(error);
-      }
-    };
-};
+// module.exports.googleCallback = () => {
+//   passport.authenticate("google", { session: false }, (req, res, next) => {
+//     try {
+//       res.redirect(
+//         `http://localhost:3000/?accessToken=${req.user.accessToken}`
+//       );
+//     } catch (error) {
+//       next(error);
+//     }
+//   });
+// };
 
 // Funzione per salvare un nuovo author nel database e inviare il risultato della creazione come risposta
 module.exports.saveAuthor = async (req, res, next) => {
