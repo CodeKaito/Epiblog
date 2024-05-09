@@ -17,12 +17,19 @@ const googleStrategy = new GoogleStrategy(
 
       const user = await AuthorModel.findOne({ email });
 
+      console.log(user);
+
       if (user) {
-        const accToken = await createAccessToken({
+        console.log("Ho trovato un utente");
+        const accessToken = await generateJWT({
           _id: user._id,
         });
-        passportNext(null, { accToken });
+        console.log(token.accessToken);
+        passportNext(null, { accessToken });
+        console.log(token.accessToken);
+        console.log(accessToken);
       } else {
+        console.log("Creo un nuovo utente");
         const newUser = new AuthorModel({
           name: given_name,
           surname: family_name,
@@ -34,11 +41,14 @@ const googleStrategy = new GoogleStrategy(
         });
         await newUser.save();
 
-        const accToken = await generateJWT({
+        const accessToken = await generateJWT({
           username: newUser.username,
         });
 
-        passportNext(null, { accToken });
+        console.log(token.accessToken);
+        console.log(accessToken);
+
+        passportNext(null, { accessToken });
       }
     } catch (err) {
       passportNext(err);

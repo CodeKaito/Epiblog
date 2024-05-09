@@ -43,7 +43,6 @@ router
         // );
         console.log("login success");
       } catch (error) {
-        // Gestisci eventuali errori qui\
         console.log("Error login");
         console.error(error);
         res.status(500).send("Internal Server Error");
