@@ -35,7 +35,7 @@ const googleStrategy = new GoogleStrategy(
         await newUser.save();
 
         const accToken = await generateJWT({
-          _id: newUser._id,
+          username: newUser.username,
         });
 
         passportNext(null, { accToken });

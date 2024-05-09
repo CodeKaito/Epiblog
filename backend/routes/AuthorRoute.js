@@ -38,11 +38,13 @@ router
     passport.authenticate("google", { session: false }),
     (req, res) => {
       try {
-        res.redirect(
-          `http://localhost:3000/?accessToken=${req.user.accessToken}`
-        );
+        // res.redirect(
+        //   `http://localhost:3000/profile?accessToken=${req.user.accToken}`
+        // );
+        console.log("login success");
       } catch (error) {
-        // Gestisci eventuali errori qui
+        // Gestisci eventuali errori qui\
+        console.log("Error login");
         console.error(error);
         res.status(500).send("Internal Server Error");
       }

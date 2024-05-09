@@ -51,6 +51,8 @@ const startServer = async () => {
 
 startServer();
 
+passport.use("google", GoogleStrategy);
+
 app.post("/api/login", login);
 
 app.post("/api/me", getMyProfile);
@@ -58,7 +60,6 @@ app.post("/api/me", getMyProfile);
 app.use("/api", AuthorRoutes); // Utilizza le route definite nel file AuthorRoute per gli endpoint API
 app.use("/api", BlogRoutes); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
 app.use("/api", CommentRoute); // Utilizza le route definite nel file BlogRoute per gli endpoint API dei post del blog
-passport.use("google", GoogleStrategy);
 
 app.use([
   badRequestHandler,
