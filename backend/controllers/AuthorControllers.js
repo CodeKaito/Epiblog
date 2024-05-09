@@ -6,7 +6,6 @@ const sendEmail = require("../middlewares/sendMail.js");
 const bcrypt = require("bcryptjs");
 
 const { generateJWT } = require("../middlewares/authentication.js");
-const passport = require("passport");
 
 // Funzione asincrona per ottenere tutti i author dal database e inviarli come risposta
 module.exports.getAuthors = async (req, res, next) => {

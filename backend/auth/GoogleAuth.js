@@ -1,6 +1,6 @@
 const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
 const AuthorModel = require("../models/AuthorModel.js");
-const generateJWT = require("../middlewares/authentication.js");
+const { generateJWT } = require("../middlewares/authentication.js");
 require("dotenv").config();
 
 const options = {
@@ -21,10 +21,13 @@ const googleStrategy = new GoogleStrategy(
 
       if (user) {
         console.log("Ho trovato un utente");
-        const accessToken = await generateJWT({
+        const accessToken = generateJWT({
           _id: user._id,
         });
         console.log(token.accessToken);
+        console.log(accessToken);
+        console.log(token);
+        console.log("ciao");
         passportNext(null, { accessToken });
         console.log(token.accessToken);
         console.log(accessToken);
@@ -41,7 +44,7 @@ const googleStrategy = new GoogleStrategy(
         });
         await newUser.save();
 
-        const accessToken = await generateJWT({
+        const accessToken = generateJWT({
           username: newUser.username,
         });
 

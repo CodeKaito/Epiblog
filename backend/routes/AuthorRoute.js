@@ -38,9 +38,9 @@ router
     passport.authenticate("google", { session: false }),
     (req, res) => {
       try {
-        // res.redirect(
-        //   `http://localhost:3000/profile?accessToken=${req.user.accToken}`
-        // );
+        res.redirect(
+          `http://localhost:3000/?accessToken=${req.user.accessToken}`
+        );
         console.log("login success");
       } catch (error) {
         console.log("Error login");
