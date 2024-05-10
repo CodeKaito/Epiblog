@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles.css";
 import { useAuth } from "../../context/AuthenticationContext.js";
 import CustomAlert from "../../utils/CustomAlert.jsx";
+import GoogleLogin from "../googleLogin/googleLogin.jsx";
 
 const Login = ({ showSignupModal }) => {
   const [loading, setLoading] = useState(false);
@@ -57,11 +58,6 @@ const Login = ({ showSignupModal }) => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    const googleAuthUrl = "http://localhost:5000/api/googleLogin";
-    window.open(googleAuthUrl, "_self");
-  };
-
   const handleAlertClose = () => {
     setError(false);
   };
@@ -80,13 +76,7 @@ const Login = ({ showSignupModal }) => {
       {loading && <CustomLoader />}
 
       <div className="d-flex justify-content-center">
-        <Button
-          type="button"
-          className="login-with-google-btn"
-          onClick={handleGoogleLogin}
-        >
-          Sign in with Google
-        </Button>
+        <GoogleLogin />
       </div>
 
       <Form onSubmit={handleSubmit} className="mt-4">

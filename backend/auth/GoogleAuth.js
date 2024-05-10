@@ -21,7 +21,7 @@ const googleStrategy = new GoogleStrategy(
 
       if (user) {
         console.log("Ho trovato un utente");
-        const accessToken = generateJWT({
+        const accessToken = await generateJWT({
           _id: user._id,
         });
         console.log(token.accessToken);

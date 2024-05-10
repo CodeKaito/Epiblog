@@ -77,8 +77,11 @@ module.exports.login = async (req, res, next) => {
 // Funzione per ottenere l'utente loggato in base al token, utilizzerá il middleware authentication
 module.exports.getMyProfile = async (req, res) => {
   try {
+    console.log(response);
     // Assume che il metodo per ottenere il profilo dell'autore prende l'ID dell'autore come parametro
     let user = await AuthorModel.findById(req.user.id);
+
+    console.log(user);
 
     // Verifica se l'autore esiste
     if (!user) {
@@ -88,6 +91,7 @@ module.exports.getMyProfile = async (req, res) => {
     // Se l'autore esiste, restituisci il profilo
     res.status(200).json(user);
   } catch (error) {
+    console.log(error);
     console.error("Errore durante il recupero del profilo dell'autore:", error);
     res.status(500).json({
       message:

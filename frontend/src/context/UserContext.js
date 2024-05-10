@@ -15,15 +15,12 @@ export const UserProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         if (isLogged) {
-          const response = await fetch(
-            "https://epicode-api.onrender.com/api/me/",
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+          const response = await fetch("http://localhost:5000/api/me/", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
           if (!response.ok) {
             throw new Error(`HTTP Error ${response.status}`);
