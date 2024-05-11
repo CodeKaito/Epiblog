@@ -39,7 +39,7 @@ router
     (req, res) => {
       try {
         res.redirect(
-          `http://localhost:3000/?accessToken=${req.user.accessToken}`
+          `https://epicode-api.onrender.com/?accessToken=${req.user.accessToken}`
         );
         console.log("login success");
       } catch (error) {
