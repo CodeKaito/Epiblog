@@ -22,15 +22,9 @@ const googleStrategy = new GoogleStrategy(
       if (user) {
         console.log("Ho trovato un utente");
         const accessToken = await generateJWT({
-          _id: user._id,
+          id: user._id,
         });
-        console.log(token.accessToken);
-        console.log(accessToken);
-        console.log(token);
-        console.log("ciao");
         passportNext(null, { accessToken });
-        console.log(token.accessToken);
-        console.log(accessToken);
       } else {
         console.log("Creo un nuovo utente");
         const newUser = new AuthorModel({
@@ -44,7 +38,7 @@ const googleStrategy = new GoogleStrategy(
         });
         await newUser.save();
 
-        const accessToken = generateJWT({
+        const accessToken = await generateJWT({
           username: newUser.username,
         });
 
@@ -54,6 +48,8 @@ const googleStrategy = new GoogleStrategy(
         passportNext(null, { accessToken });
       }
     } catch (err) {
+      console.log("Sono in catch");
+      console.log(err);
       passportNext(err);
     }
   }

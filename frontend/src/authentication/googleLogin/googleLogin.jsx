@@ -7,18 +7,30 @@ const GoogleLogin = () => {
   const { login } = useAuth();
 
   const location = useLocation();
+
   const getAccessTokenFromQuery = () => {
     const searchParams = new URLSearchParams(location.search);
-    return searchParams.get("accessToken");
-  };
-  const accessToken = getAccessTokenFromQuery();
+    const accessToken = searchParams.get("accessToken");
 
-  login(accessToken);
+    if (accessToken) {
+      // Imposta il token in localStorage
+      localStorage.setItem("token", accessToken);
+      // Imposta isLogged a true in localStorage
+      localStorage.setItem("isLogged", "true");
+      // Effettua il login con l'accessToken
+      login(accessToken);
+    }
+
+    return accessToken;
+  };
 
   const handleGoogleLogin = () => {
-    const googleAuthUrl = "http://localhost:5000/api/googleLogin";
+    const googleAuthUrl = "https://epicode-api.onrender.com/api/googleLogin";
     window.open(googleAuthUrl, "_self");
   };
+
+  // Ottieni l'accessToken e gestisci il login
+  getAccessTokenFromQuery();
 
   return (
     <>

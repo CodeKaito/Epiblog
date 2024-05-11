@@ -77,7 +77,7 @@ module.exports.login = async (req, res, next) => {
 // Funzione per ottenere l'utente loggato in base al token, utilizzerá il middleware authentication
 module.exports.getMyProfile = async (req, res) => {
   try {
-    console.log(response);
+    console.log(req.header);
     // Assume che il metodo per ottenere il profilo dell'autore prende l'ID dell'autore come parametro
     let user = await AuthorModel.findById(req.user.id);
 
@@ -170,7 +170,7 @@ module.exports.detailAuthor = async (req, res, next) => {
   const { id } = req.params;
   try {
     // Cerca il author nel database utilizzando l'ID fornito
-    const author = await AuthorModel.findById(id).select("-password");
+    const author = await AuthorModel.findById(id);
     // Invia i dettagli del author come risposta
     res.send(author);
   } catch (error) {
@@ -251,7 +251,10 @@ module.exports.updateAuthor = async (req, res, next) => {
       console.log(body);
       const { password } = req.body;
       // Password crittografata
-      const hashedPassword = await bcrypt.hash(password, 10);
+      let hashedPassword;
+      if (password) {
+        hashedPassword = await bcrypt.hash(password, 10);
+      }
 
       // Trova l'autore nel database
       const existingAuthor = await AuthorModel.findById(id);

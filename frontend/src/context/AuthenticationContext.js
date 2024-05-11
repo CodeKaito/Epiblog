@@ -21,6 +21,11 @@ export const AuthContextProvider = ({ children }) => {
     setToken("");
     localStorage.removeItem("token");
     localStorage.setItem("isLogged", "false");
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete("accessToken");
+    window.history.replaceState({}, document.title, url.toString());
+
     if (window.location.pathname !== "/") {
       window.location.href = "/";
     }

@@ -66,7 +66,7 @@ const ProfileDataEdit = ({ onCancel }) => {
       form.append("avatar", formData.avatar);
 
       const response = await fetch(
-        `http://epicode-api.onrender.com/api/authors/${userData._id}`,
+        `https://epicode-api.onrender.com/api/authors/${userData._id}`,
         {
           method: "PUT",
           headers: {

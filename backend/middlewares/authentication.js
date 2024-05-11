@@ -38,19 +38,13 @@ exports.authMiddleware = async (req, res, next) => {
     if (!req.headers.authorization) {
       return res.status(400).send("Login Required");
     } else {
+      console.log("Sono l'authMiddleware:" + req.headers.authorization);
       const token = req.headers.authorization.replace("Bearer ", "");
       const decoded = await exports.verifyJWT(token);
-
-      //   console.log("Token Payload:", decoded);
-      //   console.log("Token Exp:", decoded.exp);
-      //   console.log("Token Iat:", decoded.iat);
-      //   console.log("User Id:", decoded.id);
 
       if (decoded.exp) {
         delete decoded.iat;
         delete decoded.exp;
-
-        // console.log("Token Payload after delete:", decoded);
 
         const me = await AuthorModel.findById(decoded.id);
 
@@ -65,6 +59,7 @@ exports.authMiddleware = async (req, res, next) => {
       }
     }
   } catch (err) {
+    console.log("Sono il catch dell'authentication.js");
     res.status(400).send("Token error: " + err.message);
     next(err);
   }

@@ -70,7 +70,7 @@ const Signup = ({ showLoginModal }) => {
   };
 
   const handleGoogleLogin = () => {
-    const googleAuthUrl = "http://localhost:5000/api/googleLogin";
+    const googleAuthUrl = "https://epicode-api.onrender.com/api/googleLogin";
     window.open(googleAuthUrl, "_self");
   };
 
