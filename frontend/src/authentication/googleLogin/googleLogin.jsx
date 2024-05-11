@@ -13,11 +13,8 @@ const GoogleLogin = () => {
     const accessToken = searchParams.get("accessToken");
 
     if (accessToken) {
-      // Imposta il token in localStorage
       localStorage.setItem("token", accessToken);
-      // Imposta isLogged a true in localStorage
       localStorage.setItem("isLogged", "true");
-      // Effettua il login con l'accessToken
       login(accessToken);
     }
 

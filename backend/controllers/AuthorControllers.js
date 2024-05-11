@@ -170,7 +170,7 @@ module.exports.detailAuthor = async (req, res, next) => {
   const { id } = req.params;
   try {
     // Cerca il author nel database utilizzando l'ID fornito
-    const author = await AuthorModel.findById(id);
+    const author = await AuthorModel.findById(id).select("+password");
     // Invia i dettagli del author come risposta
     res.send(author);
   } catch (error) {

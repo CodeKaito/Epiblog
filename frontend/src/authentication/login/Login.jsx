@@ -92,6 +92,7 @@ const Login = ({ showSignupModal }) => {
               value={formData.username}
               onChange={handleChange}
               className="form-signup"
+              required
             />
           </Form.Group>
         </div>
@@ -104,6 +105,7 @@ const Login = ({ showSignupModal }) => {
               value={formData.password}
               onChange={handleChange}
               className="form-signup"
+              required
             />
           </Form.Group>
         </div>
