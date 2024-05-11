@@ -29,7 +29,19 @@ const app = express(); // Crea un'app Express
 app.use(express.json()); // Middleware per il parsing del corpo della richiesta come JSON
 app.use(logger); // Logger
 
-app.use(cors()); // Middleware per abilitare le richieste da diversi domini
+const whitelist = ["https://epiblog.vercel.app/"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
 
 // Connessione al database MongoDB utilizzando la variabile d'ambiente MONGO_URI di .env
 // mongoose
