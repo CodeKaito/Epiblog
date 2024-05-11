@@ -29,7 +29,7 @@ const app = express(); // Crea un'app Express
 app.use(express.json()); // Middleware per il parsing del corpo della richiesta come JSON
 app.use(logger); // Logger
 
-const whitelist = ["https://epiblog.vercel.app/"];
+const whitelist = ["https://epiblog.vercel.app"];
 
 const corsOptions = {
   origin: function (origin, callback) {
