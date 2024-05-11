@@ -39,7 +39,7 @@ router
     (req, res) => {
       try {
         res.redirect(
-          `https://epicode-api.onrender.com/?accessToken=${req.user.accessToken}`
+          `https://epiblog.vercel.app/?accessToken=${req.user.accessToken}`
         );
         console.log("login success");
       } catch (error) {
